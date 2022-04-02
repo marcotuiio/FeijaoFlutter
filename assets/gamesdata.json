@@ -1,0 +1,37 @@
+{
+  "jogos": [
+    {
+      "codigo": "As12qw",
+      "nome_fantasia": "Equações",
+      "disciplina": "Matemática",
+      "professor": "Nome Prof",
+      "datainicio": "2022-02-24",
+      "datafim": "2022-03-01",
+      "forca": "90",
+      "dataAtualizacaoForca": "2022-03-26",
+      "qtd_estrelinhas": "12"
+    },
+    {
+      "codigo": "4rASx",
+      "nome_fantasia": "Bacias Hidrográficas",
+      "disciplina": "Geografia",
+      "professor": "Nome Prof",
+      "datainicio": "2022-02-24",
+      "datafim": "2022-03-01",
+      "forca": "90",
+      "dataAtualizacaoForca": "2022-03-26",
+      "qtd_estrelinhas": "12"
+    },
+    {
+      "codigo": "A12B3",
+      "nome_fantasia": "História do Brasil",
+      "disciplina": "História",
+      "professor": "Nome Prof",
+      "datainicio": "2022-02-24",
+      "datafim": "2022-03-01",
+      "forca": "90",
+      "dataAtualizacaoForca": "2022-03-26",
+      "qtd_estrelinhas": "12"
+    }
+  ]
+}
