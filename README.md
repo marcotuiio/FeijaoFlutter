@@ -15,7 +15,8 @@ Implementada página para escolher o jogo desejado (futura pagina inicial ao abr
 
 obs: os botões azuis na tela inicial são facilitadores, devem ser reposicionados
 
-****** Descobrir como trabalhar com .json
+****** Descobrir como trabalhar com .json == DONE by Mateus ==
 
 Implementar formato de quiz (erro de "deveria receber int mas recebeu string" em quiz_init e/ou controller .dart)
-    
+    - implementado porém sem a segunda tentativa
+    -explorar a implementação da segunda tentativa via popup
