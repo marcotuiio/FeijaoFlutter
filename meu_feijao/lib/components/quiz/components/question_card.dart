@@ -18,39 +18,45 @@ class QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     QuestionController _controller = Get.put(QuestionController());
     return Container(
+      alignment: Alignment.center,
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
       ),
-      child: Column(
-        children: <Widget>[
-          Text(
-            question.question,
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                !.copyWith(color: Colors.black),
-          ),
-          const SizedBox(height: 10),
-          const SizedBox(height: 25),
-          ...List.generate(
-            question.options.length,
-            (index) => Option(
-              index: index,
-              text: question.options[index],
-              press: () => _controller.checkAns(question, index),
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                question.question,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    !.copyWith(color: Colors.black),
+              ),
             ),
-          ),
-          // Text(
-          //   question.comentary,
-          //   style: Theme.of(context)
-          //       .textTheme
-          //       .headline6
-          //       !.copyWith(color: Colors.black),
-          // ),
-        ],
+            const SizedBox(height: 10),
+            const SizedBox(height: 25),
+            ...List.generate(
+              question.options.length,
+              (index) => Option(
+                index: index,
+                text: question.options[index],
+                press: () => _controller.checkAns(question, index),
+              ),
+            ),
+            // Text(
+            //   question.comentary,
+            //   style: Theme.of(context)
+            //       .textTheme
+            //       .headline6
+            //       !.copyWith(color: Colors.black),
+            // ),
+          ],
+        ),
       ),
     );
   }

@@ -50,28 +50,30 @@ class Option extends StatelessWidget {
               border: Border.all(color: getTheRightColor()),
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "${index + 1}. $text",
-                  style: TextStyle(color: getTheRightColor(), fontSize: 16),
-                ),
-                Container(
-                  height: 26,
-                  width: 26,
-                  decoration: BoxDecoration(
-                    color: getTheRightColor() == Colors.green
-                        ? Colors.transparent
-                        : getTheRightColor(),
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(color: getTheRightColor()),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "${index + 1}. $text",
+                    style: TextStyle(color: getTheRightColor(), fontSize: 16),
                   ),
-                  child: getTheRightColor() == Colors.grey
-                      ? null
-                      : Icon(getTheRightIcon(), size: 16),
-                )
-              ],
+                  Container(
+                    height: 26,
+                    width: 26,
+                    decoration: BoxDecoration(
+                      color: getTheRightColor() == Colors.green
+                          ? Colors.transparent
+                          : getTheRightColor(),
+                      borderRadius: BorderRadius.circular(50),
+                      border: Border.all(color: getTheRightColor()),
+                    ),
+                    child: getTheRightColor() == Colors.grey
+                        ? null
+                        : Icon(getTheRightIcon(), size: 16),
+                  )
+                ],
+              ),
             ),
           ),
         );
@@ -81,10 +83,9 @@ class Option extends StatelessWidget {
 }
 
 Widget _buildPopupDialog(BuildContext context) {
-  //final VoidCallback press;
 
   return AlertDialog(
-    title: const Text('Teste pop up questões'),
+    title: const Text('CORRIGIR QUESTÃO'),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,

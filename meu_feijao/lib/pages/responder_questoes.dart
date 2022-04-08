@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, non_constant_identifier_names, unused_local_variable
 import 'package:feijao_magico_uel/components/quiz/quiz_init.dart';
 import 'package:feijao_magico_uel/constants.dart';
 import 'package:flutter/material.dart';
@@ -15,23 +15,47 @@ class Questoes extends StatefulWidget {
 
 class _QuestoesState extends State<Questoes> {
   List _items = [];
+  //late List<dynamic> quest_arr;
+  List<dynamic> number1 = List<dynamic>.filled(1,0, growable: true);
+
+  @override
+  void initState() {
+    super.initState();
+    readJson().then((List<dynamic> fquest_arr) {
+      setState(() {
+        List<dynamic> quest_arr = fquest_arr;
+        number1 = quest_arr..shuffle();
+        print('new order');
+        print(number1);
+      });
+    });
+  }
 
   //Buscando conteudo do arquivo json
-  Future<void> readJson() async {
+  Future<List<dynamic>> readJson() async {
     final String response =
-        await rootBundle.loadString('assets/files/questoes_index.json');
+        await rootBundle.loadString('assets/questoes_index.json');
     final data = await json.decode(response);
+    // print('imprimindo data');
+    // print(data['questao']);
+    final datalength = data['questao'].length;
+    List<dynamic> quest_arr = List<dynamic>.filled(datalength, 0);
+    List<dynamic> number1 = List<dynamic>.filled(datalength, 0);
     setState(() {
       _items = data['questao'];
+      for (int i = 0; i < datalength; i++) {
+        quest_arr[i] = int.parse(data['questao'][i]['id_questao']);
+        print(quest_arr[i]);
+      }
+      number1 = quest_arr..shuffle();
     });
+    return number1;
   }
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> vetor1 = [1, 2, 3, 4, 5, 6, 7];
-    final list1 = vetor1;
-    final number1 = list1..shuffle();
-
+    final number1 = readJson();
+    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

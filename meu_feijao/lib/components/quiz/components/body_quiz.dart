@@ -37,15 +37,15 @@ class Body extends StatelessWidget {
                           .textTheme
                           .headline4
                           !.copyWith(color: Colors.blue[900]),
-                      children: [
-                        TextSpan(
-                          text: "/${_questionController.questions.length}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              !.copyWith(color: Colors.blue[900]),
-                        ),
-                      ],
+                      // children: <Widget>[
+                      //   TextSpan(
+                      //     text: "/${_questionController.questions.length}",
+                      //     style: Theme.of(context)
+                      //         .textTheme
+                      //         .headline5
+                      //         !.copyWith(color: Colors.blue[900]),
+                      //   ),
+                      // ],
                     ),
                   ),
                 ),

@@ -126,6 +126,7 @@ class QuestionController extends GetxController
         _recompensas = _recompensas + 1; //recebe uma estrelinhas
       }
       tentativas = tentativas + 21;
+      
       Future.delayed(const Duration(seconds: 0), () {
         nextQuestion();
       });

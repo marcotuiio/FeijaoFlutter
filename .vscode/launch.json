@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "meu_feijao",
+            "cwd": "meu_feijao",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "meu_feijao (profile mode)",
+            "cwd": "meu_feijao",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "meu_feijao (release mode)",
+            "cwd": "meu_feijao",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

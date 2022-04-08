@@ -3,11 +3,16 @@
 import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:flutter/material.dart';
 
-class NavBarBottom extends StatelessWidget {
+class NavBarBottom extends StatefulWidget {
   const NavBarBottom({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<NavBarBottom> createState() => _NavBarBottomState();
+}
+
+class _NavBarBottomState extends State<NavBarBottom> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -21,6 +26,11 @@ class NavBarBottom extends StatelessWidget {
             color: Colors.black,
             icon: const Icon(Icons.star_border_outlined),
             onPressed: () {
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) => _buildPopupDialog(context),
+              );
               print('I was here - usar estrelas');
             },
           ),
@@ -58,4 +68,58 @@ class NavBarBottom extends StatelessWidget {
       backgroundColor: Colors.green[800],
     );
   }
+}
+
+Widget _buildPopupDialog(BuildContext context) {
+
+  int forca = 45; 
+  int estrelas = 28;
+  int aux = 0;
+
+  return AlertDialog(
+    title: const Text('UTILIZAR ESTRELINHAS'),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const <Widget>[
+        Text('Tem certeza que deseja consumir TODAS SUAS ESTRELAS para recuper força?'),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton.icon(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.cancel_presentation),
+        label: const Text('NÃO'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.red[700],
+          onPrimary: Colors.black,
+        ),
+      ),
+      ElevatedButton.icon(
+        onPressed: () {
+          // converter para stateful builder --> https://www.youtube.com/watch?v=THMcgdtUtFQ
+          if (forca + estrelas > 100){
+            aux = 100 - forca;
+            // setState(() {
+            //   forca = forca + aux;
+            //   estrelas = estrelas - aux;
+            // });
+          }
+          // setState(() {
+          //   forca = forca + estrelas;
+          //   estrelas = 0;
+          // });
+          print("Estrelas = $estrelas --- Força = $forca");
+        },
+        icon: const Icon(Icons.check_box_outlined),
+        label: const Text('SIM'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green[700],
+          onPrimary: Colors.black,
+        ),
+      ),
+    ],
+  );
 }
