@@ -16,7 +16,7 @@ class QuestionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
+    
     return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -45,7 +45,11 @@ class QuestionCard extends StatelessWidget {
               (index) => Option(
                 index: index,
                 text: question.options[index],
-                press: () => _controller.checkAns(question, index),
+                press: () => showDialog(
+                                barrierDismissible: false, //bloqueia toques fora do popup
+                                context: context,
+                                builder: (BuildContext context) => _buildPopupDialog(context),
+                              ),
               ),
             ),
             // Text(
@@ -60,4 +64,40 @@ class QuestionCard extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildPopupDialog(BuildContext context) {
+QuestionController _controller = Get.put(QuestionController());
+  return AlertDialog(
+    title: const Text('CORRIGIR QUESTÃO'),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const <Widget>[
+        Text('TEM CERTEZA?'),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton.icon(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.exit_to_app),
+        label: const Text('CANCELAR'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.red[700],
+          onPrimary: Colors.black,
+        ),
+      ),
+      ElevatedButton.icon(
+        onPressed: () {}, // _controller.checkAns(question, index),
+        icon: const Icon(Icons.check),
+        label: const Text('CONFIRMAR?'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green[700],
+          onPrimary: Colors.black,
+        ),
+      ),
+    ],
+  );
 }

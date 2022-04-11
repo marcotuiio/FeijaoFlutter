@@ -74,6 +74,7 @@ Widget _buildPopupDialog(BuildContext context) {
 
   int forca = 45; 
   int estrelas = 28;
+  // ignore: unused_local_variable
   int aux = 0;
 
   return AlertDialog(
