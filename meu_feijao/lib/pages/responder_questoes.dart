@@ -97,20 +97,20 @@ class _QuestoesState extends State<Questoes> {
                         itemBuilder: (context, index) {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    List<dynamic> vetor =
-                                        _items[index]["id_questao"];
-                                    final list = vetor;
-                                    final number = list..shuffle();
-                                    print('$number');
-                                  });
-                                },
-                                child: const Text(
-                                    'Teste'), //'$number' nao funciona
-                              ),
+                            children: const <Widget>[
+                              // ElevatedButton(
+                              //   onPressed: () {
+                              //     setState(() {
+                              //       List<dynamic> vetor =
+                              //           _items[index]["id_questao"];
+                              //       final list = vetor;
+                              //       final number = list..shuffle();
+                              //       print('$number');
+                              //     });
+                              //   },
+                              //   child: const Text(
+                              //       'Teste'), //'$number' nao funciona
+                              // ),
                             ],
                           );
                         }),

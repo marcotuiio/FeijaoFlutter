@@ -5,6 +5,45 @@ import 'package:get/get.dart';
 import 'package:feijao_magico_uel/components/quiz/modelo/questions.dart';
 
 
+typedef MyPopUp = Widget; _buildPopupDialog(
+    BuildContext context, Question question, int index){
+      QuestionController _controller = Get.put(QuestionController());
+  return AlertDialog(
+    title: const Text('CORRIGIR QUESTÃO'),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const <Widget>[
+        Text('TEM CERTEZA?'),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton.icon(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.exit_to_app),
+        label: const Text('CANCELAR'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.red[700],
+          onPrimary: Colors.black,
+        ),
+      ),
+      ElevatedButton.icon(
+        onPressed: () {
+          _controller.checkAns(question, index);
+        }, // _controller.checkAns(question, index),
+        icon: const Icon(Icons.check),
+        label: const Text('CONFIRMAR?'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green[700],
+          onPrimary: Colors.black,
+        ),
+      ),
+    ],
+  );
+}
+
 class QuestionCard extends StatelessWidget {
   const QuestionCard({
     Key? key,
@@ -48,7 +87,11 @@ class QuestionCard extends StatelessWidget {
                 press: () => showDialog(
                                 barrierDismissible: false, //bloqueia toques fora do popup
                                 context: context,
-                                builder: (BuildContext context) => _buildPopupDialog(context),
+                                builder: (BuildContext context) => _buildPopupDialog(
+                                  context,
+                                  question,
+                                  question.answer,
+                                ),
                               ),
               ),
             ),
@@ -66,38 +109,40 @@ class QuestionCard extends StatelessWidget {
   }
 }
 
-Widget _buildPopupDialog(BuildContext context) {
-QuestionController _controller = Get.put(QuestionController());
-  return AlertDialog(
-    title: const Text('CORRIGIR QUESTÃO'),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: const <Widget>[
-        Text('TEM CERTEZA?'),
-      ],
-    ),
-    actions: <Widget>[
-      ElevatedButton.icon(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        icon: const Icon(Icons.exit_to_app),
-        label: const Text('CANCELAR'),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.red[700],
-          onPrimary: Colors.black,
-        ),
-      ),
-      ElevatedButton.icon(
-        onPressed: () {}, // _controller.checkAns(question, index),
-        icon: const Icon(Icons.check),
-        label: const Text('CONFIRMAR?'),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.green[700],
-          onPrimary: Colors.black,
-        ),
-      ),
-    ],
-  );
-}
+// Widget _buildPopupDialog(BuildContext context, , int) {
+// QuestionController _controller = Get.put(QuestionController());
+//   return AlertDialog(
+//     title: const Text('CORRIGIR QUESTÃO'),
+//     content: Column(
+//       mainAxisSize: MainAxisSize.min,
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       children: const <Widget>[
+//         Text('TEM CERTEZA?'),
+//       ],
+//     ),
+//     actions: <Widget>[
+//       ElevatedButton.icon(
+//         onPressed: () {
+//           Navigator.pop(context);
+//         },
+//         icon: const Icon(Icons.exit_to_app),
+//         label: const Text('CANCELAR'),
+//         style: ElevatedButton.styleFrom(
+//           primary: Colors.red[700],
+//           onPrimary: Colors.black,
+//         ),
+//       ),
+//       ElevatedButton.icon(
+//         onPressed: () {
+//           _controller.checkAns();
+//         }, // _controller.checkAns(question, index),
+//         icon: const Icon(Icons.check),
+//         label: const Text('CONFIRMAR?'),
+//         style: ElevatedButton.styleFrom(
+//           primary: Colors.green[700],
+//           onPrimary: Colors.black,
+//         ),
+//       ),
+//     ],
+//   );
+// }
