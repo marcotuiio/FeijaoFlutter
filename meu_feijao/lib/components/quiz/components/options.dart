@@ -36,13 +36,7 @@ class Option extends StatelessWidget {
         }
 
         return InkWell(
-          onTap: () {
-            showDialog(
-              barrierDismissible: false, //bloqueia toques fora do popup
-              context: context,
-              builder: (BuildContext context) => _buildPopupDialog(context),
-            );
-          },
+          onTap:  press,
           child: Container(
             margin: const EdgeInsets.only(top: 20),
             padding: const EdgeInsets.all(20),
@@ -80,42 +74,4 @@ class Option extends StatelessWidget {
       },
     );
   }
-}
-
-Widget _buildPopupDialog(BuildContext context) {
-
-  return AlertDialog(
-    title: const Text('CORRIGIR QUESTÃO'),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: const <Widget>[
-        Text('TEM CERTEZA?'),
-      ],
-    ),
-    actions: <Widget>[
-      ElevatedButton.icon(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        icon: const Icon(Icons.exit_to_app),
-        label: const Text('CANCELAR'),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.red[700],
-          onPrimary: Colors.black,
-        ),
-      ),
-      ElevatedButton.icon(
-        onPressed: () {
-          //press; //aqui deve entrar a verificação da questao certa ou errada
-        },
-        icon: const Icon(Icons.check),
-        label: const Text('CONFIRMAR?'),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.green[700],
-          onPrimary: Colors.black,
-        ),
-      ),
-    ],
-  );
 }
