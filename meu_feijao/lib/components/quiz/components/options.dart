@@ -22,10 +22,18 @@ class Option extends StatelessWidget {
         Color getTheRightColor() {
           if (qnController.isAnswered) {
             if (index == qnController.correctAns) {
-              return Colors.green;
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => _buildPopupDialogCerta(context),
+              );
+              //return Colors.green;
             } else if (index == qnController.selectedAns &&
                 qnController.selectedAns != qnController.correctAns) {
-              return Colors.red;
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => _buildPopupDialogErrada(context),
+                  );
+              //return Colors.red;
             }
           }
           return Colors.black38;
@@ -74,4 +82,56 @@ class Option extends StatelessWidget {
       },
     );
   }
+}
+
+Widget _buildPopupDialogCerta(BuildContext context) {
+  return AlertDialog(
+    title: const Text('RESPOSTA DA QUESTÃO:'),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const <Widget>[
+        Text('CORRETA'),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton.icon(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.exit_to_app),
+        label: const Text('OK'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green[700],
+          onPrimary: Colors.black,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _buildPopupDialogErrada(BuildContext context) {
+  return AlertDialog(
+    title: const Text('RESPOSTA DA QUESTÃO:'),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const <Widget>[
+        Text('INCORRETA'),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton.icon(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.exit_to_app),
+        label: const Text('OK'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.red[700],
+          onPrimary: Colors.black,
+        ),
+      ),
+    ],
+  );
 }

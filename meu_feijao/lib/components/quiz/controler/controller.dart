@@ -100,7 +100,7 @@ class QuestionController extends GetxController
         _recompensas = _recompensas + 2; //recebe duas estrelinhas
       }
       tentativas = tentativas + 11;
-      Future.delayed(const Duration(seconds: 0), () {
+      Future.delayed(const Duration(seconds: 3), () {
         nextQuestion();
       });
 
@@ -127,14 +127,14 @@ class QuestionController extends GetxController
       }
       tentativas = tentativas + 21;
       
-      Future.delayed(const Duration(seconds: 0), () {
+      Future.delayed(const Duration(seconds: 3), () {
         nextQuestion();
       });
 
     } else if (_correctAns != _selectedAns && tentativas == 10) {
       //errou na segunda
       tentativas = tentativas + 20;
-      Future.delayed(const Duration(seconds: 0), () {
+      Future.delayed(const Duration(seconds: 3), () {
         nextQuestion();
       });
     }
