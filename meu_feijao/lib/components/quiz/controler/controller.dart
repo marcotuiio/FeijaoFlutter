@@ -48,8 +48,8 @@ class QuestionController extends GetxController
   final RxInt _questionNumber = 1.obs;
   RxInt get questionNumber => _questionNumber;
 
-  int _recompensas = 0;
-  int get recompensas => _recompensas;
+  int recompensas = 0;
+  int get numOfCorrectAns => recompensas;
 
   get tipo => 1; //1 rega, 0 estrelas
 
@@ -82,71 +82,81 @@ class QuestionController extends GetxController
   }
 
   void checkAns(Question question, int selectedIndex) {
-    // because once user press any option then it will run
     _isAnswered = true;
     _correctAns = question.answer;
     _selectedAns = selectedIndex;
-    var tentativas = 0;
-    var tipo = 1;
-    //Regar = 1;
-    //Estrelas = 0;
 
-    if (_correctAns == _selectedAns && tentativas == 0) {
-      //acertou na primeira
-      if (tipo == 1) {
-        _recompensas = _recompensas + 0; //não há penalidade de rega
-      }
-      if (tipo == 0) {
-        _recompensas = _recompensas + 2; //recebe duas estrelinhas
-      }
-      tentativas = tentativas + 11;
-      Future.delayed(const Duration(seconds: 3), () {
-        nextQuestion();
-      });
-
-    } else if (_correctAns != _selectedAns && tentativas == 0) {
-      //errou na primeira
-      tentativas = tentativas + 10;
-      if (tipo == 1) {
-        _recompensas = _recompensas + 18; //9 de penalidade de rega
-      }
-      if (tipo == 0) {
-        _recompensas = _recompensas + 0; //recebe uma estrelinhas
-      }
-
-      //repetir questão exibindo dica
-      _animationController.reset();
-
-    } else if (_correctAns == _selectedAns && tentativas == 10) {
-      //acertou na segunda
-      if (tipo == 1) {
-        _recompensas = _recompensas - 9; //9 de penalidade de rega
-      }
-      if (tipo == 0) {
-        _recompensas = _recompensas + 1; //recebe uma estrelinhas
-      }
-      tentativas = tentativas + 21;
-      
-      Future.delayed(const Duration(seconds: 3), () {
-        nextQuestion();
-      });
-
-    } else if (_correctAns != _selectedAns && tentativas == 10) {
-      //errou na segunda
-      tentativas = tentativas + 20;
-      Future.delayed(const Duration(seconds: 3), () {
-        nextQuestion();
-      });
+    if (_correctAns == _selectedAns) {
+      recompensas++;
     }
-
     // It will stop the counter
     _animationController.stop();
     update();
 
-    // Once user select an ans after 2s it will go to the next qn
-    // Future.delayed(const Duration(seconds: 2), () {
-    //   nextQuestion();
-    // });
+    Future.delayed(const Duration(seconds: 3), () {
+      nextQuestion();
+    });
+
+    // _isAnswered = true;
+    // _correctAns = question.answer;
+    // _selectedAns = selectedIndex;
+    // var tentativas = 0;
+    // var tipo = 1;
+    // //Regar = 1;
+    // //Estrelas = 0;
+
+    // if (_correctAns == _selectedAns && tentativas == 0) {
+    //   //acertou na primeira
+    //   if (tipo == 1) {
+    //     _recompensas = _recompensas + 0; //não há penalidade de rega
+    //   }
+    //   if (tipo == 0) {
+    //     _recompensas = _recompensas + 2; //recebe duas estrelinhas
+    //   }
+    //   tentativas = tentativas + 11;
+    //   Future.delayed(const Duration(seconds: 3), () {
+    //     nextQuestion();
+    //   });
+
+    // } else if (_correctAns != _selectedAns && tentativas == 0) {
+    //   //errou na primeira
+    //   tentativas = tentativas + 10;
+    //   if (tipo == 1) {
+    //     _recompensas = _recompensas + 18; //9 de penalidade de rega
+    //   }
+    //   if (tipo == 0) {
+    //     _recompensas = _recompensas + 0; //recebe uma estrelinhas
+    //   }
+
+    //   //repetir questão exibindo dica
+    //   _animationController.reset();
+
+    // } else if (_correctAns == _selectedAns && tentativas == 10) {
+    //   //acertou na segunda
+    //   if (tipo == 1) {
+    //     _recompensas = _recompensas - 9; //9 de penalidade de rega
+    //   }
+    //   if (tipo == 0) {
+    //     _recompensas = _recompensas + 1; //recebe uma estrelinhas
+    //   }
+    //   tentativas = tentativas + 21;
+      
+    //   Future.delayed(const Duration(seconds: 3), () {
+    //     nextQuestion();
+    //   });
+
+    // } else if (_correctAns != _selectedAns && tentativas == 10) {
+    //   //errou na segunda
+    //   tentativas = tentativas + 20;
+    //   Future.delayed(const Duration(seconds: 3), () {
+    //     nextQuestion();
+    //   });
+    // }
+
+    // // It will stop the counter
+    // _animationController.stop();
+    // update();
+
   }
 
   void nextQuestion() {

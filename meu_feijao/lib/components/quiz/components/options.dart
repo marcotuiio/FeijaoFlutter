@@ -19,37 +19,31 @@ class Option extends StatelessWidget {
     return GetBuilder<QuestionController>(
       init: QuestionController(),
       builder: (qnController) {
-        Color getTheRightColor() {
+        // ignore: unused_element
+        Future<dynamic> ?getRightPop() {
           if (qnController.isAnswered) {
             if (index == qnController.correctAns) {
-              showDialog(
+              return showDialog( // adaptar para exibir certo ou errado
                 context: context,
                 builder: (BuildContext context) => _buildPopupDialogCerta(context),
               );
-              //return Colors.green;
             } else if (index == qnController.selectedAns &&
                 qnController.selectedAns != qnController.correctAns) {
-                  showDialog(
+                  return showDialog(
                     context: context,
                     builder: (BuildContext context) => _buildPopupDialogErrada(context),
                   );
-              //return Colors.red;
             }
           }
-          return Colors.black38;
-        }
-
-        IconData getTheRightIcon() {
-          return getTheRightColor() == Colors.red ? Icons.close : Icons.done;
+          return null;
         }
 
         return InkWell(
-          onTap:  press,
+          onTap: press,
           child: Container(
             margin: const EdgeInsets.only(top: 20),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              border: Border.all(color: getTheRightColor()),
               borderRadius: BorderRadius.circular(15),
             ),
             child: SingleChildScrollView(
@@ -58,21 +52,18 @@ class Option extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     "${index + 1}. $text",
-                    style: TextStyle(color: getTheRightColor(), fontSize: 16),
+                    style: const TextStyle(
+                      color: Colors.black38,
+                      fontSize: 16
+                    ),
                   ),
                   Container(
                     height: 26,
                     width: 26,
                     decoration: BoxDecoration(
-                      color: getTheRightColor() == Colors.green
-                          ? Colors.transparent
-                          : getTheRightColor(),
+                      color: Colors.grey,
                       borderRadius: BorderRadius.circular(50),
-                      border: Border.all(color: getTheRightColor()),
                     ),
-                    child: getTheRightColor() == Colors.grey
-                        ? null
-                        : Icon(getTheRightIcon(), size: 16),
                   )
                 ],
               ),

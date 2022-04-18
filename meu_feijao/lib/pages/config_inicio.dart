@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:feijao_magico_uel/Storages/createfile.dart';
 import 'package:feijao_magico_uel/Storages/storages.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +6,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 
+// ignore: must_be_immutable
 class CadastroInicial extends StatefulWidget {
   Storage? storage = Storage(fileofInterest: 'name.json');
 
@@ -19,7 +18,6 @@ class CadastroInicial extends StatefulWidget {
 
 class _CadastroInicialState extends State<CadastroInicial> {
   late File namejsonFile;
-  // late Directory namedir;
   late Map<String, dynamic> namefileContent;
   String fileName = 'name.json';
   bool namefileExists = false;
@@ -47,7 +45,7 @@ class _CadastroInicialState extends State<CadastroInicial> {
     super.dispose();
   }
 
-  Future<void> writeJson(String name) async {
+  Future<void> writeJsonNAME(String name) async {
     String namedata = '{"nome": "$name"}';
     Map<String, dynamic> content = json.decode(namedata);
 
@@ -60,7 +58,7 @@ class _CadastroInicialState extends State<CadastroInicial> {
       // }).toList();
     } else {
       final dir = await getApplicationDocumentsDirectory();
-      createFile(content, dir, fileName);
+      createFile(content, dir.path, fileName);
     }
   }
 
@@ -125,7 +123,7 @@ class _CadastroInicialState extends State<CadastroInicial> {
               const SizedBox(height: 64),
               ElevatedButton.icon(
                 onPressed: () {
-                  writeJson(_controller.text);
+                  writeJsonNAME(_controller.text);
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.save),
