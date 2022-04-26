@@ -83,7 +83,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
     Map<String, dynamic> ghostContent = await json.decode(response.toString());
     final dir = await getApplicationDocumentsDirectory();
     String fileName = 'games.json';
-    createFile(ghostContent, dir, fileName);
+    createFile(ghostContent, dir.path, fileName);
     Map<String, dynamic> newContent =
         await json.decode(gamesjsonFile.readAsStringSync());
     var newobject = newContent["jogos"];
@@ -108,7 +108,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
     final direc = await getApplicationDocumentsDirectory();
     String questfileName = 'questoes_$codigo.json';
     Storage? queststorage = Storage(fileofInterest: questfileName);
-    createFile(questionsghostContent, direc, questfileName);
+    createFile(questionsghostContent, direc.path, questfileName);
     late File questionsfile;
     queststorage.nameJsonFile().then((File questfile) {
       setState(() {
