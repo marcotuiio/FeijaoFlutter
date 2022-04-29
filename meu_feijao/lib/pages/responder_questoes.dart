@@ -47,9 +47,9 @@ class _QuestoesState extends State<Questoes> {
         quest_arr[i] = int.parse(data['questao'][i]['id_questao']);
         print(quest_arr[i]);
       }
-      number1 = quest_arr..shuffle();
+      //number1 = quest_arr..shuffle();
     });
-    return number1;
+    return quest_arr;
   }
 
   @override
@@ -152,3 +152,5 @@ class _QuestoesState extends State<Questoes> {
 //https://github.com/samir-benabadji/Quiz-App-
 
 //colocar botão de sair em quizscreen() e em score_screen()
+// border: Border.all(color: Colors.grey),
+//               borderRadius: BorderRadius.circular(15),

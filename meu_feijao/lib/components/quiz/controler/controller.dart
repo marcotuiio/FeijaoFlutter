@@ -1,8 +1,8 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:feijao_magico_uel/components/quiz/modelo/questions.dart';
-import 'package:feijao_magico_uel/components/quiz/score_screen.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:feijao_magico_uel/components/quiz/score_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 //import 'package:get/state_manager.dart';
 // We use get package for our state management
@@ -48,8 +48,8 @@ class QuestionController extends GetxController
   final RxInt _questionNumber = 1.obs;
   RxInt get questionNumber => _questionNumber;
 
-  int recompensas = 0;
-  int get numOfCorrectAns => recompensas;
+  int _recompensas = 0;
+  int get recompensas => _recompensas;
 
   get tipo => 1; //1 rega, 0 estrelas
 
@@ -87,7 +87,7 @@ class QuestionController extends GetxController
     _selectedAns = selectedIndex;
 
     if (_correctAns == _selectedAns) {
-      recompensas++;
+      _recompensas++;
     }
     // It will stop the counter
     _animationController.stop();
@@ -173,7 +173,7 @@ class QuestionController extends GetxController
       _animationController.forward().whenComplete(nextQuestion);
     } else {
       // Get package provide us simple way to naviigate another page
-      Get.to(const ScoreScreen());
+      //Navigator.pop(context);
     }
   }
 

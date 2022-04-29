@@ -68,7 +68,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
   //Buscando conteudo do arquivo json
   Future<List<dynamic>> readJsonQuest() async {
     final String response =
-        await rootBundle.loadString('assets/files/questoes_index.json');
+        await rootBundle.loadString('assets/questoes_index.json');
     final data = await json.decode(response);
     final datalength = data['questao'].length;
     List<dynamic> questArray = List<dynamic>.filled(datalength, 0);
@@ -163,7 +163,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.wrong_location),
-                label: const Text('Sair'),
+                label: const Text('CONFIRMAR'),
               ),
             ],
           ),

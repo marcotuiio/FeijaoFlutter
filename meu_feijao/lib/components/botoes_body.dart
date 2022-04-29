@@ -79,11 +79,11 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
   Future<void> createGameJson(File gamesjsonFile) async {
     //Building Games json file
     final String response =
-        await rootBundle.loadString('assets/gamesdata.json');
+        await rootBundle.loadString('assets/games.json');
     Map<String, dynamic> ghostContent = await json.decode(response.toString());
     final dir = await getApplicationDocumentsDirectory();
     String fileName = 'games.json';
-    createFile(ghostContent, dir, fileName);
+    createFile(ghostContent, dir.path, fileName);
     Map<String, dynamic> newContent =
         await json.decode(gamesjsonFile.readAsStringSync());
     var newobject = newContent["jogos"];
@@ -104,11 +104,12 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
     final String questions =
         await rootBundle.loadString('assets/questoes_$codigo.json');
     Map<String, dynamic> questionsghostContent =
+    
         await json.decode(questions.toString());
     final direc = await getApplicationDocumentsDirectory();
     String questfileName = 'questoes_$codigo.json';
     Storage? queststorage = Storage(fileofInterest: questfileName);
-    createFile(questionsghostContent, direc, questfileName);
+    createFile(questionsghostContent, direc.path, questfileName);
     late File questionsfile;
     queststorage.nameJsonFile().then((File questfile) {
       setState(() {

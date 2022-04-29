@@ -26,12 +26,12 @@ class ScoreScreen extends StatelessWidget {
                 "RESULTADO",
                 style: Theme.of(context)
                     .textTheme
-                    .headline3!
-                    .copyWith(color: Colors.yellow),
+                    .headline3
+                    !.copyWith(color: Colors.yellow),
               ),
               const Spacer(),
               Text(
-                "${_qnController.recompensas} $type",
+                "${_qnController.correctAns} $type",
                 style: Theme.of(context)
                     .textTheme
                     .headline4!
