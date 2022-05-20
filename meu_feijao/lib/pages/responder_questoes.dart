@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, non_constant_identifier_names, unused_local_variable
+// ignore_for_file: avoid_print
 import 'package:feijao_magico_uel/components/quiz/quiz_init.dart';
 import 'package:feijao_magico_uel/constants.dart';
 import 'package:flutter/material.dart';
@@ -15,47 +15,38 @@ class Questoes extends StatefulWidget {
 
 class _QuestoesState extends State<Questoes> {
   List _items = [];
-  //late List<dynamic> quest_arr;
-  List<dynamic> number1 = List<dynamic>.filled(1,0, growable: true);
+  late List<dynamic> questArr = List<dynamic>.filled(1, 0, growable: true);
 
   @override
   void initState() {
     super.initState();
-    readJson().then((List<dynamic> fquest_arr) {
+    readJsonQuest().then((List<dynamic> fquestArr) {
       setState(() {
-        List<dynamic> quest_arr = fquest_arr;
-        number1 = quest_arr..shuffle();
-        print('new order');
-        print(number1);
+        questArr = fquestArr;
       });
     });
   }
 
   //Buscando conteudo do arquivo json
-  Future<List<dynamic>> readJson() async {
+  Future<List<dynamic>> readJsonQuest() async {
     final String response =
         await rootBundle.loadString('assets/questoes_index.json');
     final data = await json.decode(response);
-    // print('imprimindo data');
-    // print(data['questao']);
     final datalength = data['questao'].length;
-    List<dynamic> quest_arr = List<dynamic>.filled(datalength, 0);
+    List<dynamic> questArr = List<dynamic>.filled(datalength, 0);
     List<dynamic> number1 = List<dynamic>.filled(datalength, 0);
     setState(() {
       _items = data['questao'];
       for (int i = 0; i < datalength; i++) {
-        quest_arr[i] = int.parse(data['questao'][i]['id_questao']);
-        print(quest_arr[i]);
+        questArr[i] = int.parse(data['questao'][i]['id_questao']);
       }
-      //number1 = quest_arr..shuffle();
+      number1 = questArr..shuffle();
     });
-    return quest_arr;
+    return number1;
   }
 
   @override
   Widget build(BuildContext context) {
-    final number1 = readJson();
-    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -76,7 +67,7 @@ class _QuestoesState extends State<Questoes> {
             ),
             const SizedBox(height: 5),
             Text(
-              '$number1',
+              '$questArr',
               style: const TextStyle(
                 fontSize: 20,
               ),
@@ -87,7 +78,7 @@ class _QuestoesState extends State<Questoes> {
                   primary: Colors.blue[600], // Background color
                   onPrimary: Colors.white),
               child: const Text('CARREGAR INDEX'),
-              onPressed: readJson,
+              onPressed: () {},
             ),
             const SizedBox(height: 10),
             _items.isNotEmpty
@@ -97,20 +88,20 @@ class _QuestoesState extends State<Questoes> {
                         itemBuilder: (context, index) {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const <Widget>[
-                              // ElevatedButton(
-                              //   onPressed: () {
-                              //     setState(() {
-                              //       List<dynamic> vetor =
-                              //           _items[index]["id_questao"];
-                              //       final list = vetor;
-                              //       final number = list..shuffle();
-                              //       print('$number');
-                              //     });
-                              //   },
-                              //   child: const Text(
-                              //       'Teste'), //'$number' nao funciona
-                              // ),
+                            children: <Widget>[
+                              ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    List<dynamic> vetor =
+                                        _items[index]["id_questao"];
+                                    final list = vetor;
+                                    final number = list..shuffle();
+                                    print('$number');
+                                  });
+                                },
+                                child: const Text(
+                                    'Teste'), //'$number' nao funciona
+                              ),
                             ],
                           );
                         }),
@@ -152,5 +143,3 @@ class _QuestoesState extends State<Questoes> {
 //https://github.com/samir-benabadji/Quiz-App-
 
 //colocar botão de sair em quizscreen() e em score_screen()
-// border: Border.all(color: Colors.grey),
-//               borderRadius: BorderRadius.circular(15),

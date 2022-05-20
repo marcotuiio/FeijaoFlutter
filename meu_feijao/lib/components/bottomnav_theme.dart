@@ -18,4 +18,5 @@ final bottomNavigationBarTheme = BottomNavigationBarThemeData(
     unselectedLabelStyle: const TextStyle(
       color: Colors.black,
       fontSize: 12,
-    ));
+    ),
+);

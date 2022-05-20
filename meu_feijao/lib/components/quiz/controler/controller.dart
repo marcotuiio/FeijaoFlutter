@@ -1,11 +1,11 @@
-// ignore_for_file: unrelated_type_equality_checks
-
+// import 'dart:io';
 import 'package:feijao_magico_uel/components/quiz/modelo/questions.dart';
+import 'package:feijao_magico_uel/pages/body.dart';
 // import 'package:feijao_magico_uel/components/quiz/score_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// import 'package:path_provider/path_provider.dart';
 //import 'package:get/state_manager.dart';
-// We use get package for our state management
 
 class QuestionController extends GetxController
     // ignore: deprecated_member_use
@@ -35,6 +35,9 @@ class QuestionController extends GetxController
       .toList();
   List<Question> get questions => _questions;
 
+  // int forcaAux = snapshot.forca;
+  // int stars = snapshot.estrelinhas;
+
   bool _isAnswered = false;
   bool get isAnswered => _isAnswered;
 
@@ -48,10 +51,15 @@ class QuestionController extends GetxController
   final RxInt _questionNumber = 1.obs;
   RxInt get questionNumber => _questionNumber;
 
-  int _recompensas = 0;
-  int get recompensas => _recompensas;
+  late String _tipo; //P rega, E estrelas
+  String get tipo => _tipo;
 
-  get tipo => 1; //1 rega, 0 estrelas
+  // ignore: prefer_final_fields
+  int _tentativas = 0;
+  int get tentativas => _tentativas; 
+
+  int _numOfCorrectAns = 0;
+  int get numOfCorrectAns => _numOfCorrectAns;
 
   // called immediately after the widget is allocated memory
   @override
@@ -87,75 +95,82 @@ class QuestionController extends GetxController
     _selectedAns = selectedIndex;
 
     if (_correctAns == _selectedAns) {
-      _recompensas++;
+      _numOfCorrectAns++;
     }
     // It will stop the counter
     _animationController.stop();
     update();
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       nextQuestion();
     });
 
-    // _isAnswered = true;
-    // _correctAns = question.answer;
-    // _selectedAns = selectedIndex;
-    // var tentativas = 0;
-    // var tipo = 1;
-    // //Regar = 1;
-    // //Estrelas = 0;
+    //Regar = 'P';
+    //Estrelas = 'E';
 
-    // if (_correctAns == _selectedAns && tentativas == 0) {
+    // TO DO: gravar no arquivo questoes_respondidas_[codigo do game].json no registro
+
+    // if (_correctAns == _selectedAns && _tentativas == 0) {
     //   //acertou na primeira
-    //   if (tipo == 1) {
-    //     _recompensas = _recompensas + 0; //não há penalidade de rega
+    //   if (tipo == 'P') {
+    //     forcaAux = forcaAux + 0; //não há penalidade de rega
     //   }
-    //   if (tipo == 0) {
-    //     _recompensas = _recompensas + 2; //recebe duas estrelinhas
+    //   if (tipo == 'E') {
+    //     stars = stars + 2; //recebe duas estrelinhas
     //   }
-    //   tentativas = tentativas + 11;
+    //   marcar no json dessa questao que tentativa = 11;
     //   Future.delayed(const Duration(seconds: 3), () {
     //     nextQuestion();
     //   });
 
-    // } else if (_correctAns != _selectedAns && tentativas == 0) {
+    // } else if (_correctAns != _selectedAns && _tentativas == 0) {
     //   //errou na primeira
-    //   tentativas = tentativas + 10;
-    //   if (tipo == 1) {
-    //     _recompensas = _recompensas + 18; //9 de penalidade de rega
+    //   _tentativas = 10;
+    //   if (tipo == 'P') {
+    //     forcaAux = forcaAux - 9; //9 de penalidade de rega
     //   }
-    //   if (tipo == 0) {
-    //     _recompensas = _recompensas + 0; //recebe uma estrelinhas
+    //   if (tipo == 'E') {
+    //     stars = stars + 0; //recebe uma estrelinhas
     //   }
 
     //   //repetir questão exibindo dica
+    //   marcar no json dessa questao que tentativa = 10;
+
     //   _animationController.reset();
 
-    // } else if (_correctAns == _selectedAns && tentativas == 10) {
+    // } else if (_correctAns == _selectedAns && _tentativas == 10) {
     //   //acertou na segunda
-    //   if (tipo == 1) {
-    //     _recompensas = _recompensas - 9; //9 de penalidade de rega
+    //   if (tipo == 'P') {
+    //     forcaAux = forcaAux - 0; //9 de penalidade de rega ja aplicada
     //   }
-    //   if (tipo == 0) {
-    //     _recompensas = _recompensas + 1; //recebe uma estrelinhas
+    //   if (tipo == 'E') {
+    //     stars = stars + 1; //recebe uma estrelinhas
     //   }
-    //   tentativas = tentativas + 21;
+  
+    //   marcar no json dessa questao que tentativa = 21;
       
     //   Future.delayed(const Duration(seconds: 3), () {
     //     nextQuestion();
     //   });
 
-    // } else if (_correctAns != _selectedAns && tentativas == 10) {
+    // } else if (_correctAns != _selectedAns && _tentativas == 10) {
     //   //errou na segunda
-    //   tentativas = tentativas + 20;
+    //   if (tipo == 'P') {
+    //     forcaAux = forcaAux - 9; //total 18 de penalidade de rega 
+    //   }
+    //   if (tipo == 'E') {
+    //     stars = stars + 0; //total 0 estrelinhas
+    //   }
+
+    //   marcar no json dessa questao que tentativa = 20;
+    //                              !!!!!!!!!!!!!!!!!!
+    //   !!!!!!!!!!!!!!!!!! marcar no json do game forca = forcaAux e estrelinhas = stars; !!!!!!!!!!!!!!!!!!
+    //                              !!!!!!!!!!!!!!!!!!
+    
     //   Future.delayed(const Duration(seconds: 3), () {
     //     nextQuestion();
     //   });
     // }
-
-    // // It will stop the counter
-    // _animationController.stop();
-    // update();
 
   }
 
@@ -171,9 +186,9 @@ class QuestionController extends GetxController
       // Then start it again
       // Once timer is finish go to the next qn
       _animationController.forward().whenComplete(nextQuestion);
+      _tentativas = 0;
     } else {
-      // Get package provide us simple way to naviigate another page
-      //Navigator.pop(context);
+      Get.to(() => const HomeScreen());
     }
   }
 
@@ -182,3 +197,10 @@ class QuestionController extends GetxController
   }
 
 }
+
+// _write(String text) async {
+//   final Directory directory = await getApplicationDocumentsDirectory();
+//   final File file = File('${directory.path}/my_file.txt');
+//   await file.writeAsString(text);
+// }
+

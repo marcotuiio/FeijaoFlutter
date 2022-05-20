@@ -37,7 +37,10 @@ class Option extends StatelessWidget {
             margin: const EdgeInsets.only(top: 20),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              border: Border.all(color: getTheRightColor()),
+              border: Border.all(
+                color: getTheRightColor(),
+                width: 5,
+              ),
               borderRadius: BorderRadius.circular(15),
             ),
             child: SingleChildScrollView(
@@ -55,7 +58,10 @@ class Option extends StatelessWidget {
                     height: 26,
                     width: 26,
                     decoration: BoxDecoration(
-                      border: Border.all(color: getTheRightColor()),
+                      border: Border.all(
+                        color: getTheRightColor(),
+                        width: 2,
+                      ),
                       borderRadius: BorderRadius.circular(50),
                     ),
                   )

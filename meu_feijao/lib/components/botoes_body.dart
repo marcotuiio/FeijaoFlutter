@@ -4,12 +4,13 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:feijao_magico_uel/Storages/createfile.dart';
 import 'package:feijao_magico_uel/Storages/storages.dart';
-import 'package:feijao_magico_uel/components/games.dart';
+import 'package:feijao_magico_uel/network/games.dart';
 import 'package:feijao_magico_uel/pages/config_inicio.dart';
 import 'package:feijao_magico_uel/pages/game_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+// import 'package:http/http.dart' as http;
 
 class BotoesMainPage extends StatefulWidget {
   BotoesMainPage({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class BotoesMainPage extends StatefulWidget {
 class _BotoesMainPageState extends State<BotoesMainPage> {
   late File gamesjsonFile;
   int forca = 100;
+  var now = DateTime.now();
   bool gamesfileExists = false;
   Map<String, dynamic> gamesfileContent = {"": ""};
   Map<String, dynamic> targetcontent = {"": ""};
@@ -60,7 +62,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
           print(gamesfileContent);
         } else {
           print('got down');
-          setState(() => forca = 100);
+          setState(() => forca = 20);
           createGameJson(gamesjsonFile);
         }
       });
@@ -78,8 +80,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
 
   Future<void> createGameJson(File gamesjsonFile) async {
     //Building Games json file
-    final String response =
-        await rootBundle.loadString('assets/games.json');
+    final String response = await rootBundle.loadString('assets/games.json');
     Map<String, dynamic> ghostContent = await json.decode(response.toString());
     final dir = await getApplicationDocumentsDirectory();
     String fileName = 'games.json';
@@ -104,7 +105,6 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
     final String questions =
         await rootBundle.loadString('assets/questoes_$codigo.json');
     Map<String, dynamic> questionsghostContent =
-    
         await json.decode(questions.toString());
     final direc = await getApplicationDocumentsDirectory();
     String questfileName = 'questoes_$codigo.json';
@@ -134,11 +134,11 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
 
 //END OF 'PROVISÓRIO'
 ///////////////////////////////////////////////////////////////////////////////
+
   @override
   Widget build(BuildContext context) {
     //int forca = 3; //colocar força para receber o valor vindo de games.json
 
-    //USAR SWITCH/CASE
     late String background;
     if (forca >= 90) {
       //crescimento normal
@@ -234,7 +234,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                     List<Jogo> listag = games.jogos;
                     String professor = listag[0].professor;
                     listag[0].professor = 'Xavier';
-                    listag[0].forca = '50';
+                    listag[0].forca = '100';
                     print('test');
                     print('professor = $professor');
                     print(listag[0].professor);
@@ -259,6 +259,15 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                   },
                   icon: const Icon(Icons.list),
                   label: const Text('Print Json'),
+                ),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(primary: Colors.yellow[200]),
+                  onPressed: () {
+                    print("FULL TIME => $now");
+                    print("TODAY => ${now.toString().substring(0, 10)}");
+                  },
+                  icon: const Icon(Icons.watch),
+                  label: const Text("Get time"),
                 ),
               ],
             )

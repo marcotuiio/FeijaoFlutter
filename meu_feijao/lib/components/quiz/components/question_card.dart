@@ -30,7 +30,7 @@ _buildPopupDialog(BuildContext context, Question question, int index) {
       ),
       ElevatedButton.icon(
         onPressed: () {
-          _controller.checkAns(question, index);
+        _controller.checkAns(question, index);
           Navigator.pop(context);
         }, // _controller.checkAns(question, index),
         icon: const Icon(Icons.check),

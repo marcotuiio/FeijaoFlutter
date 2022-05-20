@@ -12,7 +12,10 @@ class Question {
     //required this.comentario,
   });
 }
-
+// No arquivo: questoes_respondidas_[codigo do game].json - carregar vetor com dados das
+// questões respondidas [ data, id_questao, tentativa] com tipo == “P” {“P” para plantas}
+// Verificar se existem questões com data == data de hoje (data do sistema) e (tentativa == 10 ou tentativa ==
+// 00)
 const List sampledata = [
   {
     "id": 90,

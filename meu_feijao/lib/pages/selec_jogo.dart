@@ -1,3 +1,5 @@
+import 'package:feijao_magico_uel/network/game_net.dart';
+import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/body.dart';
 import 'package:feijao_magico_uel/pages/game_code.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,16 @@ class SelecionarJogo extends StatefulWidget {
 
 class _SelecionarJogoState extends State<SelecionarJogo> {
   List _items = [];
+  late Future<GamesModel> gamesObjects;
+
+  @override
+  void initState() {
+    super.initState();
+    gamesObjects = NetworkGame().getGamesModel(gameCode: '4rASx');
+    gamesObjects.then((value) {
+      //print(value.city!.coord!.lon);
+    });
+  }
 
   // Buscando conteudo do arquivo json
   Future<void> readJson() async {
@@ -134,3 +146,64 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     );
   }
 }
+
+/*
+    Container(
+      child: FutureBuilder<GamesModel>(
+        future: gamesObjects,
+        builder:
+            (BuildContext context, AsyncSnapshot<WeatherModel> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.data != null) {
+              // ok
+              return Column(
+                children: <Widget>[
+                  midView(snapshot),
+                  bottomView(context, snapshot),
+                ],
+              );
+            } else {
+              // erro de nao ter carregado dados
+              return Text("error: ${snapshot.error}");
+            }
+            // erro de conexão com o server
+          } else if (snapshot.connectionState == ConnectionState.none) {
+            return Text("error: ${snapshot.error}");
+          } else {
+            // conectou mas não carregou ainda
+            return const Padding(
+              padding: EdgeInsets.all(15),
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    ),
+*/
+
+// Widget showGames(AsyncSnapshot<GamesModel> snapshot, BuildContext context) {
+//                   Column showGames = Column(
+//                     children: <Widget>[
+//                           const SizedBox(height: 7),
+//                           Row(
+//                             mainAxisAlignment: MainAxisAlignment.center,
+//                             children: <Widget>[
+//                               const SizedBox(width: 10),
+//                               ElevatedButton.icon(
+//                                 onPressed: () {
+//                                   // Navigator.pushNamed(context, '/home');
+//                                   Navigator.pop(context);
+//                                 },
+//                                 icon: const Icon(Icons.gamepad),
+//                                 label: Text(snapshot.data.nomeFantasia),
+//                                 style: ElevatedButton.styleFrom(
+//                                   primary: Colors.lightGreen,
+//                                   onPrimary: Colors.black,
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ],
+//                       );
+//                     return showGames;                
+// }

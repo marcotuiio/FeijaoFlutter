@@ -9,7 +9,7 @@ class ScoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     late String type;
     QuestionController _qnController = Get.put(QuestionController());
-    if (_qnController.tipo == 1) {
+    if (_qnController.tipo == 'P') {
       type = '- PENALIDADE DE REGA';
     } else {
       type = ' + ESTRELINHAS';
