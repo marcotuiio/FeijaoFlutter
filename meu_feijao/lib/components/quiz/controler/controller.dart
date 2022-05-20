@@ -61,6 +61,7 @@ class QuestionController extends GetxController
   int _numOfCorrectAns = 0;
   int get numOfCorrectAns => _numOfCorrectAns;
 
+
   // called immediately after the widget is allocated memory
   @override
   void onInit() {
@@ -203,4 +204,5 @@ class QuestionController extends GetxController
 //   final File file = File('${directory.path}/my_file.txt');
 //   await file.writeAsString(text);
 // }
+
 

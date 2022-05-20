@@ -128,8 +128,8 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
       bool gamefileExists = true;
       gamesfileContent = newContent;
     });
-    // print('conteudo gamjson -> nested!');
-    // print(gamesfileContent);
+    print('conteudo gamjson -> nested!');
+    print(gamesfileContent);
   }
 
 //END OF 'PROVISÓRIO'
@@ -213,7 +213,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: ((context) => CadastroInicial())));
+                            builder: ((context) => CadastroInicial()),),);
                   },
                   icon: const Icon(Icons.engineering),
                   label: const Text('Config Inicial'),
@@ -261,7 +261,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                   label: const Text('Print Json'),
                 ),
                 ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(primary: Colors.yellow[200]),
+                  style: ElevatedButton.styleFrom(primary: Colors.deepOrange),
                   onPressed: () {
                     print("FULL TIME => $now");
                     print("TODAY => ${now.toString().substring(0, 10)}");
@@ -277,3 +277,6 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
     );
   }
 }
+
+// https://backendless.com/docs/flutter/data_updating_json_data.html
+// ler para tentar atualizar json

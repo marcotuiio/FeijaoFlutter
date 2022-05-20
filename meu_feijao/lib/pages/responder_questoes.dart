@@ -4,6 +4,7 @@ import 'package:feijao_magico_uel/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
+
 //import 'package:get/get.dart';
 
 class Questoes extends StatefulWidget {
@@ -16,6 +17,7 @@ class Questoes extends StatefulWidget {
 class _QuestoesState extends State<Questoes> {
   List _items = [];
   late List<dynamic> questArr = List<dynamic>.filled(1, 0, growable: true);
+  
 
   @override
   void initState() {
@@ -97,6 +99,7 @@ class _QuestoesState extends State<Questoes> {
                                     final list = vetor;
                                     final number = list..shuffle();
                                     print('$number');
+                                    
                                   });
                                 },
                                 child: const Text(
@@ -143,3 +146,4 @@ class _QuestoesState extends State<Questoes> {
 //https://github.com/samir-benabadji/Quiz-App-
 
 //colocar botão de sair em quizscreen() e em score_screen()
+

@@ -28,6 +28,7 @@
         "id_questao": "20",
         "enunciado": "Qual é o questao 20.... ?",
         "resp_correta": "02",
+        "tentativas": 10,
         "comentario":"texto de ajuda",
         "respostas": [
           {
