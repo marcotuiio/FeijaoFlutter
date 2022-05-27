@@ -7,15 +7,15 @@ class GamesModel {
     if (json['jogos'] != null) {
       jogos = <Jogos>[];
       json['jogos'].forEach((v) {
-        jogos!.add(new Jogos.fromJson(v));
+        jogos!.add(Jogos.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jogos != null) {
-      data['jogos'] = this.jogos!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jogos != null) {
+      data['jogos'] = jogos!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -56,16 +56,16 @@ class Jogos {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['codigo'] = this.codigo;
-    data['nome_fantasia'] = this.nomeFantasia;
-    data['disciplina'] = this.disciplina;
-    data['professor'] = this.professor;
-    data['datainicio'] = this.datainicio;
-    data['datafim'] = this.datafim;
-    data['forca'] = this.forca;
-    data['dataAtualizacaoForca'] = this.dataAtualizacaoForca;
-    data['qtd_estrelinhas'] = this.qtdEstrelinhas;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['codigo'] = codigo;
+    data['nome_fantasia'] = nomeFantasia;
+    data['disciplina'] = disciplina;
+    data['professor'] = professor;
+    data['datainicio'] = datainicio;
+    data['datafim'] = datafim;
+    data['forca'] = forca;
+    data['dataAtualizacaoForca'] = dataAtualizacaoForca;
+    data['qtd_estrelinhas'] = qtdEstrelinhas;
     return data;
   }
 }
