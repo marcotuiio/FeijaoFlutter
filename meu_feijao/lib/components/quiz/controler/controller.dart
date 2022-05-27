@@ -1,5 +1,7 @@
 // import 'dart:io';
+// import 'dart:convert';
 import 'package:feijao_magico_uel/components/quiz/modelo/questions.dart';
+// import 'package:feijao_magico_uel/network/games.dart';
 import 'package:feijao_magico_uel/pages/body.dart';
 // import 'package:feijao_magico_uel/components/quiz/score_screen.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +37,8 @@ class QuestionController extends GetxController
       .toList();
   List<Question> get questions => _questions;
 
-  // int forcaAux = snapshot.forca;
-  // int stars = snapshot.estrelinhas;
+  // int forcaAux = Games.fromJson(json.decode(gamesjsonFile)).jogos[0].forca as int;
+  // int stars = estrelinhas;
 
   bool _isAnswered = false;
   bool get isAnswered => _isAnswered;
@@ -56,7 +58,7 @@ class QuestionController extends GetxController
 
   // ignore: prefer_final_fields
   int _tentativas = 0;
-  int get tentativas => _tentativas; 
+  int get tentativas => _tentativas;
 
   int _numOfCorrectAns = 0;
   int get numOfCorrectAns => _numOfCorrectAns;
@@ -147,9 +149,9 @@ class QuestionController extends GetxController
     //   if (tipo == 'E') {
     //     stars = stars + 1; //recebe uma estrelinhas
     //   }
-  
+
     //   marcar no json dessa questao que tentativa = 21;
-      
+
     //   Future.delayed(const Duration(seconds: 3), () {
     //     nextQuestion();
     //   });
@@ -157,7 +159,7 @@ class QuestionController extends GetxController
     // } else if (_correctAns != _selectedAns && _tentativas == 10) {
     //   //errou na segunda
     //   if (tipo == 'P') {
-    //     forcaAux = forcaAux - 9; //total 18 de penalidade de rega 
+    //     forcaAux = forcaAux - 9; //total 18 de penalidade de rega
     //   }
     //   if (tipo == 'E') {
     //     stars = stars + 0; //total 0 estrelinhas
@@ -167,12 +169,11 @@ class QuestionController extends GetxController
     //                              !!!!!!!!!!!!!!!!!!
     //   !!!!!!!!!!!!!!!!!! marcar no json do game forca = forcaAux e estrelinhas = stars; !!!!!!!!!!!!!!!!!!
     //                              !!!!!!!!!!!!!!!!!!
-    
+
     //   Future.delayed(const Duration(seconds: 3), () {
-    //     nextQuestion();
+    //     nextQuestion(stars, forcaAux);
     //   });
     // }
-
   }
 
   void nextQuestion() {
@@ -186,9 +187,24 @@ class QuestionController extends GetxController
 
       // Then start it again
       // Once timer is finish go to the next qn
-      _animationController.forward().whenComplete(nextQuestion);
-      _tentativas = 0;
-    } else {
+//       _animationController.forward().whenComplete(nextQuestion);
+//       _tentativas = 0;
+//     } else {
+//       final games = gamesFromJson(gamesjsonFile.readAsStringSync());
+//       List<Jogo> listag = games.jogos;
+//       String professor = listag[0].professor;
+// ;
+//       print('professor = $professor');
+//       print(listag[0].professor);
+//       // gamesToJson(Games(jogos: listag));
+//       String jsonUser = jsonEncode(listag);
+//       print(jsonUser);
+//       gamesjsonFile.writeAsStringSync(
+//         json.encode(
+//           Games(jogos: listag),
+//         ),
+//       );
+
       Get.to(() => const HomeScreen());
     }
   }
@@ -196,7 +212,6 @@ class QuestionController extends GetxController
   void updateTheQnNum(int index) {
     _questionNumber.value = index + 1;
   }
-
 }
 
 // _write(String text) async {
@@ -204,5 +219,3 @@ class QuestionController extends GetxController
 //   final File file = File('${directory.path}/my_file.txt');
 //   await file.writeAsString(text);
 // }
-
-

@@ -45,10 +45,6 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
         if (gamesfileExists) {
           print('Hello im here');
 
-          // testes:
-          // createGameJson(gamesjsonFile);
-          // forca = 100;
-
           final games = gamesFromJson(gamesjsonFile.readAsStringSync());
           List<Jogo> listag = games.jogos;
           // String gamecode =
