@@ -72,7 +72,7 @@ class _GameTestState extends State<GameTest> {
       child: Container(
         child: TextField(
           decoration: InputDecoration(
-            hintText: "Choose a City",
+            hintText: "Choose a CODE",
             prefixIcon: const Icon(Icons.search),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),

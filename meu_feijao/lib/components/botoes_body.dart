@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:feijao_magico_uel/Storages/createfile.dart';
 import 'package:feijao_magico_uel/Storages/storages.dart';
+import 'package:feijao_magico_uel/network/from_server.dart';
 import 'package:feijao_magico_uel/network/games.dart';
 import 'package:feijao_magico_uel/pages/config_inicio.dart';
 import 'package:feijao_magico_uel/pages/game_code.dart';
@@ -261,6 +262,17 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                   onPressed: () {
                     print("FULL TIME => $now");
                     print("TODAY => ${now.toString().substring(0, 10)}");
+                  },
+                  icon: const Icon(Icons.watch),
+                  label: const Text("Get time"),
+                ),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => const GameTest()),),);
                   },
                   icon: const Icon(Icons.watch),
                   label: const Text("Get time"),
