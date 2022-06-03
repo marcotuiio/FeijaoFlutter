@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, avoid_print
+// ignore_for_file: avoid_unnecessary_containers, avoid_print, sized_box_for_whitespace
 
 import 'package:feijao_magico_uel/components/card_selec_game.dart';
 import 'package:feijao_magico_uel/network/game_net.dart';
@@ -92,19 +92,18 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.data != null) {
                       // ok
-                      return Expanded(
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.8,
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            itemCount: snapshot.data!.jogos!.length,
-                            itemBuilder: (context, index) {
-                              Text("${snapshot.data!.jogos![index].nomeFantasia}");
-                              // cardSelectGame(snapshot, index, context);
-                              return Container();
-                            },
-                          ),
+                      return Container(
+                        height: 200,
+                        width: 300,
+                        child: ListView.builder(
+                          itemCount: snapshot.data!.jogos!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              children: <Widget>[
+                                Text("${snapshot.data!.jogos![index].nomeFantasia}"),
+                              ],
+                            );
+                          },  
                         ),
                       );
                     } else {
@@ -194,66 +193,3 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     );
   }
 }
-
-
-
-/*
-    Container(
-      child: FutureBuilder<GamesModel>(
-        future: gameObjects,
-        builder:
-            (BuildContext context, AsyncSnapshot<WeatherModel> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data != null) {
-              // ok
-              return Column(
-                children: <Widget>[
-                  midView(snapshot),
-                  bottomView(context, snapshot),
-                ],
-              );
-            } else {
-              // erro de nao ter carregado dados
-              return Text("error: ${snapshot.error}");
-            }
-            // erro de conexão com o server
-          } else if (snapshot.connectionState == ConnectionState.none) {
-            return Text("error: ${snapshot.error}");
-          } else {
-            // conectou mas não carregou ainda
-            return const Padding(
-              padding: EdgeInsets.all(15),
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-    ),
-*/
-
-// Widget showGames(AsyncSnapshot<GamesModel> snapshot, BuildContext context) {
-//                   Column showGames = Column(
-//                     children: <Widget>[
-//                           const SizedBox(height: 7),
-//                           Row(
-//                             mainAxisAlignment: MainAxisAlignment.center,
-//                             children: <Widget>[
-//                               const SizedBox(width: 10),
-//                               ElevatedButton.icon(
-//                                 onPressed: () {
-//                                   // Navigator.pushNamed(context, '/home');
-//                                   Navigator.pop(context);
-//                                 },
-//                                 icon: const Icon(Icons.gamepad),
-//                                 label: Text(snapshot.data.nomeFantasia),
-//                                 style: ElevatedButton.styleFrom(
-//                                   primary: Colors.lightGreen,
-//                                   onPrimary: Colors.black,
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ],
-//                       );
-//                     return showGames;                
-// }
