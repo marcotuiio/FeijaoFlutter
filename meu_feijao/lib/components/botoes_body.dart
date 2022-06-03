@@ -279,7 +279,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                     );
                   },
                   icon: const Icon(Icons.watch),
-                  label: const Text("Get time"),
+                  label: const Text("TESTE SERVER"),
                 ),
               ],
             )

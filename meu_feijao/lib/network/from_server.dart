@@ -15,6 +15,7 @@ class GameTest extends StatefulWidget {
 class _GameTestState extends State<GameTest> {
   late Future<GamesModel> gameObjects;
   String _gameCode = "As12qw";
+  late String _stars;
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _GameTestState extends State<GameTest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey,
         body: ListView(
       children: <Widget>[
         textFiledView(),
@@ -39,11 +41,33 @@ class _GameTestState extends State<GameTest> {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.data != null) {
                   // ok
-                  return Text(
-                    "${snapshot.data!.jogos![0].nomeFantasia}",
-                    style: const TextStyle(
-                      fontSize: 30,
-                    ),
+                  return Column(
+                    children: <Widget>[
+                      Text(
+                        "${snapshot.data!.jogos![0].nomeFantasia}",
+                        style: const TextStyle(
+                          fontSize: 30,
+                        ),
+                      ),
+                      Text(
+                        "${snapshot.data!.jogos![0].disciplina}",
+                        style: const TextStyle(
+                          fontSize: 25,
+                        ),
+                      ),
+                      Text(
+                        "${snapshot.data!.jogos![0].qtdEstrelinhas} estrelinhas",
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        "${snapshot.data!.jogos![0].forca} força",
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   );
                 } else {
                   // erro de nao ter carregado dados
@@ -62,6 +86,7 @@ class _GameTestState extends State<GameTest> {
             },
           ),
         ),
+        textFiledUpdate()
       ],
     ));
   }
@@ -83,9 +108,30 @@ class _GameTestState extends State<GameTest> {
             setState(() {
               _gameCode = value;
               gameObjects = NetworkGame().getGamesModel(gameCode: _gameCode);
-              int estre = 24;
-              int forc = 12;
-              gameObjects = NetworkGame().createStarsStrength(estre, forc, _gameCode);
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+Widget textFiledUpdate() {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Container(
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: "Update stars",
+            prefixIcon: const Icon(Icons.search),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            contentPadding: const EdgeInsets.all(8),
+          ),
+          onSubmitted: (value1) {
+            setState(() {
+              _stars = value1;
+              gameObjects = NetworkGame().createStarsStrength(_stars, 0, _gameCode);
             });
           },
         ),
@@ -93,3 +139,4 @@ class _GameTestState extends State<GameTest> {
     );
   }
 }
+

@@ -1,10 +1,13 @@
+// ignore_for_file: avoid_unnecessary_containers, avoid_print
+
+import 'package:feijao_magico_uel/components/card_selec_game.dart';
 import 'package:feijao_magico_uel/network/game_net.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/body.dart';
 import 'package:feijao_magico_uel/pages/game_code.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart';
+// import 'dart:convert';
+// import 'package:flutter/services.dart';
 //import 'dart:io';
 
 class SelecionarJogo extends StatefulWidget {
@@ -15,27 +18,30 @@ class SelecionarJogo extends StatefulWidget {
 }
 
 class _SelecionarJogoState extends State<SelecionarJogo> {
-  List _items = [];
-  late Future<GamesModel> gamesObjects;
+  // List _items = [];
+  late Future<GamesModel> gameObjects;
+  final String _gameCode = "gamesdata";
 
   @override
   void initState() {
     super.initState();
-    gamesObjects = NetworkGame().getGamesModel(gameCode: '4rASx');
-    gamesObjects.then((value) {
-      //print(value.city!.coord!.lon);
+    gameObjects = NetworkGame().getGamesModel(gameCode: _gameCode);
+    gameObjects.then((value) {
+      print("foi aquiiiiii");
+      print(value.jogos![2].nomeFantasia);
     });
   }
 
+
   // Buscando conteudo do arquivo json
-  Future<void> readJson() async {
-    final String response =
-        await rootBundle.loadString('assets/games.json');
-    final data = await json.decode(response);
-    setState(() {
-      _items = data["jogos"];
-    });
-  }
+  // Future<void> readJson() async {
+  //   final String response =
+  //       await rootBundle.loadString('assets/games.json');
+  //   final data = await json.decode(response);
+  //   setState(() {
+  //     _items = data["jogos"];
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -73,41 +79,83 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              child: const Text('Exibir Jogos'),
-              onPressed: readJson,
-            ),
+            // ElevatedButton(
+            //   child: const Text('Exibir Jogos'),
+            //   onPressed: readJson,
+            // ),
             const SizedBox(height: 5),
-            _items.isNotEmpty
-                ? Expanded(
-                    child: ListView.builder(
-                      itemCount: _items.length,
-                      itemBuilder: (context, index) {
-                        return Column(children: <Widget>[
-                          const SizedBox(height: 7),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              const SizedBox(width: 10),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  // Navigator.pushNamed(context, '/home');
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(Icons.gamepad),
-                                label: Text(_items[index]["nome_fantasia"]),
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.lightGreen,
-                                  onPrimary: Colors.black,
-                                ),
-                              ),
-                            ],
+            Container(
+              child: FutureBuilder<GamesModel>(
+                future: gameObjects,
+                builder:
+                    (BuildContext context, AsyncSnapshot<GamesModel> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data != null) {
+                      // ok
+                      return Expanded(
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.8,
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data!.jogos!.length,
+                            itemBuilder: (context, index) {
+                              Text("${snapshot.data!.jogos![index].nomeFantasia}");
+                              // cardSelectGame(snapshot, index, context);
+                              return Container();
+                            },
                           ),
-                        ]);
-                      },
-                    ),
-                  )
-                : Container(),
+                        ),
+                      );
+                    } else {
+                      // erro de nao ter carregado dados
+                      return Text("error: ${snapshot.error}");
+                    }
+                    // erro de conexão com o server
+                  } else if (snapshot.connectionState == ConnectionState.none) {
+                    return Text("error: ${snapshot.error}");
+                  } else {
+                    // conectou mas não carregou ainda
+                    return const Padding(
+                      padding: EdgeInsets.all(15),
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
+            ),
+
+            // _items.isNotEmpty
+            //     ? Expanded(
+            //         child: ListView.builder(
+            //           itemCount: _items.length,
+            //           itemBuilder: (context, index) {
+            //             return Column(children: <Widget>[
+            //               const SizedBox(height: 7),
+            //               Row(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: <Widget>[
+            //                   const SizedBox(width: 10),
+            //                   ElevatedButton.icon(
+            //                     onPressed: () {
+            //                       // Navigator.pushNamed(context, '/home');
+            //                       Navigator.pop(context);
+            //                     },
+            //                     icon: const Icon(Icons.gamepad),
+            //                     label: Text(_items[index]["nome_fantasia"]),
+            //                     style: ElevatedButton.styleFrom(
+            //                       primary: Colors.lightGreen,
+            //                       onPrimary: Colors.black,
+            //                     ),
+            //                   ),
+            //                 ],
+            //               ),
+            //             ]);
+            //           },
+            //         ),
+            //       )
+            //     : Container(),
+
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +165,7 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: ((context) => CodigoJogo()),
+                        builder: ((context) => CodigoJogo()),
                       ),
                     );
                   },
@@ -130,7 +178,7 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: ((context) => const HomeScreen()),
+                        builder: ((context) => const HomeScreen()),
                       ),
                     );
                   },
@@ -147,10 +195,12 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
   }
 }
 
+
+
 /*
     Container(
       child: FutureBuilder<GamesModel>(
-        future: gamesObjects,
+        future: gameObjects,
         builder:
             (BuildContext context, AsyncSnapshot<WeatherModel> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
