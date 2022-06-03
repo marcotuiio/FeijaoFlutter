@@ -208,9 +208,11 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                 ElevatedButton.icon(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => CadastroInicial()),),);
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => CadastroInicial()),
+                      ),
+                    );
                   },
                   icon: const Icon(Icons.engineering),
                   label: const Text('Config Inicial'),
@@ -270,9 +272,11 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                   style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => const GameTest()),),);
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => const GameTest()),
+                      ),
+                    );
                   },
                   icon: const Icon(Icons.watch),
                   label: const Text("Get time"),

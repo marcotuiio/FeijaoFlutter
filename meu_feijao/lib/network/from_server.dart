@@ -83,6 +83,9 @@ class _GameTestState extends State<GameTest> {
             setState(() {
               _gameCode = value;
               gameObjects = NetworkGame().getGamesModel(gameCode: _gameCode);
+              int estre = 24;
+              int forc = 12;
+              gameObjects = NetworkGame().createStarsStrength(estre, forc, _gameCode);
             });
           },
         ),
