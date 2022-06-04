@@ -32,7 +32,6 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     });
   }
 
-
   // Buscando conteudo do arquivo json
   // Future<void> readJson() async {
   //   final String response =
@@ -92,20 +91,7 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.data != null) {
                       // ok
-                      return Container(
-                        height: 200,
-                        width: 300,
-                        child: ListView.builder(
-                          itemCount: snapshot.data!.jogos!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                              children: <Widget>[
-                                Text("${snapshot.data!.jogos![index].nomeFantasia}"),
-                              ],
-                            );
-                          },  
-                        ),
-                      );
+                      return cardSelectGame(snapshot, context);
                     } else {
                       // erro de nao ter carregado dados
                       return Text("error: ${snapshot.error}");

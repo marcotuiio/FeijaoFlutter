@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:http/http.dart';
-// import 'package:http/http.dart' as http;
 
 class NetworkGame {
   Future<GamesModel> getGamesModel({required String gameCode}) async {
