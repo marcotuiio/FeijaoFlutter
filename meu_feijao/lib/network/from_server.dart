@@ -25,9 +25,11 @@ class _GameTestState extends State<GameTest> {
     });
   }
 
-  Future<GamesModel> createStarsStrength(int stars, int strength, String gameCode) async {
-    final String url = "https://marcotuiio.github.io/Data/" + gameCode + ".json"; 
-  
+  Future<GamesModel> updateApiPlease(
+      int stars, int strength, String gameCode) async {
+    final String url =
+        "https://marcotuiio.github.io/Data/" + gameCode + ".json";
+
     Map<String, dynamic> body = {
       "stars": stars,
       "strength": strength,
@@ -106,8 +108,8 @@ class _GameTestState extends State<GameTest> {
           ),
           FloatingActionButton.extended(
             onPressed: () {
-              // createStarsStrength(1, 1, _gameCode);
-              // print(gameObjects);
+              updateApiPlease(99, 99, _gameCode);
+              print(gameObjects.toString());
             },
             label: const Text('NOVO'),
             backgroundColor: Colors.green[700],
