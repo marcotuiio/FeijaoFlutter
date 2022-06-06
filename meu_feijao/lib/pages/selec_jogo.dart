@@ -32,16 +32,6 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     });
   }
 
-  // Buscando conteudo do arquivo json
-  // Future<void> readJson() async {
-  //   final String response =
-  //       await rootBundle.loadString('assets/games.json');
-  //   final data = await json.decode(response);
-  //   setState(() {
-  //     _items = data["jogos"];
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,12 +67,7 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                 fontSize: 20,
               ),
             ),
-            const SizedBox(height: 20),
-            // ElevatedButton(
-            //   child: const Text('Exibir Jogos'),
-            //   onPressed: readJson,
-            // ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 25),
             Container(
               child: FutureBuilder<GamesModel>(
                 future: gameObjects,
@@ -109,38 +94,6 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                 },
               ),
             ),
-
-            // _items.isNotEmpty
-            //     ? Expanded(
-            //         child: ListView.builder(
-            //           itemCount: _items.length,
-            //           itemBuilder: (context, index) {
-            //             return Column(children: <Widget>[
-            //               const SizedBox(height: 7),
-            //               Row(
-            //                 mainAxisAlignment: MainAxisAlignment.center,
-            //                 children: <Widget>[
-            //                   const SizedBox(width: 10),
-            //                   ElevatedButton.icon(
-            //                     onPressed: () {
-            //                       // Navigator.pushNamed(context, '/home');
-            //                       Navigator.pop(context);
-            //                     },
-            //                     icon: const Icon(Icons.gamepad),
-            //                     label: Text(_items[index]["nome_fantasia"]),
-            //                     style: ElevatedButton.styleFrom(
-            //                       primary: Colors.lightGreen,
-            //                       onPrimary: Colors.black,
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ]);
-            //           },
-            //         ),
-            //       )
-            //     : Container(),
-
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

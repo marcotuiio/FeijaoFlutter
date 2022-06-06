@@ -17,23 +17,4 @@ class NetworkGame {
       throw Exception("ERRO AO OBTER URL");
     }
   }
-
-  Future<GamesModel> createStarsStrength(String stars, int strength, String gameCode) async {
-    final String url = "api do server"+gameCode; //integrar com o server
-    Client client = Client();
-    int starsInt = int.parse(stars);
-
-    final response = await client.post(Uri.parse(url), body: {
-      "stars": starsInt,
-      "strength": strength,
-    });
-
-    if (response.statusCode == 200) {
-      // print(response.body);
-      final String responseString = response.body;
-      return GamesModel.fromJson(json.decode(responseString));
-    } else {
-      throw Exception("ERRO AO OBTER URL");
-    }
-  }
 } 

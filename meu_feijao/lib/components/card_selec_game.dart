@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +17,8 @@ Widget cardSelectGame(
               const SizedBox(width: 10),
               ElevatedButton.icon(
                 onPressed: () {
-                  // Navigator.pushNamed(context, '/home');
                   Navigator.pop(context);
+                  print(snapshot.data!.jogos![index].toJson());
                 },
                 icon: const Icon(Icons.gamepad),
                 label: Text("${snapshot.data!.jogos![index].nomeFantasia}"),
