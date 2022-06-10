@@ -27,8 +27,8 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     super.initState();
     gameObjects = NetworkGame().getGamesModel(gameCode: _gameCode);
     gameObjects.then((value) {
-      print("foi aquiiiiii");
-      print(value.jogos![2].nomeFantasia);
+      // print("foi aquiiiiii");
+      // print(value.jogos![2].nomeFantasia);
     });
   }
 

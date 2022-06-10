@@ -5,7 +5,9 @@ import 'dart:io';
 import 'package:feijao_magico_uel/Storages/createfile.dart';
 import 'package:feijao_magico_uel/Storages/storages.dart';
 import 'package:feijao_magico_uel/network/from_server.dart';
+import 'package:feijao_magico_uel/network/game_net.dart';
 import 'package:feijao_magico_uel/network/games.dart';
+import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/config_inicio.dart';
 import 'package:feijao_magico_uel/pages/game_code.dart';
 import 'package:flutter/material.dart';
@@ -29,12 +31,21 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
   bool gamesfileExists = false;
   Map<String, dynamic> gamesfileContent = {"": ""};
   Map<String, dynamic> targetcontent = {"": ""};
+
+  late Future<GamesModel> gameObjects;
+  final String _gameCode = "gamesdata";
 ///////////////////////////////////////////////////////////////////////////////
 // PROVISÓRIO -> SUBSTITUI O ARQUIVO DO SERVIDOR
   @override
   void initState() {
     super.initState();
-
+    gameObjects = NetworkGame().getGamesModel(gameCode: _gameCode);
+    gameObjects.then((value) {
+      value.jogos![0].nomeFantasia = "UM TEST MUITO LOUCO";
+      value.jogos![0].codigo = "696Ga";
+      print(value.jogos![0].nomeFantasia);
+      print(gameObjects.toString());
+    });
     widget.storage!.nameJsonFile().then((File namefile) {
       setState(() {
         gamesjsonFile = namefile;
@@ -246,18 +257,49 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                   icon: const Icon(Icons.list),
                   label: const Text('Get Data'),
                 ),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(primary: Colors.purple),
-                  onPressed: () {
-                    final games =
-                        gamesFromJson(gamesjsonFile.readAsStringSync());
-                    List<Jogo> listag = games.jogos;
-                    String jsonUser = jsonEncode(listag);
-                    print(jsonUser);
-                    print('test');
+                FutureBuilder<GamesModel>(
+                  future: gameObjects,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data != null) {
+                      // ok
+                      return ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(primary: Colors.purple),
+                        onPressed: () {
+                          final games =
+                              gamesFromJson(gamesjsonFile.readAsStringSync());
+                          var listag = games.jogos[0];
+                          var jsonUser = json.encode(listag).toString();
+                          var novo = snapshot.data!.jogos;
+                          var aux = listag as Jogos;
+                          print(aux);
+                          novo!.add(aux);
+                          print(novo);
+                          // print(aux);
+                          // print(novo.runtimeType);
+                          // print(listag[0].runtimeType);
+                          // print(novo);
+                          print(jsonUser);
+                          print('test');
+                        },
+                        icon: const Icon(Icons.list),
+                        label: const Text('Print Json'),
+                      );
+                    } else {
+                      // erro de nao ter carregado dados
+                      return Text("error: ${snapshot.error}");
+                    }
+                    // erro de conexão com o server
+                  } else if (snapshot.connectionState == ConnectionState.none) {
+                    return Text("error: ${snapshot.error}");
+                  } else {
+                    // conectou mas não carregou ainda
+                    return const Padding(
+                      padding: EdgeInsets.all(15),
+                      child: CircularProgressIndicator(),
+                    );
+                  }
                   },
-                  icon: const Icon(Icons.list),
-                  label: const Text('Print Json'),
                 ),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(primary: Colors.deepOrange),
