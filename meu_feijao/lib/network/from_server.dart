@@ -16,7 +16,7 @@ class GameTest extends StatefulWidget {
 
 class _GameTestState extends State<GameTest> {
   late Future<GamesModel> gameObjects;
-  String _gameCode = "As12qw";
+  String _gameCode = "gamesdata";
   var now = DateTime.now();
 
   @override
@@ -29,7 +29,8 @@ class _GameTestState extends State<GameTest> {
   }
 
   updateApiPlease(int stars, int strength, String gameCode) async {
-    final String url = "https://marcotuiio.github.io/Data/" + gameCode + ".json";
+    final String url =
+        "https://marcotuiio.github.io/Data/" + gameCode + ".json";
     var uri = Uri.parse(url);
 
     var body = {
@@ -49,8 +50,7 @@ class _GameTestState extends State<GameTest> {
 
     if (response.toString().isNotEmpty) {
       print(response.body);
-       
-    } else { 
+    } else {
       print(response.statusCode);
     }
   }
@@ -71,7 +71,8 @@ class _GameTestState extends State<GameTest> {
     print('TALVEZ TENHA DADO CERTO GUARDAR O ARQUIVO');
   }
 
-  void writeAndSaveFileStars(String gameCode, var fileContents, int stars) async {
+  void writeAndSaveFileStars(
+      String gameCode, var fileContents, int stars) async {
     fileContents['qtd_estrelinhas'] = stars;
     final file = File(await getFilePath(gameCode));
     await file.writeAsString(json.encode(fileContents));
@@ -92,17 +93,19 @@ class _GameTestState extends State<GameTest> {
       'nome_fantasia': 'teste reescrita',
       'disciplina': 'programar',
       'professor': 'sr dor',
-      'datainicio': '2022-05-27',
+      'datainicio': now.toString().substring(0, 10),
       'datafim': '2022-06-02',
       'forca': 100,
       'dataAtualizacaoForca': now.toString().substring(0, 10),
       'qtd_estrelinhas': 0,
     };
 
-    print('TESTE: ${teste[0]['codigo']}');
+    print('NOVA CLASSE DE JOGO ${Jogos.fromJson(newGame)}');
+    teste.add(Jogos.fromJson(newGame));
+    print('TESTE APPEND $teste');
+    // print('TESTE: ${teste[0]['codigo']}');
     print('NEW GAME: ${json.encode(newGame)}');
     print('FILE CONTEnTS ${json.encode(fileContents)}');
-    teste.add(newGame);
     // print(fileContents.runtimeType);
     // print(fileContents.toString());
 

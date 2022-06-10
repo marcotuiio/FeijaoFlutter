@@ -9,27 +9,32 @@ Widget cardSelectGame(
     child: ListView.builder(
       itemCount: snapshot.data!.jogos!.length,
       itemBuilder: (context, index) {
-        return Column(children: <Widget>[
-          const SizedBox(height: 7),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(width: 10),
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.pop(context);
-                  print(snapshot.data!.jogos![index].toJson());
-                },
-                icon: const Icon(Icons.gamepad),
-                label: Text("${snapshot.data!.jogos![index].nomeFantasia}"),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.lightGreen,
-                  onPrimary: Colors.black,
+        return Column(
+          children: <Widget>[
+            const SizedBox(height: 7),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(width: 10),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    print(snapshot.data!.jogos![index].toJson());
+                  },
+                  icon: const Icon(Icons.gamepad),
+                  label: Text("${snapshot.data!.jogos![index].nomeFantasia}"),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.lightGreen,
+                    onPrimary: Colors.black,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ]);
+              ],
+            ),
+            Text(
+              "${snapshot.data!.jogos![index].disciplina}",
+            ),
+          ],
+        );
       },
     ),
   );

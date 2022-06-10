@@ -88,7 +88,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
 
   Future<void> createGameJson(File gamesjsonFile) async {
     //Building Games json file
-    final String response = await rootBundle.loadString('assets/games.json');
+    final String response = await rootBundle.loadString('assets/gamesdata.json');
     Map<String, dynamic> ghostContent = await json.decode(response.toString());
     final dir = await getApplicationDocumentsDirectory();
     String fileName = 'games.json';
