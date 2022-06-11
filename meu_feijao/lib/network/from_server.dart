@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:feijao_magico_uel/network/game_net.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import "package:flutter/material.dart";
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 class GameTest extends StatefulWidget {
@@ -28,32 +28,32 @@ class _GameTestState extends State<GameTest> {
     });
   }
 
-  updateApiPlease(int stars, int strength, String gameCode) async {
-    final String url =
-        "https://marcotuiio.github.io/Data/" + gameCode + ".json";
-    var uri = Uri.parse(url);
+  // updateApiPlease(int stars, int strength, String gameCode) async {
+  //   final String url =
+  //       "https://marcotuiio.github.io/Data/" + gameCode + ".json";
+  //   var uri = Uri.parse(url);
 
-    var body = {
-      'stars': '$stars',
-      'strength': '$strength',
-    };
+  //   var body = {
+  //     'stars': '$stars',
+  //     'strength': '$strength',
+  //   };
 
-    final jsonString = json.encode(body);
-    print(jsonString);
+  //   final jsonString = json.encode(body);
+  //   print(jsonString);
 
-    // final uri = Uri.http(url, '/path');
+  //   // final uri = Uri.http(url, '/path');
 
-    final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
+  //   final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
 
-    final response = await http.post(uri, headers: headers, body: jsonString);
-    print(response);
+  //   final response = await http.post(uri, headers: headers, body: jsonString);
+  //   print(response);
 
-    if (response.toString().isNotEmpty) {
-      print(response.body);
-    } else {
-      print(response.statusCode);
-    }
-  }
+  //   if (response.toString().isNotEmpty) {
+  //     print(response.body);
+  //   } else {
+  //     print(response.statusCode);
+  //   }
+  // }
 
   Future<String> getFilePath(String gameCode) async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -100,14 +100,11 @@ class _GameTestState extends State<GameTest> {
       'qtd_estrelinhas': 0,
     };
 
-    print('NOVA CLASSE DE JOGO ${Jogos.fromJson(newGame)}');
+    // print('NOVA CLASSE DE JOGO ${Jogos.fromJson(newGame)}');
     teste.add(Jogos.fromJson(newGame));
-    print('TESTE APPEND $teste');
-    // print('TESTE: ${teste[0]['codigo']}');
-    print('NEW GAME: ${json.encode(newGame)}');
-    print('FILE CONTEnTS ${json.encode(fileContents)}');
-    // print(fileContents.runtimeType);
-    // print(fileContents.toString());
+    // print('FILE CONTENTS1 ${json.encode(fileContents)}');
+    // print('NEW GAME: ${json.encode(newGame)}');
+    // print('TESTE APPEND ${json.encode(teste)}');
 
     final file = File(await getFilePath(gameCode));
     await file.writeAsString(json.encode(teste));
@@ -166,7 +163,8 @@ class _GameTestState extends State<GameTest> {
                         FloatingActionButton.extended(
                           onPressed: () {
                             print('TESTE ${snapshot.data!.jogos![0]}');
-                            writeAndSaveFileModel('gamesdata', snapshot.data!.jogos![0].toJson());
+                            writeAndSaveFileModel(
+                                'gamesdata', snapshot.data!.jogos!);
                           },
                           label: const Text('SALVAR E ESCREVER MODEL'),
                           backgroundColor: Colors.green[700],
@@ -174,7 +172,8 @@ class _GameTestState extends State<GameTest> {
                         const SizedBox(height: 12),
                         FloatingActionButton.extended(
                           onPressed: () {
-                            writeAndSaveFileStars(_gameCode, snapshot.data!.jogos![0].toJson(), 222);
+                            writeAndSaveFileStars(_gameCode,
+                                snapshot.data!.jogos![0].toJson(), 222);
                           },
                           label: const Text('SALVAR E ESCREVER STARS'),
                           backgroundColor: Colors.green[700],
@@ -182,7 +181,8 @@ class _GameTestState extends State<GameTest> {
                         const SizedBox(height: 12),
                         FloatingActionButton.extended(
                           onPressed: () {
-                            writeAndSaveFileData(_gameCode, snapshot.data!.jogos![0].toJson());
+                            writeAndSaveFileData(
+                                _gameCode, snapshot.data!.jogos![0].toJson());
                           },
                           label: const Text('SALVAR E ESCREVER DATA'),
                           backgroundColor: Colors.green[700],

@@ -1,11 +1,14 @@
 // ignore_for_file: avoid_unnecessary_containers, avoid_print, sized_box_for_whitespace
 
+import 'dart:convert';
+import 'dart:io';
 import 'package:feijao_magico_uel/components/card_selec_game.dart';
 import 'package:feijao_magico_uel/network/game_net.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/body.dart';
 import 'package:feijao_magico_uel/pages/game_code.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 // import 'dart:convert';
 // import 'package:flutter/services.dart';
 //import 'dart:io';
@@ -27,9 +30,24 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     super.initState();
     gameObjects = NetworkGame().getGamesModel(gameCode: _gameCode);
     gameObjects.then((value) {
-      // print("foi aquiiiiii");
       // print(value.jogos![2].nomeFantasia);
     });
+  }
+
+  Future<String> getFilePath(String gameCode) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/" + gameCode + ".json";
+    print(filePath);
+
+    return filePath;
+  }
+
+  void readFile(String gameCode) async {
+    File file = File(await getFilePath(gameCode));
+    String contents = await file.readAsString();
+    json.decode(contents);
+    print(contents);
   }
 
   @override
