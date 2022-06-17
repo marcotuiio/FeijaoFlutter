@@ -2,16 +2,12 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:feijao_magico_uel/components/card_selec_game.dart';
 import 'package:feijao_magico_uel/network/game_net.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/body.dart';
 import 'package:feijao_magico_uel/pages/game_code.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-// import 'dart:convert';
-// import 'package:flutter/services.dart';
-//import 'dart:io';
 
 class SelecionarJogo extends StatefulWidget {
   const SelecionarJogo({Key? key}) : super(key: key);
@@ -21,7 +17,7 @@ class SelecionarJogo extends StatefulWidget {
 }
 
 class _SelecionarJogoState extends State<SelecionarJogo> {
-  // List _items = [];
+  List<dynamic> _items = [];
   late Future<GamesModel> gameObjects;
   final String _gameCode = "gamesdata";
 
@@ -34,20 +30,22 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     });
   }
 
-  Future<String> getFilePath(String gameCode) async {
+  Future<String> getFilePath() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
-    String filePath = appDocPath + "/" + gameCode + ".json";
+    String filePath = appDocPath + "/gamesdata.json";
     print(filePath);
 
     return filePath;
   }
 
-  void readFile(String gameCode) async {
-    File file = File(await getFilePath(gameCode));
+  void readFile() async {
+    File file = File(await getFilePath());
     String contents = await file.readAsString();
-    json.decode(contents);
-    print(contents);
+    final data = json.decode(contents);
+    setState(() {
+      _items = data;
+    });
   }
 
   @override
@@ -85,33 +83,42 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                 fontSize: 20,
               ),
             ),
-            const SizedBox(height: 25),
-            Container(
-              child: FutureBuilder<GamesModel>(
-                future: gameObjects,
-                builder:
-                    (BuildContext context, AsyncSnapshot<GamesModel> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.data != null) {
-                      // ok
-                      return cardSelectGame(snapshot, context);
-                    } else {
-                      // erro de nao ter carregado dados
-                      return Text("error: ${snapshot.error}");
-                    }
-                    // erro de conexão com o server
-                  } else if (snapshot.connectionState == ConnectionState.none) {
-                    return Text("error: ${snapshot.error}");
-                  } else {
-                    // conectou mas não carregou ainda
-                    return const Padding(
-                      padding: EdgeInsets.all(15),
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-              ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              child: const Text('Exibir Jogos'),
+              onPressed: readFile,
             ),
+            const SizedBox(height: 5),
+            _items.isNotEmpty
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: _items.length,
+                      itemBuilder: (context, index) {
+                        return Column(children: <Widget>[
+                          const SizedBox(height: 7),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              const SizedBox(width: 10),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  // Navigator.pushNamed(context, '/home');
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(Icons.gamepad),
+                                label: Text(_items[index]["nome_fantasia"]),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.lightGreen,
+                                  onPrimary: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ]);
+                      },
+                    ),
+                  )
+                : Container(),
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -150,3 +157,30 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     );
   }
 }
+
+//            Container(
+//               child: FutureBuilder<GamesModel>(
+//                 future: gameObjects,
+//                 builder:
+//                     (BuildContext context, AsyncSnapshot<GamesModel> snapshot) {
+//                   if (snapshot.connectionState == ConnectionState.done) {
+//                     if (snapshot.data != null) {
+//                       // ok
+//                       return cardSelectGame(snapshot, context);
+//                     } else {
+//                       // erro de nao ter carregado dados
+//                       return Text("error: ${snapshot.error}");
+//                     }
+//                     // erro de conexão com o server
+//                   } else if (snapshot.connectionState == ConnectionState.none) {
+//                     return Text("error: ${snapshot.error}");
+//                   } else {
+//                     // conectou mas não carregou ainda
+//                     return const Padding(
+//                       padding: EdgeInsets.all(15),
+//                       child: CircularProgressIndicator(),
+//                     );
+//                   }
+//                 },
+//               ),
+//             ),

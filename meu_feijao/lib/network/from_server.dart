@@ -86,15 +86,16 @@ class _GameTestState extends State<GameTest> {
     print('TALVEZ TENHA DADO CERTO DATA $fileContents');
   }
 
-  void createNewGameInFile(String gameCode, var fileContents) async {
+  void createNewGameInFile(String fileCode, var fileContents) async {
     List teste = fileContents.jogos;
+    var endDate = int.parse(now.toString().substring(8, 9)) + 6;
     var newGame = {
-      'codigo': '359sd0',
-      'nome_fantasia': 'teste reescrita',
-      'disciplina': 'programar',
-      'professor': 'sr dor',
+      'codigo': '92842',
+      'nome_fantasia': 'Gramatica',
+      'disciplina': 'Portugues e Literatura',
+      'professor': 'Leo',
       'datainicio': now.toString().substring(0, 10),
-      'datafim': '2022-06-02',
+      'datafim': now.toString().substring(0, 7) + endDate.toString(),
       'forca': 100,
       'dataAtualizacaoForca': now.toString().substring(0, 10),
       'qtd_estrelinhas': 0,
@@ -106,7 +107,7 @@ class _GameTestState extends State<GameTest> {
     // print('NEW GAME: ${json.encode(newGame)}');
     // print('TESTE APPEND ${json.encode(teste)}');
 
-    final file = File(await getFilePath(gameCode));
+    final file = File(await getFilePath(fileCode));
     await file.writeAsString(json.encode(teste));
     print('TALVEZ TENHA DADO CERTO NEW GAME $teste');
   }
@@ -191,6 +192,8 @@ class _GameTestState extends State<GameTest> {
                         FloatingActionButton.extended(
                           onPressed: () {
                             createNewGameInFile('gamesdata', snapshot.data);
+                            // APOS CRIAR O NOVO JOGO, RECARREGAR A LISTA DE JOGOS E TALVEZ ATUALIZAR
+                            // O ARQUIVO NO SERVIDOR PARA NÃO PERDER JOGOS
                             print(snapshot.data!.jogos);
                           },
                           label: const Text('CRIAR NOVO JOGO'),
