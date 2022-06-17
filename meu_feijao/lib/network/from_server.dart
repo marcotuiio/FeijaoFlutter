@@ -88,14 +88,15 @@ class _GameTestState extends State<GameTest> {
 
   void createNewGameInFile(String fileCode, var fileContents) async {
     List teste = fileContents.jogos;
-    var endDate = int.parse(now.toString().substring(8, 9)) + 6;
+    DateTime endDateTime = DateTime(now.year, now.month, now.day+6);
+    print(endDateTime);
     var newGame = {
       'codigo': '92842',
       'nome_fantasia': 'Gramatica',
       'disciplina': 'Portugues e Literatura',
       'professor': 'Leo',
       'datainicio': now.toString().substring(0, 10),
-      'datafim': now.toString().substring(0, 7) + endDate.toString(),
+      'datafim': endDateTime.toString().substring(0, 10),
       'forca': 100,
       'dataAtualizacaoForca': now.toString().substring(0, 10),
       'qtd_estrelinhas': 0,
@@ -192,8 +193,12 @@ class _GameTestState extends State<GameTest> {
                         FloatingActionButton.extended(
                           onPressed: () {
                             createNewGameInFile('gamesdata', snapshot.data);
-                            // APOS CRIAR O NOVO JOGO, RECARREGAR A LISTA DE JOGOS E TALVEZ ATUALIZAR
-                            // O ARQUIVO NO SERVIDOR PARA NÃO PERDER JOGOS
+                            // Descobri um jeito de passar os dados que estão no arquivo local
+                            // no lugar de snapshot.data pois isso vem do server agora e o server
+                            // não atualiza o arquivo local a medida que novos jogos surgem. Passando
+                            // o conteudo do arquivo local (gamesdata.json) e fazendo a conversão
+                            // desse mapa para o modelo de GamesModel creio que seja possivel atualizar
+                            // e acrescentar novos jogos sem perder nenhum dado.
                             print(snapshot.data!.jogos);
                           },
                           label: const Text('CRIAR NOVO JOGO'),
