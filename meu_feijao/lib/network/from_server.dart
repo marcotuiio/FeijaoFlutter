@@ -88,8 +88,9 @@ class _GameTestState extends State<GameTest> {
 
   void createNewGameInFile(String fileCode, var fileContents) async {
     List teste = fileContents.jogos;
-    DateTime endDateTime = DateTime(now.year, now.month, now.day+6);
+    DateTime endDateTime = DateTime(now.year, now.month, now.day + 6);
     print(endDateTime);
+    print(endDateTime.toString().substring(0, 10));
     var newGame = {
       'codigo': '92842',
       'nome_fantasia': 'Gramatica',
