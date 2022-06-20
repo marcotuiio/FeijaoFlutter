@@ -35,6 +35,7 @@ TextTheme _appTextTheme(TextTheme base) {
     ),
     subtitle1: base.subtitle1?.copyWith(
       fontSize: 18,
+      color: Colors.black45,
     ),
     caption: base.caption?.copyWith(
       fontWeight: FontWeight.w400,

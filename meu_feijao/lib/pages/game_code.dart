@@ -55,9 +55,11 @@ class _CodigoJogoState extends State<CodigoJogo> {
     });
   }
 
-  void newGame(String fileCode, String profName, String discName,
-      var fileContents) async {
-    List teste = fileContents.jogos;
+  void newGame(String fileCode, String profName, String discName) async {
+    String contents = await getFileContents();
+    Map<String, dynamic> fileContents = json.decode(contents);
+    var games = GamesModel.fromJson(fileContents);
+    var teste = games.jogos!;
     DateTime endDateTime = DateTime(now.year, now.month, now.day + 6);
 
     var newGame = {
@@ -95,7 +97,6 @@ class _CodigoJogoState extends State<CodigoJogo> {
   Future<String> getFileContents() async {
     File file = File(await getFilePath());
     String contents = await file.readAsString();
-    json.decode(contents);
     print(contents);
     return contents;
   }
@@ -142,7 +143,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
           reverse: true,
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 45),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -155,11 +156,11 @@ class _CodigoJogoState extends State<CodigoJogo> {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              // const SizedBox(height: 10),
               Container(
                 margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                width: 350,
-                height: 190,
+                width: 250,
+                height: 130,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: const DecorationImage(
@@ -168,21 +169,24 @@ class _CodigoJogoState extends State<CodigoJogo> {
                   ),
                 ),
               ),
-              const SizedBox(height: 54),
+              const SizedBox(height: 8),
               const Text(
                 'Insira os dados do novo jogo:',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
               ),
               const SizedBox(height: 12),
               textFiledViewCode(),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               textFiledViewMateria(),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               textFiledViewProf(),
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
               ElevatedButton.icon(
                 onPressed: () {
-                  newGame(_code, _prof, _disc, getFileContents());
+                  newGame(_code, _prof, _disc);
                   String questIdfile = _code + '_questIDs.json';
                   print('path = $questIdfile');
                   Storage? storageQuest = Storage(fileofInterest: questIdfile);
@@ -201,12 +205,12 @@ class _CodigoJogoState extends State<CodigoJogo> {
                       });
                     }
                   });
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                 },
                 icon: const Icon(Icons.check),
                 label: const Text('CONFIRMAR'),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 5),
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -244,7 +248,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
 
   Widget textFiledViewProf() {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(22.0),
       child: Container(
         child: TextField(
           decoration: InputDecoration(
@@ -254,11 +258,13 @@ class _CodigoJogoState extends State<CodigoJogo> {
               fontSize: 18,
               color: Colors.blue[800],
             ),
-            prefixIcon: const Icon(Icons.search),
+            prefixIcon: const Icon(Icons.person_add_alt_1),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
             contentPadding: const EdgeInsets.all(8),
+            fillColor: Colors.black12,
+            filled: true,
           ),
           onSubmitted: (value) {
             setState(() {
@@ -272,7 +278,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
 
   Widget textFiledViewCode() {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(22.0),
       child: Container(
         child: TextField(
           decoration: InputDecoration(
@@ -282,18 +288,20 @@ class _CodigoJogoState extends State<CodigoJogo> {
               fontSize: 18,
               color: Colors.blue[800],
             ),
-            prefixIcon: const Icon(Icons.search),
+            prefixIcon: const Icon(Icons.code),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
             contentPadding: const EdgeInsets.all(8),
+            fillColor: Colors.black12,
+            filled: true,
           ),
           onSubmitted: (value) {
             setState(() {
               _code = value;
             });
           },
-          maxLength: 6,
+          // maxLength: 6,
         ),
       ),
     );
@@ -301,7 +309,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
 
   Widget textFiledViewMateria() {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(22.0),
       child: Container(
         child: TextField(
           decoration: InputDecoration(
@@ -311,11 +319,13 @@ class _CodigoJogoState extends State<CodigoJogo> {
               fontSize: 18,
               color: Colors.blue[800],
             ),
-            prefixIcon: const Icon(Icons.search),
+            prefixIcon: const Icon(Icons.subject),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
             contentPadding: const EdgeInsets.all(8),
+            fillColor: Colors.black12,
+            filled: true,
           ),
           onSubmitted: (value) {
             setState(() {
