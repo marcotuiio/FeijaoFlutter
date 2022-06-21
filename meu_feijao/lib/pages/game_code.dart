@@ -97,6 +97,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
   Future<String> getFileContents() async {
     File file = File(await getFilePath());
     String contents = await file.readAsString();
+    json.encode(contents);
     print(contents);
     return contents;
   }
@@ -179,11 +180,11 @@ class _CodigoJogoState extends State<CodigoJogo> {
               ),
               const SizedBox(height: 12),
               textFiledViewCode(),
-              const SizedBox(height: 8),
+              const SizedBox(height: 2),
               textFiledViewMateria(),
-              const SizedBox(height: 8),
+              const SizedBox(height: 2),
               textFiledViewProf(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               ElevatedButton.icon(
                 onPressed: () {
                   newGame(_code, _prof, _disc);
@@ -226,7 +227,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
                       _disc,
                       style: const TextStyle(
                         fontSize: 15,
-                        color: Colors.black,
+                        color: Colors.red,
                       ),
                     ),
                     Text(
