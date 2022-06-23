@@ -68,4 +68,6 @@ class Jogos {
     data['qtd_estrelinhas'] = qtdEstrelinhas;
     return data;
   }
+
+  void add(Jogos jogos) {}
 }

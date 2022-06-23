@@ -28,18 +28,13 @@ class _GameTestState extends State<GameTest> {
     });
   }
 
-  // updateApiPlease(int stars, int strength, String gameCode) async {
-  //   final String url =
-  //       "https://marcotuiio.github.io/Data/" + gameCode + ".json";
+  // void updateApiPlease(var fileUpdated) async {
+  //   String url = "http://10.0.2.2:8000/jogos";
   //   var uri = Uri.parse(url);
 
-  //   var body = {
-  //     'stars': '$stars',
-  //     'strength': '$strength',
-  //   };
-
+  //   var body = json.decode(fileUpdated);
   //   final jsonString = json.encode(body);
-  //   print(jsonString);
+  //   print('WHO ARE YOU? $jsonString');
 
   //   // final uri = Uri.http(url, '/path');
 
@@ -92,10 +87,10 @@ class _GameTestState extends State<GameTest> {
     print(endDateTime);
     print(endDateTime.toString().substring(0, 10));
     var newGame = {
-      'codigo': '92842',
-      'nome_fantasia': 'Gramatica',
-      'disciplina': 'Portugues e Literatura',
-      'professor': 'Leo',
+      'codigo': '33333j',
+      'nome_fantasia': 'O desespero dos feijoes',
+      'disciplina': 'Biologia',
+      'professor': 'eu o chapolin colorado',
       'datainicio': now.toString().substring(0, 10),
       'datafim': endDateTime.toString().substring(0, 10),
       'forca': 100,
@@ -105,13 +100,16 @@ class _GameTestState extends State<GameTest> {
 
     // print('NOVA CLASSE DE JOGO ${Jogos.fromJson(newGame)}');
     teste.add(Jogos.fromJson(newGame));
+    fileContents.jogos = teste;
     // print('FILE CONTENTS1 ${json.encode(fileContents)}');
     // print('NEW GAME: ${json.encode(newGame)}');
     // print('TESTE APPEND ${json.encode(teste)}');
 
     final file = File(await getFilePath(fileCode));
-    await file.writeAsString(json.encode(teste));
-    print('TALVEZ TENHA DADO CERTO NEW GAME $teste');
+    await file.writeAsString(json.encode(fileContents));
+    // Fazer postRequest para o servidor gamesdata.json = ;
+    // updateApiPlease(json.encode(teste));
+    print('TALVEZ TENHA DADO CERTO NEW GAME $fileContents');
   }
 
   void readFile(String gameCode) async {

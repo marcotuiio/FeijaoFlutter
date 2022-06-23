@@ -20,6 +20,44 @@ class CodigoJogo extends StatefulWidget {
 }
 
 class _CodigoJogoState extends State<CodigoJogo> {
+  var x = {
+    "jogos": [
+      {
+        "codigo": "As12qw",
+        "nome_fantasia": "Equações",
+        "disciplina": "Matemática",
+        "professor": "Nome Prof",
+        "datainicio": "2022-02-24",
+        "datafim": "2022-03-01",
+        "forca": 90,
+        "dataAtualizacaoForca": "2022-03-26",
+        "qtd_estrelinhas": 12
+      },
+      {
+        "codigo": "4rASx",
+        "nome_fantasia": "Bacias Hidrográficas",
+        "disciplina": "Geografia",
+        "professor": "Nome Prof ",
+        "datainicio": "2022-02-24",
+        "datafim": "2022-03-01",
+        "forca": 90,
+        "dataAtualizacaoForca": "2022-03-26",
+        "qtd_estrelinhas": 12
+      },
+      {
+        "codigo": "A12B3",
+        "nome_fantasia": "História do Brasil",
+        "disciplina": "História",
+        "professor": "Nome Prof",
+        "datainicio": "2022-02-24",
+        "datafim": "2022-03-01",
+        "forca": 90,
+        "dataAtualizacaoForca": "2022-03-26",
+        "qtd_estrelinhas": 12
+      }
+    ]
+  };
+  
   String _disc = '';
   String _prof = '';
   String _code = '';
@@ -56,12 +94,20 @@ class _CodigoJogoState extends State<CodigoJogo> {
   }
 
   void newGame(String fileCode, String profName, String discName) async {
-    String contents = await getFileContents();
-    Map<String, dynamic> fileContents = json.decode(contents);
-    var games = GamesModel.fromJson(fileContents);
-    var teste = games.jogos!;
-    DateTime endDateTime = DateTime(now.year, now.month, now.day + 6);
+    Map<String, dynamic> aux = await getFileContents();
+    print('auxnewgame $aux');
 
+    // String contents = aux.replaceAll('},{', '}  {');
+    // print('contents: $contents');
+    // List jsonList = contents.split('  ');
+    // var games = GamesModel.fromJson(json.decode(jsonList.toString()));
+    // print('games: $games');
+    // var teste = games.jogos!;
+
+    var teste = GamesModel.fromJson(aux);
+    var jsonList = teste.jogos!;
+
+    DateTime endDateTime = DateTime(now.year, now.month, now.day + 6);
     var newGame = {
       'codigo': fileCode,
       'nome_fantasia': 'Gramatica',
@@ -74,8 +120,11 @@ class _CodigoJogoState extends State<CodigoJogo> {
       'qtd_estrelinhas': 0,
     };
 
+    jsonList.add(Jogos.fromJson(newGame));
+    teste.jogos = jsonList;
+
     // print('NOVA CLASSE DE JOGO ${Jogos.fromJson(newGame)}');
-    teste.add(Jogos.fromJson(newGame));
+    // teste.add(Jogos.fromJson(newGame));
     // print('FILE CONTENTS1 ${json.encode(fileContents)}');
     // print('NEW GAME: ${json.encode(newGame)}');
     // print('TESTE APPEND ${json.encode(teste)}');
@@ -90,16 +139,13 @@ class _CodigoJogoState extends State<CodigoJogo> {
     String appDocPath = appDocDir.path;
     String filePath = appDocPath + "/gamesdata.json";
     print(filePath);
-
     return filePath;
   }
 
-  Future<String> getFileContents() async {
+  Future<Map<String, dynamic>> getFileContents() async {
     File file = File(await getFilePath());
     String contents = await file.readAsString();
-    json.encode(contents);
-    print(contents);
-    return contents;
+    return json.decode(contents);
   }
 
   Future<String> readJsonNAME(File namejsonFile) async {
