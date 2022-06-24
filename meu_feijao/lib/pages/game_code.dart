@@ -20,43 +20,6 @@ class CodigoJogo extends StatefulWidget {
 }
 
 class _CodigoJogoState extends State<CodigoJogo> {
-  var x = {
-    "jogos": [
-      {
-        "codigo": "As12qw",
-        "nome_fantasia": "Equações",
-        "disciplina": "Matemática",
-        "professor": "Nome Prof",
-        "datainicio": "2022-02-24",
-        "datafim": "2022-03-01",
-        "forca": 90,
-        "dataAtualizacaoForca": "2022-03-26",
-        "qtd_estrelinhas": 12
-      },
-      {
-        "codigo": "4rASx",
-        "nome_fantasia": "Bacias Hidrográficas",
-        "disciplina": "Geografia",
-        "professor": "Nome Prof ",
-        "datainicio": "2022-02-24",
-        "datafim": "2022-03-01",
-        "forca": 90,
-        "dataAtualizacaoForca": "2022-03-26",
-        "qtd_estrelinhas": 12
-      },
-      {
-        "codigo": "A12B3",
-        "nome_fantasia": "História do Brasil",
-        "disciplina": "História",
-        "professor": "Nome Prof",
-        "datainicio": "2022-02-24",
-        "datafim": "2022-03-01",
-        "forca": 90,
-        "dataAtualizacaoForca": "2022-03-26",
-        "qtd_estrelinhas": 12
-      }
-    ]
-  };
   
   String _disc = '';
   String _prof = '';
@@ -95,14 +58,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
 
   void newGame(String fileCode, String profName, String discName) async {
     Map<String, dynamic> aux = await getFileContents();
-    print('auxnewgame $aux');
-
-    // String contents = aux.replaceAll('},{', '}  {');
-    // print('contents: $contents');
-    // List jsonList = contents.split('  ');
-    // var games = GamesModel.fromJson(json.decode(jsonList.toString()));
-    // print('games: $games');
-    // var teste = games.jogos!;
+    // print('auxnewgame $aux');
 
     var teste = GamesModel.fromJson(aux);
     var jsonList = teste.jogos!;
@@ -134,18 +90,18 @@ class _CodigoJogoState extends State<CodigoJogo> {
     print('TALVEZ TENHA DADO CERTO NEW GAME $teste');
   }
 
+  Future<Map<String, dynamic>> getFileContents() async {
+    File file = File(await getFilePath());
+    String contents = await file.readAsString();
+    return json.decode(contents);
+  }
+
   Future<String> getFilePath() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     String filePath = appDocPath + "/gamesdata.json";
     print(filePath);
     return filePath;
-  }
-
-  Future<Map<String, dynamic>> getFileContents() async {
-    File file = File(await getFilePath());
-    String contents = await file.readAsString();
-    return json.decode(contents);
   }
 
   Future<String> readJsonNAME(File namejsonFile) async {
@@ -190,7 +146,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
           reverse: true,
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -273,7 +229,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
                       _disc,
                       style: const TextStyle(
                         fontSize: 15,
-                        color: Colors.red,
+                        color: Colors.black,
                       ),
                     ),
                     Text(

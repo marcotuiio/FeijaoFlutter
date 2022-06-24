@@ -2,7 +2,7 @@
 // import 'dart:convert';
 import 'package:feijao_magico_uel/components/quiz/modelo/questions.dart';
 // import 'package:feijao_magico_uel/network/games.dart';
-import 'package:feijao_magico_uel/pages/body.dart';
+// import 'package:feijao_magico_uel/pages/body.dart';
 // import 'package:feijao_magico_uel/components/quiz/score_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -205,7 +205,7 @@ class QuestionController extends GetxController
 //         ),
 //       );
 
-      Get.to(() => const HomeScreen());
+      // Get.to(() => const HomeScreen());
     }
   }
 

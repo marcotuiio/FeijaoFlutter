@@ -69,5 +69,4 @@ class Jogos {
     return data;
   }
 
-  void add(Jogos jogos) {}
 }

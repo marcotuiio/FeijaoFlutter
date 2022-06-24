@@ -1,10 +1,14 @@
 import 'package:feijao_magico_uel/components/botoes_body.dart';
 import 'package:feijao_magico_uel/components/bottom_bar.dart';
+import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final Jogos atual;
+  final int index;
+  const HomeScreen({required this.atual, required this.index, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const SelecionarJogo(),
+                builder: (context) => const SelecionarJogo(),
               ),
             );
           },
@@ -33,7 +37,7 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.green[800],
       ),
-      body: BotoesMainPage(),
+      body: BotoesMainPage(currentGame: atual, index: index),
       bottomNavigationBar: const NavBarBottom(),
     );
   }

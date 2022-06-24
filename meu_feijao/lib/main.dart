@@ -1,5 +1,5 @@
 import 'package:feijao_magico_uel/components/bottomnav_theme.dart';
-import 'package:feijao_magico_uel/pages/body.dart';
+import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +22,7 @@ class PeDeFeijaoAPP extends StatelessWidget {
         textTheme: _appTextTheme(base.textTheme),
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: const SelecionarJogo(),
       navigatorKey: Get.key,
     );
   }

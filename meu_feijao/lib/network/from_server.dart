@@ -87,7 +87,7 @@ class _GameTestState extends State<GameTest> {
     print(endDateTime);
     print(endDateTime.toString().substring(0, 10));
     var newGame = {
-      'codigo': '33333j',
+      'codigo': '920jk',
       'nome_fantasia': 'O desespero dos feijoes',
       'disciplina': 'Biologia',
       'professor': 'eu o chapolin colorado',
@@ -162,6 +162,7 @@ class _GameTestState extends State<GameTest> {
                         ),
                         const SizedBox(height: 12),
                         FloatingActionButton.extended(
+                          heroTag: "btnwm",
                           onPressed: () {
                             print('TESTE ${snapshot.data!.jogos![0]}');
                             writeAndSaveFileModel(
@@ -172,6 +173,7 @@ class _GameTestState extends State<GameTest> {
                         ),
                         const SizedBox(height: 12),
                         FloatingActionButton.extended(
+                          heroTag: "btns",
                           onPressed: () {
                             writeAndSaveFileStars(_gameCode,
                                 snapshot.data!.jogos![0].toJson(), 222);
@@ -181,6 +183,7 @@ class _GameTestState extends State<GameTest> {
                         ),
                         const SizedBox(height: 12),
                         FloatingActionButton.extended(
+                          heroTag: "btnd",
                           onPressed: () {
                             writeAndSaveFileData(
                                 _gameCode, snapshot.data!.jogos![0].toJson());
@@ -190,6 +193,7 @@ class _GameTestState extends State<GameTest> {
                         ),
                         const SizedBox(height: 12),
                         FloatingActionButton.extended(
+                          heroTag: "btnn",
                           onPressed: () {
                             createNewGameInFile('gamesdata', snapshot.data);
                             // Descobri um jeito de passar os dados que estão no arquivo local
@@ -224,6 +228,7 @@ class _GameTestState extends State<GameTest> {
           ),
           const SizedBox(height: 12),
           FloatingActionButton.extended(
+            heroTag: "btnr",
             onPressed: () {
               readFile(_gameCode);
             },

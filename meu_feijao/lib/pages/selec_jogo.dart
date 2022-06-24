@@ -18,6 +18,8 @@ class SelecionarJogo extends StatefulWidget {
 
 class _SelecionarJogoState extends State<SelecionarJogo> {
   List<dynamic> _items = [];
+  Map<String, dynamic> myGame = {};
+  late Jogos finalGame;
   late Future<GamesModel> gameObjects;
   final String _gameCode = "gamesdata";
 
@@ -43,8 +45,9 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     File file = File(await getFilePath());
     String contents = await file.readAsString();
     final data = json.decode(contents);
+    var teste = GamesModel.fromJson(data);
     setState(() {
-      _items = data;
+      _items = teste.jogos!;
     });
   }
 
@@ -63,11 +66,11 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 6),
             Container(
               margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-              width: 350,
-              height: 190,
+              width: 330,
+              height: 170,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: const DecorationImage(
@@ -76,19 +79,24 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                 ),
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 15),
             const Text(
               '-- Escolha seu jogo --',
               style: TextStyle(
                 fontSize: 20,
+                color: Colors.black,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 5),
             ElevatedButton(
               child: const Text('Exibir Jogos'),
               onPressed: readFile,
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+                onPrimary: Colors.white,
+              ),
             ),
-            const SizedBox(height: 5),
+            // const SizedBox(height: 5),
             _items.isNotEmpty
                 ? Expanded(
                     child: ListView.builder(
@@ -102,11 +110,24 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                               const SizedBox(width: 10),
                               ElevatedButton.icon(
                                 onPressed: () {
-                                  // Navigator.pushNamed(context, '/home');
-                                  Navigator.pop(context);
+                                  setState(() {
+                                    // print(json.encode(_items[index]));
+                                    myGame =
+                                        json.decode(json.encode(_items[index]));
+                                    finalGame = Jogos.fromJson(myGame);
+                                    // print(finalGame.nomeFantasia);
+                                  });
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => HomeScreen(
+                                        atual: finalGame,
+                                        index: index,
+                                      ),
+                                    ),
+                                  );
                                 },
                                 icon: const Icon(Icons.gamepad),
-                                label: Text(_items[index]["nome_fantasia"]),
+                                label: Text(_items[index].nomeFantasia),
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.lightGreen,
                                   onPrimary: Colors.black,
@@ -124,6 +145,7 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 FloatingActionButton.extended(
+                  heroTag: 'btn1',
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -136,18 +158,19 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                   backgroundColor: Colors.green[700],
                 ),
                 const SizedBox(width: 15),
-                FloatingActionButton.extended(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => const HomeScreen()),
-                      ),
-                    );
-                  },
-                  label: const Text('SAIR'),
-                  backgroundColor: Colors.red,
-                ),
+                // FloatingActionButton.extended(
+                //   heroTag: 'btn2',
+                //   onPressed: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: ((context) => const HomeScreen()),
+                //       ),
+                //     );
+                //   },
+                //   label: const Text('SAIR'),
+                //   backgroundColor: Colors.red,
+                // ),
               ],
             ),
             const SizedBox(height: 20),
