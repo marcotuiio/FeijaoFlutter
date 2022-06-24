@@ -1,11 +1,12 @@
 // ignore_for_file: avoid_print
+import 'dart:io';
+
 import 'package:feijao_magico_uel/components/quiz/quiz_init.dart';
 import 'package:feijao_magico_uel/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
-
-//import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Questoes extends StatefulWidget {
   const Questoes({Key? key}) : super(key: key);
@@ -15,13 +16,14 @@ class Questoes extends StatefulWidget {
 }
 
 class _QuestoesState extends State<Questoes> {
+  late String _name;
   List _items = [];
   late List<dynamic> questArr = List<dynamic>.filled(1, 0, growable: true);
-  
 
   @override
   void initState() {
     super.initState();
+    readFileTXT();
     readJsonQuest().then((List<dynamic> fquestArr) {
       setState(() {
         questArr = fquestArr;
@@ -47,6 +49,21 @@ class _QuestoesState extends State<Questoes> {
     return number1;
   }
 
+  Future<String> getFilePathTXT() async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/cadastro.txt";
+    return filePath;
+  }
+
+  void readFileTXT() async {
+    File file = File(await getFilePathTXT());
+    String contents = await file.readAsString();
+    setState(() {
+      _name = contents;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,9 +77,9 @@ class _QuestoesState extends State<Questoes> {
         child: Column(
           children: <Widget>[
             const SizedBox(height: 20),
-            const Text(
-              'Olá, [nome].',
-              style: TextStyle(
+            Text(
+              'Olá, $_name',
+              style: const TextStyle(
                 fontSize: 28,
                 color: Colors.black,
               ),
@@ -99,11 +116,9 @@ class _QuestoesState extends State<Questoes> {
                                     final list = vetor;
                                     final number = list..shuffle();
                                     print('$number');
-                                    
                                   });
                                 },
-                                child: const Text(
-                                    'Teste'), //'$number' nao funciona
+                                child: const Text('Teste'),
                               ),
                             ],
                           );

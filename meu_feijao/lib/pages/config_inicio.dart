@@ -1,65 +1,44 @@
-import 'package:feijao_magico_uel/Storages/createfile.dart';
-import 'package:feijao_magico_uel/Storages/storages.dart';
+// ignore_for_file: avoid_unnecessary_containers
+import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'dart:async';
-import 'dart:convert';
 
 // ignore: must_be_immutable
 class CadastroInicial extends StatefulWidget {
-  Storage? storage = Storage(fileofInterest: 'name.json');
-
-  CadastroInicial({Key? key}) : super(key: key);
+  const CadastroInicial({Key? key}) : super(key: key);
 
   @override
   _CadastroInicialState createState() => _CadastroInicialState();
 }
 
 class _CadastroInicialState extends State<CadastroInicial> {
-  late File namejsonFile;
-  late Map<String, dynamic> namefileContent;
-  String fileName = 'name.json';
-  bool namefileExists = false;
-
-  String namedata = '';
-  final TextEditingController _controller = TextEditingController();
+  String _name = '';
 
   @override
   void initState() {
     super.initState();
-    //Verifica existência do arquivo fileX.json [no caso: name.json]
-    widget.storage!.checkExist().then((bool existfile) {
-      setState(() => namefileExists = existfile);
-    });
-    widget.storage!.nameJsonFile().then((File namefile) {
-      setState(() {
-        namejsonFile = namefile;
-      });
+  }
+
+  Future<String> getFilePathTXT() async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/cadastro.txt";
+    return filePath;
+  }
+
+  void readFile() async {
+    File file = File(await getFilePathTXT());
+    String contents = await file.readAsString();
+    setState(() {
+      _name = contents;
     });
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  Future<void> writeJsonNAME(String name) async {
-    String namedata = '{"nome": "$name"}';
-    Map<String, dynamic> content = json.decode(namedata);
-
-    if (namefileExists) {
-      namejsonFile.writeAsStringSync(json.encode(content));
-      // Map<String, dynamic> jsonFileContent =
-      //     await json.decode(namejsonFile.readAsStringSync());
-      // var newobject = jsonFileContent.entries.map((entry) {
-      //   return entry.value;
-      // }).toList();
-    } else {
-      final dir = await getApplicationDocumentsDirectory();
-      createFile(content, dir.path, fileName);
-    }
+  void writeFile() async {
+    File file = File(await getFilePathTXT());
+    file.writeAsString(_name);
   }
 
   @override
@@ -71,7 +50,7 @@ class _CadastroInicialState extends State<CadastroInicial> {
           reverse: true,
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 40),
+              const SizedBox(height: 10),
               const Text(
                 'Olá Estudante.',
                 style: TextStyle(
@@ -87,7 +66,7 @@ class _CadastroInicialState extends State<CadastroInicial> {
                   color: Colors.black,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 5),
               Container(
                 margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 width: 350,
@@ -100,37 +79,69 @@ class _CadastroInicialState extends State<CadastroInicial> {
                   ),
                 ),
               ),
-              const SizedBox(height: 34),
+              const SizedBox(height: 18),
               const Text(
                 'Informe seu nome:',
-                style: TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _controller,
-                decoration: InputDecoration(
-                  hintText: 'Nome',
-                  labelText: 'NOME',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.blue[800],
-                  ),
-                  border: const OutlineInputBorder(),
-                  fillColor: Colors.black12,
-                  filled: true,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
                 ),
               ),
-              const SizedBox(height: 64),
+              const SizedBox(height: 12),
+              textFiledViewName(),
+              const SizedBox(height: 24),
               ElevatedButton.icon(
                 onPressed: () {
-                  writeJsonNAME(_controller.text);
-                  Navigator.pop(context);
+                  writeFile();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SelecionarJogo(),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.save),
                 label: const Text('Confirmar'),
               ),
+              Text(
+                _name,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget textFiledViewName() {
+    return Padding(
+      padding: const EdgeInsets.all(22.0),
+      child: Container(
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: "Cadastre seu Nome",
+            labelText: "NOME",
+            labelStyle: TextStyle(
+              fontSize: 18,
+              color: Colors.blue[800],
+            ),
+            prefixIcon: const Icon(Icons.person),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            contentPadding: const EdgeInsets.all(8),
+            fillColor: Colors.black12,
+            filled: true,
+          ),
+          onSubmitted: (value) {
+            setState(() {
+              _name = value;
+            });
+          },
         ),
       ),
     );

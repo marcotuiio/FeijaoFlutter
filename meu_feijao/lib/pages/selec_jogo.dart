@@ -2,9 +2,9 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:feijao_magico_uel/network/game_net.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/body.dart';
+import 'package:feijao_magico_uel/pages/config_inicio.dart';
 import 'package:feijao_magico_uel/pages/game_code.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,16 +20,13 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
   List<dynamic> _items = [];
   Map<String, dynamic> myGame = {};
   late Jogos finalGame;
-  late Future<GamesModel> gameObjects;
-  final String _gameCode = "gamesdata";
+
+  late String _name = 'Estudante';
 
   @override
   void initState() {
     super.initState();
-    gameObjects = NetworkGame().getGamesModel(gameCode: _gameCode);
-    gameObjects.then((value) {
-      // print(value.jogos![2].nomeFantasia);
-    });
+    readFileTXT();
   }
 
   Future<String> getFilePath() async {
@@ -51,6 +48,21 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     });
   }
 
+  Future<String> getFilePathTXT() async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/cadastro.txt";
+    return filePath;
+  }
+
+  void readFileTXT() async {
+    File file = File(await getFilePathTXT());
+    String contents = await file.readAsString();
+    setState(() {
+      _name = contents;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,9 +71,9 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
         child: Column(
           children: <Widget>[
             const SizedBox(height: 50),
-            const Text(
-              'Olá, [nome].',
-              style: TextStyle(
+            Text(
+              'Olá, $_name',
+              style: const TextStyle(
                 fontSize: 28,
                 color: Colors.black,
               ),
@@ -150,7 +162,7 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: ((context) => CodigoJogo()),
+                        builder: ((context) => const CodigoJogo()),
                       ),
                     );
                   },
@@ -158,19 +170,19 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                   backgroundColor: Colors.green[700],
                 ),
                 const SizedBox(width: 15),
-                // FloatingActionButton.extended(
-                //   heroTag: 'btn2',
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: ((context) => const HomeScreen()),
-                //       ),
-                //     );
-                //   },
-                //   label: const Text('SAIR'),
-                //   backgroundColor: Colors.red,
-                // ),
+                FloatingActionButton.extended(
+                  heroTag: 'btn2',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => const CadastroInicial()),
+                      ),
+                    );
+                  },
+                  label: const Text('CONFIGURAÇÕES'),
+                  backgroundColor: Colors.red,
+                ),
               ],
             ),
             const SizedBox(height: 20),
@@ -180,30 +192,3 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     );
   }
 }
-
-//            Container(
-//               child: FutureBuilder<GamesModel>(
-//                 future: gameObjects,
-//                 builder:
-//                     (BuildContext context, AsyncSnapshot<GamesModel> snapshot) {
-//                   if (snapshot.connectionState == ConnectionState.done) {
-//                     if (snapshot.data != null) {
-//                       // ok
-//                       return cardSelectGame(snapshot, context);
-//                     } else {
-//                       // erro de nao ter carregado dados
-//                       return Text("error: ${snapshot.error}");
-//                     }
-//                     // erro de conexão com o server
-//                   } else if (snapshot.connectionState == ConnectionState.none) {
-//                     return Text("error: ${snapshot.error}");
-//                   } else {
-//                     // conectou mas não carregou ainda
-//                     return const Padding(
-//                       padding: EdgeInsets.all(15),
-//                       child: CircularProgressIndicator(),
-//                     );
-//                   }
-//                 },
-//               ),
-//             ),
