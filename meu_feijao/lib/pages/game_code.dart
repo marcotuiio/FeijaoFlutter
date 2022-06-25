@@ -41,26 +41,12 @@ class _CodigoJogoState extends State<CodigoJogo> {
     print(snapshot);
     var newGame = snapshot.jogos![0];
 
-    // Esse newGame será recebido do servidor e será o código do jogo.
-    // DateTime endDateTime = DateTime(now.year, now.month, now.day + 6);
-    // var newGame = {
-    //   'codigo': 'fileCode',
-    //   'nome_fantasia': 'Gramatica',
-    //   'disciplina': 'discName',
-    //   'professor': 'profName',
-    //   'datainicio': now.toString().substring(0, 10),
-    //   'datafim': endDateTime.toString().substring(0, 10),
-    //   'forca': 100,
-    //   'dataAtualizacaoForca': now.toString().substring(0, 10),
-    //   'qtd_estrelinhas': 0,
-    // };
-
     jsonList.add(newGame);
     teste.jogos = jsonList;
 
     final file = File(await getFilePath());
     await file.writeAsString(json.encode(teste));
-    print('TALVEZ TENHA DADO CERTO NEW GAME $teste');
+    // print('TALVEZ TENHA DADO CERTO NEW GAME $teste');
   }
 
   Future<Map<String, dynamic>> getFileContents() async {
@@ -73,7 +59,7 @@ class _CodigoJogoState extends State<CodigoJogo> {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     String filePath = appDocPath + "/gamesdata.json";
-    print(filePath);
+    // print(filePath);
     return filePath;
   }
 

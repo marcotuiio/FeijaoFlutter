@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.green[800],
       ),
       body: BotoesMainPage(currentGame: atual, index: index),
-      bottomNavigationBar: const NavBarBottom(),
+      bottomNavigationBar: NavBarBottom(atual: atual, index: index),
     );
   }
 }

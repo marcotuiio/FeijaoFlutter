@@ -28,13 +28,30 @@ class UpdateOnFile {
 
   void setEstrelinhas(int estrelinhas, int gameIndex) async {
     var fullJson = await getFileContents();
-    fullJson.jogos![gameIndex].qtdEstrelinhas = estrelinhas;
+    int aux = fullJson.jogos![gameIndex].qtdEstrelinhas!;
+    fullJson.jogos![gameIndex].qtdEstrelinhas = aux + estrelinhas;
     writeFile(fullJson);
   }
 
-  void setForca(int forca, int gameIndex) async {
+  void setForcaPlus(int forca, int gameIndex) async {
     var fullJson = await getFileContents();
-    fullJson.jogos![gameIndex].forca = forca;
+    if (fullJson.jogos![gameIndex].forca! + forca > 100) {
+      fullJson.jogos![gameIndex].forca = 100;
+    } else {
+      fullJson.jogos![gameIndex].forca =
+          fullJson.jogos![gameIndex].forca! + forca;
+    }
+    writeFile(fullJson);
+  }
+
+  void setForcaMinus(int forca, int gameIndex) async {
+    var fullJson = await getFileContents();
+    if (fullJson.jogos![gameIndex].forca! - forca <= 0) {
+      fullJson.jogos![gameIndex].forca = 0;
+    } else {
+      fullJson.jogos![gameIndex].forca =
+          fullJson.jogos![gameIndex].forca! - forca;
+    }
     writeFile(fullJson);
   }
 

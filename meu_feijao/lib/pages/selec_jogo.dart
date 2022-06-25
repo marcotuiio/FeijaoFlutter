@@ -21,7 +21,7 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
   Map<String, dynamic> myGame = {};
   late Jogos finalGame;
 
-  late String _name = 'Estudante';
+  late String _name = '';
 
   @override
   void initState() {
@@ -33,8 +33,6 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     String filePath = appDocPath + "/gamesdata.json";
-    print(filePath);
-
     return filePath;
   }
 

@@ -1,10 +1,16 @@
 // ignore_for_file: avoid_print
 
+import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:flutter/material.dart';
+import 'package:feijao_magico_uel/network/updates_on_file.dart';
 
 class NavBarBottom extends StatefulWidget {
+  final Jogos atual;
+  final int index;
   const NavBarBottom({
+    required this.atual,
+    required this.index,
     Key? key,
   }) : super(key: key);
 
@@ -13,6 +19,17 @@ class NavBarBottom extends StatefulWidget {
 }
 
 class _NavBarBottomState extends State<NavBarBottom> {
+  UpdateOnFile updates = UpdateOnFile();
+  late Jogos currentGame;
+  late int currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    currentGame = widget.atual;
+    currentIndex = widget.index;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -29,7 +46,8 @@ class _NavBarBottomState extends State<NavBarBottom> {
               showDialog(
                 barrierDismissible: false,
                 context: context,
-                builder: (BuildContext context) => _buildPopupDialog(context),
+                builder: (BuildContext context) => _buildPopupDialog(
+                    context, currentIndex, currentGame, updates),
               );
               print('I was here - usar estrelas');
             },
@@ -37,17 +55,16 @@ class _NavBarBottomState extends State<NavBarBottom> {
           label: "Usar Estrelas",
         ),
         BottomNavigationBarItem(
-          icon: IconButton(
-            iconSize: 40,
-            color: Colors.black,
-            icon: const Icon(Icons.opacity),
-            onPressed: () {
-              print('I was here - questoes');
-              //Navigator.pushNamed(context, '/questoes');
-            },
-          ),
-          label: "Regar"
-        ),
+            icon: IconButton(
+              iconSize: 40,
+              color: Colors.black,
+              icon: const Icon(Icons.opacity),
+              onPressed: () {
+                print('I was here - questoes');
+                //Navigator.pushNamed(context, '/questoes');
+              },
+            ),
+            label: "Regar"),
         BottomNavigationBarItem(
           icon: IconButton(
             iconSize: 40,
@@ -57,7 +74,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
               print('I was here - obter estrelas');
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Questoes()),                 
+                MaterialPageRoute(builder: (context) => const Questoes()),
               );
             },
           ),
@@ -70,20 +87,19 @@ class _NavBarBottomState extends State<NavBarBottom> {
   }
 }
 
-Widget _buildPopupDialog(BuildContext context) {
-
-  int forca = 45; 
-  int estrelas = 28;
-  // ignore: unused_local_variable
-  int aux = 0;
-
+Widget _buildPopupDialog(
+    BuildContext context, int currentIndex, Jogos atual, UpdateOnFile updates) {
   return AlertDialog(
-    title: const Text('UTILIZAR ESTRELINHAS'),
+    title: const Text(
+      'UTILIZAR ESTRELINHAS',
+      style: TextStyle(color: Colors.black),
+    ),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: const <Widget>[
-        Text('Tem certeza que deseja consumir TODAS SUAS ESTRELAS para recuper força?'),
+      children: <Widget>[
+        Text(
+            'Tem certeza que deseja consumir TODAS SUAS ESTRELAS (${atual.qtdEstrelinhas}) para recuper força (${atual.forca})?'),
       ],
     ),
     actions: <Widget>[
@@ -100,19 +116,13 @@ Widget _buildPopupDialog(BuildContext context) {
       ),
       ElevatedButton.icon(
         onPressed: () {
-          // converter para stateful builder --> https://www.youtube.com/watch?v=THMcgdtUtFQ
-          if (forca + estrelas > 100){
-            aux = 100 - forca;
-            // setState(() {
-            //   forca = forca + aux;
-            //   estrelas = estrelas - aux;
-            // });
-          }
-          // setState(() {
-          //   forca = forca + estrelas;
-          //   estrelas = 0;
-          // });
-          print("Estrelas = $estrelas --- Força = $forca");
+          var auxStars = -(atual.qtdEstrelinhas!);
+          var auxStars2 = auxStars * 2;
+          print(auxStars);
+          print(auxStars2);
+          updates.setForcaPlus(auxStars2, currentIndex);
+          updates.setEstrelinhas(-(atual.qtdEstrelinhas!), currentIndex);
+          Navigator.pop(context);
         },
         icon: const Icon(Icons.check_box_outlined),
         label: const Text('SIM'),

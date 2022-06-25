@@ -1,16 +1,81 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:feijao_magico_uel/components/bottomnav_theme.dart';
-import 'package:feijao_magico_uel/pages/config_inicio.dart';
+import 'package:feijao_magico_uel/network/games_model.dart';
+import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(const PeDeFeijaoAPP());
 }
 
-class PeDeFeijaoAPP extends StatelessWidget {
+class PeDeFeijaoAPP extends StatefulWidget {
   const PeDeFeijaoAPP({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<PeDeFeijaoAPP> createState() => _PeDeFeijaoAPPState();
+}
+
+class _PeDeFeijaoAPPState extends State<PeDeFeijaoAPP> {
+  // ignore: prefer_typing_uninitialized_variables
+  var ghost = {"jogos": []};
+
+  @override
+  void initState() {
+    super.initState();
+    // checkFileEmpty();
+    checkJsonEmpty();
+  }
+
+  // Future<String> getFilePathTXT() async {
+  //   Directory appDocDir = await getApplicationDocumentsDirectory();
+  //   String appDocPath = appDocDir.path;
+  //   String filePath = appDocPath + "/cadastro.txt";
+  //   return filePath;
+  // }
+
+  // void checkFileEmpty() async {
+  //   // se vazio, retorna TRUE
+  //   File file = File(await getFilePathTXT());
+  //   if (file.existsSync()) {
+  //     String contents = await file.readAsString();
+  //     if (contents.isEmpty) {
+  //       setState(() {
+  //         _homePage = const CadastroInicial();
+  //       });
+  //     }
+  //   } else {
+  //     file.createSync();
+  //     setState(() {
+  //       _homePage = const CadastroInicial();
+  //     });
+  //   }
+  // }
+
+  Future<String> getFilePath() async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/gamesdata.json";
+
+    return filePath;
+  }
+
+  void checkJsonEmpty() async {
+    File file = File(await getFilePath());
+    var jogos = GamesModel.fromJson(ghost);
+    if (file.existsSync()) {
+      String contents = await file.readAsString();
+      if (contents.isEmpty) {
+        await file.writeAsString(json.encode(jogos));
+      }
+    } else {
+      file.createSync();
+      await file.writeAsString(json.encode(jogos));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +87,7 @@ class PeDeFeijaoAPP extends StatelessWidget {
         textTheme: _appTextTheme(base.textTheme),
       ),
       debugShowCheckedModeBanner: false,
-      home: const CadastroInicial(),
-      navigatorKey: Get.key,
+      home: const SelecionarJogo(),
     );
   }
 }

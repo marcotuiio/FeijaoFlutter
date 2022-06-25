@@ -1,11 +1,10 @@
 // ignore_for_file: avoid_print, must_be_immutable
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:feijao_magico_uel/network/from_server.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
-// import 'package:feijao_magico_uel/pages/config_inicio.dart';
-// import 'package:feijao_magico_uel/pages/game_code.dart';
 import 'package:flutter/material.dart';
 
 class BotoesMainPage extends StatefulWidget {
@@ -24,14 +23,14 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
   late File gamesjsonFile;
   late int forca;
   late int currentIndex;
+  late Jogos currentGame;
   var now = DateTime.now();
-
-  late Future<GamesModel> gameObjects;
 
   @override
   void initState() {
     forca = widget.currentGame.forca as int;
     currentIndex = widget.index;
+    currentGame = widget.currentGame;
     super.initState();
   }
 
@@ -106,42 +105,33 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                // ElevatedButton.icon(
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: ((context) => const CadastroInicial()),
-                //       ),
-                //     );
-                //   },
-                //   icon: const Icon(Icons.engineering),
-                //   label: const Text('Config Inicial'),
-                // ),
-                // ElevatedButton.icon(
-                //   onPressed: () {
-                //     Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) => const CodigoJogo()));
-                //   },
-                //   icon: const Icon(Icons.code),
-                //   label: const Text('Game Code'),
-                // ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    updates.setForca(0, currentIndex);
+                    setState(() {
+                      // updates.setEstrelinhas(-(600), currentIndex);
+                      updates.setForcaMinus(100, currentIndex);
+                    });
                   },
                   icon: const Icon(Icons.engineering),
                   label: const Text('Alterar arquivo'),
                 ),
                 ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(primary: Colors.deepOrange),
+                  style: ElevatedButton.styleFrom(primary: Colors.purple[900]),
                   onPressed: () {
-                    print("FULL TIME => $now");
-                    print("TODAY => ${now.toString().substring(0, 10)}");
+                    print(json.encode(currentGame));
                   },
-                  icon: const Icon(Icons.watch),
-                  label: const Text("Get time"),
+                  icon: const Icon(Icons.person_outline_sharp),
+                  label: const Text('Prova real'),
                 ),
+                // ElevatedButton.icon(
+                //   style: ElevatedButton.styleFrom(primary: Colors.deepOrange),
+                //   onPressed: () {
+                //     print("FULL TIME => $now");
+                //     print("TODAY => ${now.toString().substring(0, 10)}");
+                //   },
+                //   icon: const Icon(Icons.watch),
+                //   label: const Text("Get time"),
+                // ),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
                   onPressed: () {
