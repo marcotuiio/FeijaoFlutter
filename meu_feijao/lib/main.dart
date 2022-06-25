@@ -30,31 +30,6 @@ class _PeDeFeijaoAPPState extends State<PeDeFeijaoAPP> {
     checkJsonEmpty();
   }
 
-  // Future<String> getFilePathTXT() async {
-  //   Directory appDocDir = await getApplicationDocumentsDirectory();
-  //   String appDocPath = appDocDir.path;
-  //   String filePath = appDocPath + "/cadastro.txt";
-  //   return filePath;
-  // }
-
-  // void checkFileEmpty() async {
-  //   // se vazio, retorna TRUE
-  //   File file = File(await getFilePathTXT());
-  //   if (file.existsSync()) {
-  //     String contents = await file.readAsString();
-  //     if (contents.isEmpty) {
-  //       setState(() {
-  //         _homePage = const CadastroInicial();
-  //       });
-  //     }
-  //   } else {
-  //     file.createSync();
-  //     setState(() {
-  //       _homePage = const CadastroInicial();
-  //     });
-  //   }
-  // }
-
   Future<String> getFilePath() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;

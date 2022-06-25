@@ -161,7 +161,6 @@ class _CodigoJogoState extends State<CodigoJogo> {
                   },
                 ),
               ),
-
               const SizedBox(height: 5),
               Container(
                 child: Row(

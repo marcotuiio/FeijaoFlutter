@@ -1,5 +1,7 @@
 // import 'dart:io';
 // import 'dart:convert';
+// ignore_for_file: deprecated_member_use
+
 import 'package:feijao_magico_uel/components/quiz/modelo/questions.dart';
 // import 'package:feijao_magico_uel/network/games.dart';
 // import 'package:feijao_magico_uel/pages/body.dart';
@@ -10,15 +12,10 @@ import 'package:get/get.dart';
 //import 'package:get/state_manager.dart';
 
 class QuestionController extends GetxController
-    // ignore: deprecated_member_use
-    with
-        // ignore: deprecated_member_use
-        SingleGetTickerProviderMixin {
-  // Lets animated our progress bar
-
+    with SingleGetTickerProviderMixin {
   late AnimationController _animationController;
   late Animation _animation;
-  // so that we can access our animation outside
+  final String code = '';
   Animation get animation => _animation;
 
   late PageController _pageController;
@@ -36,9 +33,6 @@ class QuestionController extends GetxController
       )
       .toList();
   List<Question> get questions => _questions;
-
-  // int forcaAux = Games.fromJson(json.decode(gamesjsonFile)).jogos[0].forca as int;
-  // int stars = estrelinhas;
 
   bool _isAnswered = false;
   bool get isAnswered => _isAnswered;
@@ -63,12 +57,10 @@ class QuestionController extends GetxController
   int _numOfCorrectAns = 0;
   int get numOfCorrectAns => _numOfCorrectAns;
 
-
   // called immediately after the widget is allocated memory
   @override
   void onInit() {
-    // Our animation duration is 60 s
-    // so our plan is to fill the progress bar within 60s
+    super.onInit();
     _animationController = AnimationController(
         duration: const Duration(seconds: 600), vsync: this);
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
@@ -185,26 +177,6 @@ class QuestionController extends GetxController
       // Reset the counter
       _animationController.reset();
 
-      // Then start it again
-      // Once timer is finish go to the next qn
-//       _animationController.forward().whenComplete(nextQuestion);
-//       _tentativas = 0;
-//     } else {
-//       final games = gamesFromJson(gamesjsonFile.readAsStringSync());
-//       List<Jogo> listag = games.jogos;
-//       String professor = listag[0].professor;
-// ;
-//       print('professor = $professor');
-//       print(listag[0].professor);
-//       // gamesToJson(Games(jogos: listag));
-//       String jsonUser = jsonEncode(listag);
-//       print(jsonUser);
-//       gamesjsonFile.writeAsStringSync(
-//         json.encode(
-//           Games(jogos: listag),
-//         ),
-//       );
-
       // Get.to(() => const HomeScreen());
     }
   }
@@ -213,10 +185,3 @@ class QuestionController extends GetxController
     _questionNumber.value = index + 1;
   }
 }
-
-// _write(String text) async {
-//   final Directory directory = await getApplicationDocumentsDirectory();
-//   final File file = File('${directory.path}/my_file.txt');
-//   await file.writeAsString(text);
-// }
-

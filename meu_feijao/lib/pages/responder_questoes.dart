@@ -1,28 +1,39 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, avoid_unnecessary_containers
 import 'dart:io';
 
 import 'package:feijao_magico_uel/components/quiz/quiz_init.dart';
 import 'package:feijao_magico_uel/constants.dart';
+import 'package:feijao_magico_uel/network/question_net.dart';
+import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Questoes extends StatefulWidget {
-  const Questoes({Key? key}) : super(key: key);
+  final String code;
+  const Questoes({required this.code, Key? key}) : super(key: key);
 
   @override
   _QuestoesState createState() => _QuestoesState();
 }
 
 class _QuestoesState extends State<Questoes> {
-  late String _name;
+  late Future<QuestionModel> questionsObjects;
+  String _key = '';
+  late String _name = '';
   List _items = [];
   late List<dynamic> questArr = List<dynamic>.filled(1, 0, growable: true);
 
   @override
   void initState() {
     super.initState();
+    _key = widget.code;
+    questionsObjects = NetworkQuestion().getQuestionModel(gameCode: _key);
+    questionsObjects.then((value) {
+      print(value.questoes!.length);
+      print(value.questoes![0].question);
+    });
     readFileTXT();
     readJsonQuest().then((List<dynamic> fquestArr) {
       setState(() {
@@ -62,6 +73,28 @@ class _QuestoesState extends State<Questoes> {
     setState(() {
       _name = contents;
     });
+  }
+
+  void saveQuestionModel(String gameCode, var fileContents) async {
+    print('FILE contents: ${json.encode(fileContents)}');
+    final file = File(await getFilePath(gameCode));
+    QuestionModel aux = fileContents;
+    await file.writeAsString(json.encode(aux));
+    print('TALVEZ TENHA DADO CERTO GUARDAR O ARQUIVO');
+  }
+
+  Future<Map<String, dynamic>> getFileContents(String gameCode) async {
+    File file = File(await getFilePath(gameCode));
+    String contents = await file.readAsString();
+    return json.decode(contents);
+  }
+
+  Future<String> getFilePath(String gameCode) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/questions_" + gameCode + ".json";
+    print(filePath);
+    return filePath;
   }
 
   @override
@@ -126,28 +159,61 @@ class _QuestoesState extends State<Questoes> {
                   )
                 : Container(),
             const SizedBox(height: 1),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const QuizScreen()),
-                );
-              },
-              child: Container(
-                width: 150,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(15),
-                decoration: const BoxDecoration(
-                  gradient: kPrimaryGradient,
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                ),
-                child: Text(
-                  "Começar a Responder",
-                  style: Theme.of(context)
-                      .textTheme
-                      .button!
-                      .copyWith(color: Colors.black),
-                ),
+            Container(
+              child: FutureBuilder<QuestionModel>(
+                future: questionsObjects,
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuestionModel> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data != null) {
+                      // ok
+                      return Column(
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () {
+                              saveQuestionModel(_key, snapshot.data);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => QuizScreen(code: _key),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: 150,
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(15),
+                              decoration: const BoxDecoration(
+                                gradient: kPrimaryGradient,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Text(
+                                "Começar a Responder",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .button!
+                                    .copyWith(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      // erro de nao ter carregado dados
+                      return Text("error: ${snapshot.error}");
+                    }
+                    // erro de conexão com o server
+                  } else if (snapshot.connectionState == ConnectionState.none) {
+                    return Text("error: ${snapshot.error}");
+                  } else {
+                    // conectou mas não carregou ainda
+                    return const Padding(
+                      padding: EdgeInsets.all(15),
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
               ),
             ),
           ],
@@ -162,3 +228,6 @@ class _QuestoesState extends State<Questoes> {
 
 //colocar botão de sair em quizscreen() e em score_screen()
 
+
+
+              

@@ -6,5 +6,5 @@ TO DO:
     * Fix initial config and show name on all screens DONE
     * Get new game from server and add to the already existing games DONE
     * Clean code DONE
-    * Fix quiz !!
-    * What if gamesdata is empty? What to do then?
+    * Fix quiz !!!!!!
+    * What if gamesdata is empty? What to do then? DONE

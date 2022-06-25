@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class QuizScreen extends StatelessWidget {
-  const QuizScreen({Key? key}) : super(key: key);
+  final String code;
+  const QuizScreen({required this.code, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,7 @@ class QuizScreen extends StatelessWidget {
         elevation: 0,
         actions: <Widget>[
           MaterialButton(
-            onPressed: _controller.nextQuestion,
-            child: const Text("Pular")
-          ),
+              onPressed: _controller.nextQuestion, child: const Text("Pular")),
         ],
       ),
       body: const Body(),

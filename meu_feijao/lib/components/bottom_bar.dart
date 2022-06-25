@@ -22,12 +22,14 @@ class _NavBarBottomState extends State<NavBarBottom> {
   UpdateOnFile updates = UpdateOnFile();
   late Jogos currentGame;
   late int currentIndex;
+  late String _code = '';
 
   @override
   void initState() {
     super.initState();
     currentGame = widget.atual;
     currentIndex = widget.index;
+    _code = currentGame.codigo!;
   }
 
   @override
@@ -74,7 +76,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
               print('I was here - obter estrelas');
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Questoes()),
+                MaterialPageRoute(builder: (context) => Questoes(code: _code)),
               );
             },
           ),
