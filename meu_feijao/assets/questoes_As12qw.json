@@ -11,6 +11,7 @@
                 "resposta 04"
             ],
             "answer_index": 1,
+            "tipo": "P",    
             "comentario": "dica 90"
         },
         {
@@ -24,6 +25,7 @@
                 "implementação de um sistema de previdência e seguridade para atender aos trabalhadores rurais."
             ],
             "answer_index": 2,
+            "tipo": "E",  
             "comentario": "dica 20"
         },
         {
@@ -37,6 +39,7 @@
                 "resposta 04"
             ],
             "answer_index": 2,
+            "tipo": "P",  
             "comentario": "dica 30"
         },
         {
@@ -50,6 +53,7 @@
                 "resposta 04"
             ],
             "answer_index": 3,
+            "tipo": "P",  
             "comentario": "dica 31"
         },
         {
@@ -63,6 +67,7 @@
                 "resposta 04"
             ],
             "answer_index": 2,
+            "tipo": "E",  
             "comentario": "dica 33"
         },
         {
@@ -76,6 +81,7 @@
                 "resposta 04"
             ],
             "answer_index": 3,
+            "tipo": "E",  
             "comentario": "dica 61"
         },
         {
@@ -89,6 +95,7 @@
                 "resposta 04"
             ],
             "answer_index": 0,
+            "tipo": "E",  
             "comentario": "dica 10"
         }
     ]
