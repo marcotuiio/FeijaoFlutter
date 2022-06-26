@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class QuizScreen extends StatelessWidget {
   final String code;
-  const QuizScreen({required this.code, Key? key}) : super(key: key);
+  final int index;
+  const QuizScreen({required this.code, required this.index, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +14,16 @@ class QuizScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        // Fluttter show the back button automatically
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[
           MaterialButton(
-              onPressed: _controller.nextQuestion, child: const Text("Pular")),
+            onPressed: _controller.nextQuestion,
+            child: const Text("Pular"),
+          ),
         ],
       ),
-      body: const Body(),
+      body: const BodyQuiz(),
     );
   }
 }

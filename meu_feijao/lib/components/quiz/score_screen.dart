@@ -7,13 +7,13 @@ class ScoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late String type;
+    // late String type;
     QuestionController _qnController = Get.put(QuestionController());
-    if (_qnController.tipo == 'P') {
-      type = '- PENALIDADE DE REGA';
-    } else {
-      type = ' + ESTRELINHAS';
-    }
+    // if (_qnController.tipo == 'P') {
+    //   type = '- PENALIDADE DE REGA';
+    // } else {
+    //   type = ' + ESTRELINHAS';
+    // }
     
     return Scaffold(
       body: Stack(
@@ -31,7 +31,7 @@ class ScoreScreen extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                "${_qnController.correctAns} $type",
+                "${_qnController.correctAns}",
                 style: Theme.of(context)
                     .textTheme
                     .headline4!

@@ -4,18 +4,16 @@ import 'package:feijao_magico_uel/components/quiz/controler/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Body extends StatelessWidget {
-  const Body({
+class BodyQuiz extends StatelessWidget {
+  const BodyQuiz({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // So that we have acccess our controller
     QuestionController _questionController = Get.put(QuestionController());
     return Stack(
       children: <Widget>[
-        //SvgPicture.asset("assets/icons/bg.svg", fit: BoxFit.fill),
         SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,37 +2,21 @@
 // import 'dart:convert';
 // ignore_for_file: deprecated_member_use
 
-import 'package:feijao_magico_uel/components/quiz/modelo/questions.dart';
-// import 'package:feijao_magico_uel/network/games.dart';
-// import 'package:feijao_magico_uel/pages/body.dart';
-// import 'package:feijao_magico_uel/components/quiz/score_screen.dart';
+import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:path_provider/path_provider.dart';
-//import 'package:get/state_manager.dart';
 
 class QuestionController extends GetxController
     with SingleGetTickerProviderMixin {
   late AnimationController _animationController;
   late Animation _animation;
-  final String code = '';
   Animation get animation => _animation;
 
   late PageController _pageController;
   PageController get pageController => _pageController;
 
-  final List<Question> _questions = sampledata
-      .map(
-        (question) => Question(
-          id: question['id'],
-          question: question['question'],
-          options: question['options'],
-          answer: question['answer_index'],
-          //comentario: question['comentario'],
-        ),
-      )
-      .toList();
-  List<Question> get questions => _questions;
+  final List<Questoes> _questions = sampledata;
+  List<Questoes> get questions => _questions;
 
   bool _isAnswered = false;
   bool get isAnswered => _isAnswered;
@@ -47,12 +31,8 @@ class QuestionController extends GetxController
   final RxInt _questionNumber = 1.obs;
   RxInt get questionNumber => _questionNumber;
 
-  late String _tipo; //P rega, E estrelas
-  String get tipo => _tipo;
-
-  // ignore: prefer_final_fields
-  int _tentativas = 0;
-  int get tentativas => _tentativas;
+  // late String _tipo; //P rega, E estrelas
+  // String get tipo => _tipo;
 
   int _numOfCorrectAns = 0;
   int get numOfCorrectAns => _numOfCorrectAns;
@@ -65,18 +45,14 @@ class QuestionController extends GetxController
         duration: const Duration(seconds: 600), vsync: this);
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
       ..addListener(() {
-        // update like setState
         update();
       });
 
-    // start our animation
-    // Once 60s is completed go to the next qn
     _animationController.forward().whenComplete(nextQuestion);
     _pageController = PageController();
     super.onInit();
   }
 
-  // // called just before the Controller is deleted from memory
   @override
   void onClose() {
     super.onClose();
@@ -84,9 +60,9 @@ class QuestionController extends GetxController
     _pageController.dispose();
   }
 
-  void checkAns(Question question, int selectedIndex) {
+  void checkAns(Questoes question, int selectedIndex) {
     _isAnswered = true;
-    _correctAns = question.answer;
+    _correctAns = question.answerIndex!;
     _selectedAns = selectedIndex;
 
     if (_correctAns == _selectedAns) {
@@ -176,8 +152,8 @@ class QuestionController extends GetxController
 
       // Reset the counter
       _animationController.reset();
-
-      // Get.to(() => const HomeScreen());
+    } else {
+      // Navigator.push(context, RespQuest());
     }
   }
 

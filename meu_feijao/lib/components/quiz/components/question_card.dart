@@ -1,11 +1,11 @@
 import 'package:feijao_magico_uel/components/quiz/components/options.dart';
 import 'package:feijao_magico_uel/components/quiz/controler/controller.dart';
+import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:feijao_magico_uel/components/quiz/modelo/questions.dart';
 
 typedef MyPopUp = Widget;
-_buildPopupDialog(BuildContext context, Question question, int index) {
+_buildPopupDialog(BuildContext context, Questoes question, int index) {
   QuestionController _controller = Get.put(QuestionController());
   return AlertDialog(
     title: const Text('CORRIGIR QUESTÃO'),
@@ -51,7 +51,7 @@ class QuestionCard extends StatelessWidget {
     required this.question,
   }) : super(key: key);
 
-  final Question question;
+  final Questoes question;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class QuestionCard extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Text(
-                question.question,
+                question.question!,
                 style: Theme.of(context)
                     .textTheme
                     .headline6!
@@ -79,17 +79,17 @@ class QuestionCard extends StatelessWidget {
             const SizedBox(height: 10),
             const SizedBox(height: 25),
             ...List.generate(
-              question.options.length,
+              question.options!.length,
               (index) => Option(
                 index: index,
-                text: question.options[index],
+                text: question.options![index],
                 press: () => showDialog(
                   barrierDismissible: false, //bloqueia toques fora do popup
                   context: context,
                   builder: (BuildContext context) => _buildPopupDialog(
                     context,
                     question,
-                    question.answer,
+                    question.answerIndex!,
                   ),
                 ),
               ),

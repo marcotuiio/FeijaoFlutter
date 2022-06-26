@@ -76,7 +76,12 @@ class _NavBarBottomState extends State<NavBarBottom> {
               print('I was here - obter estrelas');
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Questoes(code: _code)),
+                MaterialPageRoute(
+                  builder: (context) => RespQuestoes(
+                    code: _code,
+                    index: currentIndex,
+                  ),
+                ),
               );
             },
           ),
@@ -101,7 +106,8 @@ Widget _buildPopupDialog(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
-            'Tem certeza que deseja consumir TODAS SUAS ESTRELAS (${atual.qtdEstrelinhas}) para recuper força (${atual.forca})?'),
+          'Tem certeza que deseja consumir TODAS SUAS ESTRELAS (${atual.qtdEstrelinhas}) para recuper força (${atual.forca})?',
+        ),
       ],
     ),
     actions: <Widget>[
