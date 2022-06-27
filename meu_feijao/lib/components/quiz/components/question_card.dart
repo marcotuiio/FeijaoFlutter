@@ -8,12 +8,17 @@ typedef MyPopUp = Widget;
 _buildPopupDialog(BuildContext context, Questoes question, int index) {
   QuestionController _controller = Get.put(QuestionController());
   return AlertDialog(
-    title: const Text('CORRIGIR QUESTÃO'),
+    title: const Text(
+      'CORRIGIR QUESTÃO',
+      style: TextStyle(
+        color: Colors.black,
+      ),
+    ),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: const <Widget>[
-        Text('TEM CERTEZA?'),
+        Text('TEM CERTEZA?', style: TextStyle(color: Colors.black)),
       ],
     ),
     actions: <Widget>[
@@ -30,7 +35,7 @@ _buildPopupDialog(BuildContext context, Questoes question, int index) {
       ),
       ElevatedButton.icon(
         onPressed: () {
-        _controller.checkAns(question, index);
+          _controller.checkAns(question, index);
           Navigator.pop(context);
         }, // _controller.checkAns(question, index),
         icon: const Icon(Icons.check),
@@ -107,4 +112,3 @@ class QuestionCard extends StatelessWidget {
     );
   }
 }
-

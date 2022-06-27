@@ -6,11 +6,14 @@ import 'package:flutter/material.dart';
 class QuizScreen extends StatelessWidget {
   final String code;
   final int index;
-  const QuizScreen({required this.code, required this.index, Key? key}) : super(key: key);
+  final String type;
+  const QuizScreen({required this.code, required this.index, required this.type, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController(index: index, code: code));
+    QuestionController _controller =
+        Get.put(QuestionController(index: index, code: code));
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(

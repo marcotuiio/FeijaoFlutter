@@ -19,16 +19,16 @@ class BotoesMainPage extends StatefulWidget {
 
 class _BotoesMainPageState extends State<BotoesMainPage> {
   UpdateOnFile updates = UpdateOnFile();
+  var now = DateTime.now();
   late int forca;
   late int currentIndex;
   late Jogos currentGame;
-  var now = DateTime.now();
-
 
   @override
   void initState() {
     forca = widget.currentGame.forca as int;
     currentIndex = widget.index;
+    currentGame = widget.currentGame;
     super.initState();
   }
 

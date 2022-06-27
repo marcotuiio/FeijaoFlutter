@@ -11,7 +11,9 @@ import 'package:path_provider/path_provider.dart';
 class RespQuestoes extends StatefulWidget {
   final String code;
   final int index;
-  const RespQuestoes({required this.code, required this.index, Key? key})
+  final String type;
+  const RespQuestoes(
+      {required this.code, required this.index, required this.type, Key? key})
       : super(key: key);
 
   @override
@@ -23,12 +25,14 @@ class _RespQuestoesState extends State<RespQuestoes> {
   String _key = '';
   late int _currentIndex;
   late String _name = '';
+  late String _type = '';
 
   @override
   void initState() {
     super.initState();
     _key = widget.code;
     _currentIndex = widget.index;
+    _type = widget.type;
     questionsObjects = NetworkQuestion().getQuestionModel(gameCode: _key);
     readFileTXT();
   }
@@ -57,8 +61,9 @@ class _RespQuestoesState extends State<RespQuestoes> {
       aux.questoes = suffleList;
       file.writeAsString(json.encode(aux));
       print('ARQUIVO SALVO PELA PRIMEIRA VEZ');
+    } else {
+      print('ARQUIVO JA EXISTE');
     }
-    print('ARQUIVO JA EXISTE');
   }
 
   Future<Map<String, dynamic>> getFileContents(String gameCode) async {
@@ -129,6 +134,7 @@ class _RespQuestoesState extends State<RespQuestoes> {
                                   builder: (context) => QuizScreen(
                                     code: _key,
                                     index: _currentIndex,
+                                    type: _type,
                                   ),
                                 ),
                               );

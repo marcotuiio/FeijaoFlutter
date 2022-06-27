@@ -1,8 +1,9 @@
 // import 'dart:io';
 // import 'dart:convert';
-// ignore_for_file: deprecated_member_use, unused_field
+// ignore_for_file: deprecated_member_use, unused_field, avoid_print
 
 import 'package:feijao_magico_uel/network/questions_model.dart';
+import 'package:feijao_magico_uel/network/updates_on_file.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,8 +11,10 @@ class QuestionController extends GetxController
     with SingleGetTickerProviderMixin {
   late int index;
   late String code;
+  late String type;
 
-  QuestionController({this.index = 0, this.code = '', Key? key});
+  QuestionController(
+      {this.index = 0, this.code = '', this.type = '', Key? key});
 
   late AnimationController _animationController;
   late Animation _animation;
@@ -32,7 +35,6 @@ class QuestionController extends GetxController
   late int _selectedAns;
   int get selectedAns => _selectedAns;
 
-  // for more about obs please check documentation
   final RxInt _questionNumber = 1.obs;
   RxInt get questionNumber => _questionNumber;
 
@@ -41,6 +43,7 @@ class QuestionController extends GetxController
 
   late int _currentIndex;
   late String _currentCode;
+  final UpdateOnFile _updates = UpdateOnFile();
 
   // called immediately after the widget is allocated memory
   @override
@@ -48,8 +51,8 @@ class QuestionController extends GetxController
     super.onInit();
     _currentIndex = index;
     _currentCode = code;
-    // print(currentCode);
-    // print(currentIndex);
+    print(_currentCode);
+    print(_currentIndex);
     _animationController = AnimationController(
         duration: const Duration(seconds: 600), vsync: this);
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
@@ -75,6 +78,11 @@ class QuestionController extends GetxController
     _selectedAns = selectedIndex;
 
     if (_correctAns == _selectedAns) {
+      if (type == 'P') {
+        _updates.setForcaPlus(18, _currentIndex);
+      } else {
+        _updates.setEstrelinhas(2, _currentIndex);
+      }
       _numOfCorrectAns++;
     }
     _animationController.stop();

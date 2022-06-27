@@ -33,7 +33,7 @@ class Questoes {
   String? question;
   List<String>? options;
   int? answerIndex;
-  String? tipo;
+  int? usado;
   String? comentario;
 
   Questoes(
@@ -42,7 +42,7 @@ class Questoes {
       this.question,
       this.options,
       this.answerIndex,
-      this.tipo,
+      this.usado,
       this.comentario});
 
   Questoes.fromJson(Map<String, dynamic> json) {
@@ -51,7 +51,7 @@ class Questoes {
     question = json['question'];
     options = json['options'].cast<String>();
     answerIndex = json['answer_index'];
-    tipo = json['tipo'];
+    usado = json['usado'];
     comentario = json['comentario'];
   }
 
@@ -62,11 +62,12 @@ class Questoes {
     data['question'] = question;
     data['options'] = options;
     data['answer_index'] = answerIndex;
-    data['tipo'] = tipo;
+    data['usado'] = usado;
     data['comentario'] = comentario;
     return data;
   }
 }
+
 
 Future<QuestionModel> getFileContents(String gameCode) async {
   File file = File(await getFilePath(gameCode));

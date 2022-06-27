@@ -62,8 +62,16 @@ class _NavBarBottomState extends State<NavBarBottom> {
               color: Colors.black,
               icon: const Icon(Icons.opacity),
               onPressed: () {
-                print('I was here - questoes');
-                //Navigator.pushNamed(context, '/questoes');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RespQuestoes(
+                      code: _code,
+                      index: currentIndex,
+                      type: 'R',
+                    ),
+                  ),
+                );
               },
             ),
             label: "Regar"),
@@ -73,13 +81,13 @@ class _NavBarBottomState extends State<NavBarBottom> {
             color: Colors.black,
             icon: const Icon(Icons.book_online_outlined),
             onPressed: () {
-              print('I was here - obter estrelas');
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => RespQuestoes(
                     code: _code,
                     index: currentIndex,
+                    type: 'E',
                   ),
                 ),
               );
