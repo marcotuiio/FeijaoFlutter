@@ -6,5 +6,6 @@ TO DO:
     * Fix initial config and show name on all screens DONE
     * Get new game from server and add to the already existing games DONE
     * Clean code DONE
-    * Fix quiz !!!!!!
+    * Fix quiz DONE ?
     * What if gamesdata is empty? What to do then? DONE
+    * Integrate type of question and update on json after answer the question
