@@ -83,12 +83,12 @@ Future<String> getFilePath(String gameCode) async {
   return filePath;
 }
 
-void loadQuestions(String gameCode) async {
+Future<void> loadQuestions(String gameCode) async {
   QuestionModel fullQuestions = await getFileContents(gameCode);
   List<Questoes> questoes = fullQuestions.questoes!;
-  print('AQUI ${questoes[0].options}');
+  // print('Antes ${questoes[0].options}');
   sampledata = questoes;
-  print(sampledata[0].options);
+  // print('Depois ${sampledata[0].options}');
 }
 
 List<Questoes> sampledata = [];

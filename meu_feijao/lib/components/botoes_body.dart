@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print, must_be_immutable
 
 import 'dart:convert';
-import 'dart:io';
 import 'package:feijao_magico_uel/network/from_server.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
@@ -20,17 +19,16 @@ class BotoesMainPage extends StatefulWidget {
 
 class _BotoesMainPageState extends State<BotoesMainPage> {
   UpdateOnFile updates = UpdateOnFile();
-  late File gamesjsonFile;
   late int forca;
   late int currentIndex;
   late Jogos currentGame;
   var now = DateTime.now();
 
+
   @override
   void initState() {
     forca = widget.currentGame.forca as int;
     currentIndex = widget.index;
-    currentGame = widget.currentGame;
     super.initState();
   }
 
@@ -99,13 +97,17 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
             const SizedBox(height: 100),
             const Text(
               'TESTES',
-              style: TextStyle(fontSize: 22),
+              style: TextStyle(
+                fontSize: 22,
+                color: Colors.black,
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(primary: Colors.orange[900]),
                   onPressed: () {
                     setState(() {
                       // updates.setEstrelinhas(-(600), currentIndex);

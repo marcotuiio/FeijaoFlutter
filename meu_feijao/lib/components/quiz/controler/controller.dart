@@ -1,6 +1,6 @@
 // import 'dart:io';
 // import 'dart:convert';
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, unused_field
 
 import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +8,11 @@ import 'package:get/get.dart';
 
 class QuestionController extends GetxController
     with SingleGetTickerProviderMixin {
+  late int index;
+  late String code;
+
+  QuestionController({this.index = 0, this.code = '', Key? key});
+
   late AnimationController _animationController;
   late Animation _animation;
   Animation get animation => _animation;
@@ -31,16 +36,20 @@ class QuestionController extends GetxController
   final RxInt _questionNumber = 1.obs;
   RxInt get questionNumber => _questionNumber;
 
-  // late String _tipo; //P rega, E estrelas
-  // String get tipo => _tipo;
-
   int _numOfCorrectAns = 0;
   int get numOfCorrectAns => _numOfCorrectAns;
+
+  late int _currentIndex;
+  late String _currentCode;
 
   // called immediately after the widget is allocated memory
   @override
   void onInit() {
     super.onInit();
+    _currentIndex = index;
+    _currentCode = code;
+    // print(currentCode);
+    // print(currentIndex);
     _animationController = AnimationController(
         duration: const Duration(seconds: 600), vsync: this);
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
@@ -68,7 +77,6 @@ class QuestionController extends GetxController
     if (_correctAns == _selectedAns) {
       _numOfCorrectAns++;
     }
-    // It will stop the counter
     _animationController.stop();
     update();
 

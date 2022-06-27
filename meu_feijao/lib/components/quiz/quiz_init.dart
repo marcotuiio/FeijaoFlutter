@@ -10,7 +10,7 @@ class QuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
+    QuestionController _controller = Get.put(QuestionController(index: index, code: code));
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
