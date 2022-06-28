@@ -68,7 +68,6 @@ class Questoes {
   }
 }
 
-
 Future<QuestionModel> getFileContents(String gameCode) async {
   File file = File(await getFilePath(gameCode));
   String contents = await file.readAsString();
