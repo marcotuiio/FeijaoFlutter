@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:feijao_magico_uel/components/quiz/components/progress_bar.dart';
 import 'package:feijao_magico_uel/components/quiz/components/question_card.dart';
 import 'package:feijao_magico_uel/components/quiz/controler/controller.dart';
@@ -12,10 +14,13 @@ class BodyQuiz extends StatelessWidget {
   Widget build(BuildContext context) {
     QuestionController _questionController = Get.put(QuestionController());
     int len = 1;
-    if (type == 'P') {
+    String tipo = '';
+    if (type == 'R') {
       len = 1;
+      tipo = 'Regar';
     } else if (type == 'E') {
       len = _questionController.questions.length;
+      tipo = 'Estrelinhas';
     }
     return Stack(
       children: <Widget>[
@@ -30,24 +35,14 @@ class BodyQuiz extends StatelessWidget {
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Obx(
-                  () => Text.rich(
+                child: Container(
+                  child: Text.rich(
                     TextSpan(
-                      text:
-                          "Question ${_questionController.questionNumber.value}",
+                      text: "Questão para $tipo",
                       style: Theme.of(context)
                           .textTheme
                           .headline4!
                           .copyWith(color: Colors.blue[900]),
-                      // children: <Widget>[
-                      //   TextSpan(
-                      //     text: "/${_questionController.questions.length}",
-                      //     style: Theme.of(context)
-                      //         .textTheme
-                      //         .headline5
-                      //         !.copyWith(color: Colors.blue[900]),
-                      //   ),
-                      // ],
                     ),
                   ),
                 ),
