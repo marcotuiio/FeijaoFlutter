@@ -5,13 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BodyQuiz extends StatelessWidget {
-  const BodyQuiz({
-    Key? key,
-  }) : super(key: key);
+  final String type;
+  const BodyQuiz({required this.type, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     QuestionController _questionController = Get.put(QuestionController());
+    int len = 1;
+    if (type == 'P') {
+      len = 1;
+    } else if (type == 'E') {
+      len = _questionController.questions.length;
+    }
     return Stack(
       children: <Widget>[
         SafeArea(
@@ -19,13 +24,12 @@ class BodyQuiz extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),     
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: ProgressBar(),
               ),
               const SizedBox(height: 20),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Obx(
                   () => Text.rich(
                     TextSpan(
@@ -33,8 +37,8 @@ class BodyQuiz extends StatelessWidget {
                           "Question ${_questionController.questionNumber.value}",
                       style: Theme.of(context)
                           .textTheme
-                          .headline4
-                          !.copyWith(color: Colors.blue[900]),
+                          .headline4!
+                          .copyWith(color: Colors.blue[900]),
                       // children: <Widget>[
                       //   TextSpan(
                       //     text: "/${_questionController.questions.length}",
@@ -56,9 +60,9 @@ class BodyQuiz extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _questionController.pageController,
                   onPageChanged: _questionController.updateTheQnNum,
-                  itemCount: _questionController.questions.length,
+                  itemCount: len,
                   itemBuilder: (context, index) => QuestionCard(
-                      question: _questionController.questions[index],
+                    question: _questionController.questions[index],
                   ),
                 ),
               ),

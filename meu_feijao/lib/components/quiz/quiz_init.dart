@@ -26,7 +26,7 @@ class QuizScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const BodyQuiz(),
+      body: BodyQuiz(type: type),
     );
   }
 }
