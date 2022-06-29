@@ -23,6 +23,10 @@ class _NavBarBottomState extends State<NavBarBottom> {
   late Jogos currentGame;
   late int currentIndex;
   late String _code = '';
+  late String dataRega = '';
+  DateTime now = DateTime.now();
+  late String today = '';
+  bool isActiveButton = false;
 
   @override
   void initState() {
@@ -30,10 +34,18 @@ class _NavBarBottomState extends State<NavBarBottom> {
     currentGame = widget.atual;
     currentIndex = widget.index;
     _code = currentGame.codigo!;
+    dataRega = currentGame.dataAtualizacaoForca!;
+    today = now.toString().substring(0, 10);
   }
 
   @override
   Widget build(BuildContext context) {
+    if (today == dataRega) {
+      isActiveButton = false;
+    } else {
+      isActiveButton = true;
+    }
+    // se a ultima rega não foi hoje nem ontem, devo retirar força da planta
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.black,
@@ -51,7 +63,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
                 builder: (BuildContext context) => _buildPopupDialog(
                     context, currentIndex, currentGame, updates),
               );
-              print('I was here - usar estrelas');
+              // print('I was here - usar estrelas');
             },
           ),
           label: "Usar Estrelas",
@@ -61,18 +73,27 @@ class _NavBarBottomState extends State<NavBarBottom> {
               iconSize: 40,
               color: Colors.black,
               icon: const Icon(Icons.opacity),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => RespQuestoes(
-                      code: _code,
-                      index: currentIndex,
-                      type: 'R',
-                    ),
-                  ),
-                );
-              },
+              onPressed: isActiveButton
+                  ? () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RespQuestoes(
+                            code: _code,
+                            index: currentIndex,
+                            type: 'R',
+                          ),
+                        ),
+                      );
+                    }
+                  : () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) =>
+                            _buildPopupDialogNaoRega(context),
+                      );
+                    },
             ),
             label: "Regar"),
         BottomNavigationBarItem(
@@ -131,19 +152,51 @@ Widget _buildPopupDialog(
         ),
       ),
       ElevatedButton.icon(
-        onPressed: () {
+        onPressed: () async {
           var auxStars = -(atual.qtdEstrelinhas!);
           var auxStars2 = auxStars * 2;
           print(auxStars);
           print(auxStars2);
-          updates.setForcaPlus(auxStars2, currentIndex);
-          updates.setEstrelinhas(-(atual.qtdEstrelinhas!), currentIndex);
+          await updates.setForcaPlus(auxStars2, currentIndex);
+          await updates.setEstrelinhas(-(atual.qtdEstrelinhas!), currentIndex);
           Navigator.pop(context);
         },
         icon: const Icon(Icons.check_box_outlined),
         label: const Text('SIM'),
         style: ElevatedButton.styleFrom(
           primary: Colors.green[700],
+          onPrimary: Colors.black,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _buildPopupDialogNaoRega(BuildContext context) {
+  return AlertDialog(
+    title: const Text(
+      'VOCÊ JÁ REGOU HOJE.',
+      style: TextStyle(color: Colors.black),
+    ),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const <Widget>[
+        Text(
+          'Tente Novamente Amanhã.',
+          style: TextStyle(color: Colors.black),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton.icon(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.cancel_presentation),
+        label: const Text('OK'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.red[700],
           onPrimary: Colors.black,
         ),
       ),

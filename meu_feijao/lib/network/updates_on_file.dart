@@ -26,14 +26,14 @@ class UpdateOnFile {
     await file.writeAsString(json.encode(gamesModel));
   }
 
-  void setEstrelinhas(int estrelinhas, int gameIndex) async {
+  Future<void> setEstrelinhas(int estrelinhas, int gameIndex) async {
     var fullJson = await getFileContents();
     int aux = fullJson.jogos![gameIndex].qtdEstrelinhas!;
     fullJson.jogos![gameIndex].qtdEstrelinhas = aux + estrelinhas;
     writeFile(fullJson);
   }
 
-  void setForcaPlus(int forca, int gameIndex) async {
+  Future<void> setForcaPlus(int forca, int gameIndex) async {
     var fullJson = await getFileContents();
     if (fullJson.jogos![gameIndex].forca! + forca > 100) {
       fullJson.jogos![gameIndex].forca = 100;
@@ -44,7 +44,7 @@ class UpdateOnFile {
     writeFile(fullJson);
   }
 
-  void setForcaMinus(int forca, int gameIndex) async {
+  Future<void> setForcaMinus(int forca, int gameIndex) async {
     var fullJson = await getFileContents();
     if (fullJson.jogos![gameIndex].forca! - forca <= 0) {
       fullJson.jogos![gameIndex].forca = 0;
@@ -54,8 +54,8 @@ class UpdateOnFile {
     }
     writeFile(fullJson);
   }
-
-  void setDataRega(int gameIndex) async {
+  
+  Future<void> setDataRega(int gameIndex) async {
     var fullJson = await getFileContents();
     fullJson.jogos![gameIndex].dataAtualizacaoForca =
         now.toString().substring(0, 10);
