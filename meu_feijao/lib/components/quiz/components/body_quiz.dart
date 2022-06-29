@@ -19,7 +19,7 @@ class BodyQuiz extends StatelessWidget {
       len = 1;
       tipo = 'Regar';
     } else if (type == 'E') {
-      len = _questionController.questions.length;
+      len = _questionController.questions.length; // Mudar len para 9 quando o quiz for finalizado
       tipo = 'Estrelinhas';
     }
     return Stack(

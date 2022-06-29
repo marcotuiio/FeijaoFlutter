@@ -78,12 +78,21 @@ class QuestionController extends GetxController
     _selectedAns = selectedIndex;
 
     if (_correctAns == _selectedAns) {
-      if (type == 'P') {
+      if (type == 'R') {
         _updates.setForcaPlus(18, _currentIndex);
-      } else {
+        _updates.setDataRega(_currentIndex);
+      } else if (type == 'E') {
         _updates.setEstrelinhas(2, _currentIndex);
       }
       _numOfCorrectAns++;
+
+    } else {
+      if (type == 'R') {
+        _updates.setForcaMinus(18, _currentIndex);
+        _updates.setDataRega(_currentIndex);
+      } else if (type == 'E') {
+        _updates.setEstrelinhas(0, _currentIndex);
+      }
     }
     _animationController.stop();
     update();
@@ -169,7 +178,7 @@ class QuestionController extends GetxController
       // Reset the counter
       _animationController.reset();
     } else {
-      // Navigator.push(context, RespQuest());
+      // Pop to HomeScreen
     }
   }
 

@@ -26,7 +26,8 @@ class _NavBarBottomState extends State<NavBarBottom> {
   late String dataRega = '';
   DateTime now = DateTime.now();
   late String today = '';
-  bool isActiveButton = false;
+  bool isActiveButtonRega = false;
+  bool isActiveButtonStars = true;
 
   @override
   void initState() {
@@ -36,16 +37,21 @@ class _NavBarBottomState extends State<NavBarBottom> {
     _code = currentGame.codigo!;
     dataRega = currentGame.dataAtualizacaoForca!;
     today = now.toString().substring(0, 10);
+    if (today == dataRega) {
+      isActiveButtonRega = false;
+    } else {
+      isActiveButtonRega = true;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (today == dataRega) {
-      isActiveButton = false;
-    } else {
-      isActiveButton = true;
-    }
-    // se a ultima rega não foi hoje nem ontem, devo retirar força da planta
+    // if (today == dataRega) {
+    //   isActiveButtonRega = false;
+    // } else {
+    //   isActiveButtonRega = true;
+    // }
+    // // se a ultima rega não foi hoje nem ontem, devo retirar força da planta
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.black,
@@ -73,7 +79,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
               iconSize: 40,
               color: Colors.black,
               icon: const Icon(Icons.opacity),
-              onPressed: isActiveButton
+              onPressed: isActiveButtonRega
                   ? () {
                       Navigator.push(
                         context,
@@ -101,18 +107,27 @@ class _NavBarBottomState extends State<NavBarBottom> {
             iconSize: 40,
             color: Colors.black,
             icon: const Icon(Icons.book_online_outlined),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => RespQuestoes(
-                    code: _code,
-                    index: currentIndex,
-                    type: 'E',
-                  ),
-                ),
-              );
-            },
+            onPressed: isActiveButtonStars
+                ? () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RespQuestoes(
+                          code: _code,
+                          index: currentIndex,
+                          type: 'E',
+                        ),
+                      ),
+                    );
+                  }
+                : () {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) =>
+                          _buildPopupDialogNaoStars(context),
+                    );
+                  },
           ),
           label: "Obter Estrelas",
         ),
@@ -155,8 +170,6 @@ Widget _buildPopupDialog(
         onPressed: () async {
           var auxStars = -(atual.qtdEstrelinhas!);
           var auxStars2 = auxStars * 2;
-          print(auxStars);
-          print(auxStars2);
           await updates.setForcaPlus(auxStars2, currentIndex);
           await updates.setEstrelinhas(-(atual.qtdEstrelinhas!), currentIndex);
           Navigator.pop(context);
@@ -176,6 +189,38 @@ Widget _buildPopupDialogNaoRega(BuildContext context) {
   return AlertDialog(
     title: const Text(
       'VOCÊ JÁ REGOU HOJE.',
+      style: TextStyle(color: Colors.black),
+    ),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const <Widget>[
+        Text(
+          'Tente Novamente Amanhã.',
+          style: TextStyle(color: Colors.black),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton.icon(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.cancel_presentation),
+        label: const Text('OK'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.red[700],
+          onPrimary: Colors.black,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _buildPopupDialogNaoStars(BuildContext context) {
+  return AlertDialog(
+    title: const Text(
+      'VOCÊ JÁ RESPONDEU 9 PERGUNTAS HOJE.',
       style: TextStyle(color: Colors.black),
     ),
     content: Column(
