@@ -33,6 +33,13 @@ class UpdateQuestions {
     writeFile(fullQuestions, gameCode);
   }
 
+  void setUsado(String gameCode, int index) async {
+    QuestionModel fullQuestions = await getFileContents(gameCode);
+    List<Questoes> questoes = fullQuestions.questoes!;
+    questoes[index].usado = 1;
+    writeFile(fullQuestions, gameCode);
+  }
+
   void writeFile(QuestionModel questModel, String gameCode) async {
     final file = File(await getFilePath(gameCode));
     await file.writeAsString(json.encode(questModel));

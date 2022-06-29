@@ -86,9 +86,17 @@ Future<String> getFilePath(String gameCode) async {
 Future<void> loadQuestions(String gameCode) async {
   QuestionModel fullQuestions = await getFileContents(gameCode);
   List<Questoes> questoes = fullQuestions.questoes!;
-  // print('Antes ${questoes[0].options}');
+  print(questoes);
+  int i = 0;
+  while (i < questoes.length) {
+    if (questoes[i].usado == 1) {
+      questoes.removeAt(i);
+    } else {
+      i++;
+    }
+  }
   sampledata = questoes;
-  // print('Depois ${sampledata[0].options}');
+  print(sampledata);
 }
 
 List<Questoes> sampledata = [];
