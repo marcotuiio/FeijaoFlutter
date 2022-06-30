@@ -28,15 +28,13 @@ class UpdateQuestions {
 
   void setTentativas(String gameCode, int tentativas, int index) async {
     QuestionModel fullQuestions = await getFileContents(gameCode);
-    List<Questoes> questoes = fullQuestions.questoes!;
-    questoes[index].tentativas = tentativas;
+    fullQuestions.questoes![index].tentativas = tentativas;
     writeFile(fullQuestions, gameCode);
   }
 
   void setUsado(String gameCode, int index) async {
     QuestionModel fullQuestions = await getFileContents(gameCode);
-    List<Questoes> questoes = fullQuestions.questoes!;
-    questoes[index].usado = 1;
+    fullQuestions.questoes![index].usado = 1;
     writeFile(fullQuestions, gameCode);
   }
 

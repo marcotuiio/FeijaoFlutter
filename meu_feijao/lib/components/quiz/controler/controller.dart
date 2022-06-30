@@ -94,6 +94,7 @@ class QuestionController extends GetxController
         _updateQuestions.setTentativas(_currentCode, 11, _currentIndex);
         _updateQuestions.setUsado(_currentCode, _currentIndex);
         _numOfCorrectAns++;
+
       } else {
         // EEEEErrou com tentativas = 0
         _updateQuestions.setTentativas(_currentCode, 10, _currentIndex);
@@ -104,6 +105,7 @@ class QuestionController extends GetxController
           _updatesGame.setEstrelinhas(0, _currentIndex);
         }
       }
+      
     //Segunda tentativa  
     } else if (question.tentativas == 10) {
       // Acertou de segunda
