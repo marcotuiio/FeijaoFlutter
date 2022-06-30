@@ -3,6 +3,7 @@
 // ignore_for_file: deprecated_member_use, unused_field, avoid_print
 
 import 'package:feijao_magico_uel/network/questions_model.dart';
+import 'package:feijao_magico_uel/network/update_quest.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,9 @@ class QuestionController extends GetxController
 
   late int _currentIndex;
   late String _currentCode;
-  final UpdateOnFile _updates = UpdateOnFile();
+  late String _currentType;
+  final UpdateOnFile _updatesGame = UpdateOnFile();
+  final UpdateQuestions _updateQuestions = UpdateQuestions();
 
   // called immediately after the widget is allocated memory
   @override
@@ -51,6 +54,7 @@ class QuestionController extends GetxController
     super.onInit();
     _currentIndex = index;
     _currentCode = code;
+    _currentType = type;
     print(_currentCode);
     print(_currentIndex);
     _animationController = AnimationController(
@@ -77,23 +81,49 @@ class QuestionController extends GetxController
     _correctAns = question.answerIndex!;
     _selectedAns = selectedIndex;
 
-    if (_correctAns == _selectedAns) {
-      if (type == 'R') {
-        _updates.setForcaPlus(18, _currentIndex);
-        _updates.setDataRega(_currentIndex);
-      } else if (type == 'E') {
-        _updates.setEstrelinhas(2, _currentIndex);
+    //primeira tentativa
+    if (question.tentativas == 0) {
+      //Certa resposta
+      if (_correctAns == _selectedAns) {
+        if (_currentType == 'R') {
+          _updatesGame.setForcaPlus(18, _currentIndex);
+          _updatesGame.setDataRega(_currentIndex);
+        } else if (_currentType == 'E') {
+          _updatesGame.setEstrelinhas(2, _currentIndex);
+        }
+        _updateQuestions.setTentativas(_currentCode, 11, _currentIndex);
+        _updateQuestions.setUsado(_currentCode, _currentIndex);
+        _numOfCorrectAns++;
+      } else {
+        // EEEEErrou com tentativas = 0
+        _updateQuestions.setTentativas(_currentCode, 10, _currentIndex);
+        if (_currentType == 'R') {
+          _updatesGame.setForcaMinus(18, _currentIndex);
+          _updatesGame.setDataRega(_currentIndex);
+        } else if (_currentType == 'E') {
+          _updatesGame.setEstrelinhas(0, _currentIndex);
+        }
       }
-      _numOfCorrectAns++;
-
-    } else {
-      if (type == 'R') {
-        _updates.setForcaMinus(18, _currentIndex);
-        _updates.setDataRega(_currentIndex);
-      } else if (type == 'E') {
-        _updates.setEstrelinhas(0, _currentIndex);
+    //Segunda tentativa  
+    } else if (question.tentativas == 10) {
+      // Acertou de segunda
+      if (_correctAns == _selectedAns) {
+        if (_currentType == 'R') {
+          _updatesGame.setForcaPlus(9, _currentIndex);
+          _updatesGame.setDataRega(_currentIndex);
+        } else if (_currentType == 'E') {
+          _updatesGame.setEstrelinhas(1, _currentIndex);
+        }
+        _updateQuestions.setTentativas(_currentCode, 21, _currentIndex);
+        _updateQuestions.setUsado(_currentCode, _currentIndex);
+      
+      // Errou de segunda
+      } else {
+        _updateQuestions.setTentativas(_currentCode, 20, _currentIndex);
+        _updateQuestions.setUsado(_currentCode, _currentIndex);
       }
     }
+
     _animationController.stop();
     update();
 
@@ -101,72 +131,8 @@ class QuestionController extends GetxController
       nextQuestion();
     });
 
-    //Regar = 'P';
+    //Regar = 'R';
     //Estrelas = 'E';
-
-    // TO DO: gravar no arquivo questoes_respondidas_[codigo do game].json no registro
-
-    // if (_correctAns == _selectedAns && _tentativas == 0) {
-    //   //acertou na primeira
-    //   if (tipo == 'P') {
-    //     forcaAux = forcaAux + 0; //não há penalidade de rega
-    //   }
-    //   if (tipo == 'E') {
-    //     stars = stars + 2; //recebe duas estrelinhas
-    //   }
-    //   marcar no json dessa questao que tentativa = 11;
-    //   Future.delayed(const Duration(seconds: 3), () {
-    //     nextQuestion();
-    //   });
-
-    // } else if (_correctAns != _selectedAns && _tentativas == 0) {
-    //   //errou na primeira
-    //   _tentativas = 10;
-    //   if (tipo == 'P') {
-    //     forcaAux = forcaAux - 9; //9 de penalidade de rega
-    //   }
-    //   if (tipo == 'E') {
-    //     stars = stars + 0; //recebe uma estrelinhas
-    //   }
-
-    //   //repetir questão exibindo dica
-    //   marcar no json dessa questao que tentativa = 10;
-
-    //   _animationController.reset();
-
-    // } else if (_correctAns == _selectedAns && _tentativas == 10) {
-    //   //acertou na segunda
-    //   if (tipo == 'P') {
-    //     forcaAux = forcaAux - 0; //9 de penalidade de rega ja aplicada
-    //   }
-    //   if (tipo == 'E') {
-    //     stars = stars + 1; //recebe uma estrelinhas
-    //   }
-
-    //   marcar no json dessa questao que tentativa = 21;
-
-    //   Future.delayed(const Duration(seconds: 3), () {
-    //     nextQuestion();
-    //   });
-
-    // } else if (_correctAns != _selectedAns && _tentativas == 10) {
-    //   //errou na segunda
-    //   if (tipo == 'P') {
-    //     forcaAux = forcaAux - 9; //total 18 de penalidade de rega
-    //   }
-    //   if (tipo == 'E') {
-    //     stars = stars + 0; //total 0 estrelinhas
-    //   }
-
-    //   marcar no json dessa questao que tentativa = 20;
-    //                              !!!!!!!!!!!!!!!!!!
-    //   !!!!!!!!!!!!!!!!!! marcar no json do game forca = forcaAux e estrelinhas = stars; !!!!!!!!!!!!!!!!!!
-    //                              !!!!!!!!!!!!!!!!!!
-
-    //   Future.delayed(const Duration(seconds: 3), () {
-    //     nextQuestion(stars, forcaAux);
-    //   });
-    // }
   }
 
   void nextQuestion() {

@@ -91,9 +91,8 @@ Future<void> loadQuestions(String gameCode) async {
   while (i < questoes.length) {
     if (questoes[i].usado == 1) {
       questoes.removeAt(i);
-    } else {
-      i++;
-    }
+    }      
+    i++;
   }
   sampledata = questoes;
   print(sampledata);
