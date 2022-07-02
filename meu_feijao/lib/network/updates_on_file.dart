@@ -61,4 +61,18 @@ class UpdateOnFile {
         now.toString().substring(0, 10);
     writeFile(fullJson);
   }
+
+  Future<void> setDataAtual(int gameIndex) async {
+    var fullJson = await getFileContents();
+    fullJson.jogos![gameIndex].dataAtual =
+        now.toString().substring(0, 10);
+    writeFile(fullJson);
+  }
+
+  Future<void> setTentativaDiaria(int gameIndex) async {
+    var fullJson = await getFileContents();
+    fullJson.jogos![gameIndex].tentativasDiarias =
+        fullJson.jogos![gameIndex].tentativasDiarias! + 1;
+    writeFile(fullJson);
+  }
 }

@@ -28,6 +28,8 @@ class _NavBarBottomState extends State<NavBarBottom> {
   late String today = '';
   bool isActiveButtonRega = false;
   bool isActiveButtonStars = true;
+  late int tentativasDiarias;
+  late int auxLen;
 
   @override
   void initState() {
@@ -41,6 +43,14 @@ class _NavBarBottomState extends State<NavBarBottom> {
       isActiveButtonRega = false;
     } else {
       isActiveButtonRega = true;
+    }
+    updates.setDataAtual(currentIndex);
+    tentativasDiarias = currentGame.tentativasDiarias!;
+    if (tentativasDiarias < 9) {
+      isActiveButtonStars = true;
+      auxLen = 9 - tentativasDiarias;
+    } else {
+      isActiveButtonStars = false;
     }
   }
 
@@ -69,7 +79,6 @@ class _NavBarBottomState extends State<NavBarBottom> {
                 builder: (BuildContext context) => _buildPopupDialog(
                     context, currentIndex, currentGame, updates),
               );
-              // print('I was here - usar estrelas');
             },
           ),
           label: "Usar Estrelas",
@@ -116,6 +125,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
                           code: _code,
                           index: currentIndex,
                           type: 'E',
+                          len: auxLen,
                         ),
                       ),
                     );

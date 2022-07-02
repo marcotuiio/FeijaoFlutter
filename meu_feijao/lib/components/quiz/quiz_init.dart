@@ -7,7 +7,13 @@ class QuizScreen extends StatelessWidget {
   final String code;
   final int index;
   final String type;
-  const QuizScreen({required this.code, required this.index, required this.type, Key? key})
+  final int len;
+  const QuizScreen(
+      {required this.code,
+      required this.index,
+      required this.type,
+      required this.len,
+      Key? key})
       : super(key: key);
 
   @override
@@ -26,7 +32,7 @@ class QuizScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: BodyQuiz(type: type),
+      body: BodyQuiz(type: type, auxLen: len),
     );
   }
 }

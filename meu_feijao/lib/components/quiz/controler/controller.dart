@@ -90,6 +90,7 @@ class QuestionController extends GetxController
           _updatesGame.setDataRega(_currentIndex);
         } else if (_currentType == 'E') {
           _updatesGame.setEstrelinhas(2, _currentIndex);
+          _updatesGame.setTentativaDiaria(_currentIndex);
         }
         _updateQuestions.setTentativas(_currentCode, 11, _currentIndex);
         _updateQuestions.setUsado(_currentCode, _currentIndex);
@@ -115,12 +116,16 @@ class QuestionController extends GetxController
           _updatesGame.setDataRega(_currentIndex);
         } else if (_currentType == 'E') {
           _updatesGame.setEstrelinhas(1, _currentIndex);
+          _updatesGame.setTentativaDiaria(_currentIndex);
         }
         _updateQuestions.setTentativas(_currentCode, 21, _currentIndex);
         _updateQuestions.setUsado(_currentCode, _currentIndex);
       
       // Errou de segunda
       } else {
+        if (_currentType == 'E') {
+          _updatesGame.setTentativaDiaria(_currentIndex);
+        }
         _updateQuestions.setTentativas(_currentCode, 20, _currentIndex);
         _updateQuestions.setUsado(_currentCode, _currentIndex);
       }

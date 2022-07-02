@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 
 class BodyQuiz extends StatelessWidget {
   final String type;
-  const BodyQuiz({required this.type, Key? key}) : super(key: key);
+  final int auxLen;
+  const BodyQuiz({required this.type, required this.auxLen, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class BodyQuiz extends StatelessWidget {
       len = 1;
       tipo = 'Regar';
     } else if (type == 'E') {
-      len = _questionController.questions.length; // Mudar len para 9 quando o quiz for finalizado
+      len = auxLen;
       tipo = 'Estrelinhas';
     }
     return Stack(

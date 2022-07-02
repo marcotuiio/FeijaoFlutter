@@ -12,8 +12,13 @@ class RespQuestoes extends StatefulWidget {
   final String code;
   final int index;
   final String type;
+  final int len;
   const RespQuestoes(
-      {required this.code, required this.index, required this.type, Key? key})
+      {required this.code,
+      required this.index,
+      required this.type,
+      this.len = 0,
+      Key? key})
       : super(key: key);
 
   @override
@@ -26,6 +31,7 @@ class _RespQuestoesState extends State<RespQuestoes> {
   late int _currentIndex;
   late String _name = '';
   late String _type = '';
+  late int _len;
 
   @override
   void initState() {
@@ -33,6 +39,7 @@ class _RespQuestoesState extends State<RespQuestoes> {
     _key = widget.code;
     _currentIndex = widget.index;
     _type = widget.type;
+    _len = widget.len;
     questionsObjects = NetworkQuestion().getQuestionModel(gameCode: _key);
     readFileTXT();
   }
@@ -135,6 +142,7 @@ class _RespQuestoesState extends State<RespQuestoes> {
                                     code: _key,
                                     index: _currentIndex,
                                     type: _type,
+                                    len: _len,
                                   ),
                                 ),
                               );
