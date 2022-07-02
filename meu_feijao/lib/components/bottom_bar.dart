@@ -44,13 +44,16 @@ class _NavBarBottomState extends State<NavBarBottom> {
     } else {
       isActiveButtonRega = true;
     }
-    updates.setDataAtual(currentIndex);
-    tentativasDiarias = currentGame.tentativasDiarias!;
-    if (tentativasDiarias < 9) {
-      isActiveButtonStars = true;
-      auxLen = 9 - tentativasDiarias;
-    } else {
-      isActiveButtonStars = false;
+    if (today == currentGame.dataAtual) {
+      tentativasDiarias = currentGame.tentativasDiarias!;
+      if (tentativasDiarias < 9) {
+        isActiveButtonStars = true;
+        auxLen = 9 - tentativasDiarias;
+      } else {
+        updates.setDataAtual(currentIndex);
+        updates.setTentativaDiarias(currentIndex);
+        isActiveButtonStars = false;
+      }
     }
   }
 

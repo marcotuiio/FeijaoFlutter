@@ -54,7 +54,7 @@ class UpdateOnFile {
     }
     writeFile(fullJson);
   }
-  
+
   Future<void> setDataRega(int gameIndex) async {
     var fullJson = await getFileContents();
     fullJson.jogos![gameIndex].dataAtualizacaoForca =
@@ -64,15 +64,21 @@ class UpdateOnFile {
 
   Future<void> setDataAtual(int gameIndex) async {
     var fullJson = await getFileContents();
-    fullJson.jogos![gameIndex].dataAtual =
-        now.toString().substring(0, 10);
+    var aux = DateTime(now.year, now.month, now.day + 1);
+    fullJson.jogos![gameIndex].dataAtual = aux.toString().substring(0, 10);
     writeFile(fullJson);
   }
 
-  Future<void> setTentativaDiaria(int gameIndex) async {
+  Future<void> plusTentativaDiaria(int gameIndex) async {
     var fullJson = await getFileContents();
     fullJson.jogos![gameIndex].tentativasDiarias =
         fullJson.jogos![gameIndex].tentativasDiarias! + 1;
+    writeFile(fullJson);
+  }
+
+  Future<void> setTentativaDiarias(int gameIndex) async {
+    var fullJson = await getFileContents();
+    fullJson.jogos![gameIndex].tentativasDiarias = 0;
     writeFile(fullJson);
   }
 }
