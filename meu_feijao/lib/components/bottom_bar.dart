@@ -62,12 +62,6 @@ class _NavBarBottomState extends State<NavBarBottom> {
 
   @override
   Widget build(BuildContext context) {
-    // if (today == dataRega) {
-    //   isActiveButtonRega = false;
-    // } else {
-    //   isActiveButtonRega = true;
-    // }
-    // // se a ultima rega não foi hoje nem ontem, devo retirar força da planta
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.black,
