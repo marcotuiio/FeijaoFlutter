@@ -31,7 +31,8 @@ class Jogos {
   int? forca;
   String? dataAtualizacaoForca;
   String? dataAtual;
-  int? tentativasDiarias;
+  int? tentativasEstrelas;
+  int? tentativasForca;
   int? qtdEstrelinhas;
 
   Jogos(
@@ -44,7 +45,8 @@ class Jogos {
       this.forca,
       this.dataAtualizacaoForca,
       this.dataAtual,
-      this.tentativasDiarias,
+      this.tentativasEstrelas,
+      this.tentativasForca,
       this.qtdEstrelinhas});
 
   Jogos.fromJson(Map<String, dynamic> json) {
@@ -57,7 +59,8 @@ class Jogos {
     forca = json['forca'];
     dataAtualizacaoForca = json['dataAtualizacaoForca'];
     dataAtual = json['dataAtual'];
-    tentativasDiarias = json['tentativas_diarias'];
+    tentativasEstrelas = json['tentativas_estrelas'];
+    tentativasForca = json['tentativas_forca'];
     qtdEstrelinhas = json['qtd_estrelinhas'];
   }
 
@@ -72,7 +75,8 @@ class Jogos {
     data['forca'] = forca;
     data['dataAtualizacaoForca'] = dataAtualizacaoForca;
     data['dataAtual'] = dataAtual;
-    data['tentativas_diarias'] = tentativasDiarias;
+    data['tentativas_estrelas'] = tentativasEstrelas;
+    data['tentativas_forca'] = tentativasForca;
     data['qtd_estrelinhas'] = qtdEstrelinhas;
     return data;
   }

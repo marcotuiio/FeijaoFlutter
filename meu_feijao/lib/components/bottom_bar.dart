@@ -29,7 +29,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
   bool isActiveButtonRega = false;
   bool isActiveButtonStars = true;
   late int tentativasDiarias;
-  late int auxLen;
+  late int auxLen = 0;
 
   @override
   void initState() {
@@ -39,19 +39,22 @@ class _NavBarBottomState extends State<NavBarBottom> {
     _code = currentGame.codigo!;
     dataRega = currentGame.dataAtualizacaoForca!;
     today = now.toString().substring(0, 10);
+
     if (today == dataRega) {
       isActiveButtonRega = false;
-    } else {
+      updates.setTentativaForca(currentIndex, 0);
+    } else if (currentGame.tentativasForca == 0) {
       isActiveButtonRega = true;
     }
+
     if (today == currentGame.dataAtual) {
-      tentativasDiarias = currentGame.tentativasDiarias!;
+      tentativasDiarias = currentGame.tentativasEstrelas!;
       if (tentativasDiarias < 9) {
         isActiveButtonStars = true;
         auxLen = 9 - tentativasDiarias;
       } else {
         updates.setDataAtual(currentIndex);
-        updates.setTentativaDiarias(currentIndex);
+        updates.setTentativaEstrelas(currentIndex);
         isActiveButtonStars = false;
       }
     }

@@ -28,6 +28,7 @@ class QuestionModel {
 }
 
 class Questoes {
+  String? dataResposta;
   int? tentativas;
   int? id;
   String? question;
@@ -37,7 +38,8 @@ class Questoes {
   String? comentario;
 
   Questoes(
-      {this.tentativas,
+      {this.dataResposta,
+      this.tentativas,
       this.id,
       this.question,
       this.options,
@@ -46,6 +48,7 @@ class Questoes {
       this.comentario});
 
   Questoes.fromJson(Map<String, dynamic> json) {
+    dataResposta = json['data_resposta'];
     tentativas = json['tentativas'];
     id = json['id'];
     question = json['question'];
@@ -57,6 +60,7 @@ class Questoes {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['data_resposta'] = dataResposta;
     data['tentativas'] = tentativas;
     data['id'] = id;
     data['question'] = question;
@@ -88,10 +92,14 @@ Future<void> loadQuestions(String gameCode) async {
   List<Questoes> questoes = fullQuestions.questoes!;
   print(questoes);
   int i = 0;
+  var now = DateTime.now();
+  var time = now.toString().substring(0, 10);
   while (i < questoes.length) {
     if (questoes[i].usado == 1) {
-      questoes.removeAt(i);
-    }      
+      if (time != questoes[i].dataResposta) {
+        questoes.removeAt(i);
+      }
+    }
     i++;
   }
   sampledata = questoes;

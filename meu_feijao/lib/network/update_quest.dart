@@ -4,6 +4,7 @@ import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 class UpdateQuestions {
+  var now = DateTime.now();
 
   Future<QuestionModel> getFileContents(String gameCode) async {
     File file = File(await getFilePath(gameCode));
@@ -20,27 +21,33 @@ class UpdateQuestions {
     return filePath;
   }
 
+  void writeFile(QuestionModel questModel, String gameCode) async {
+    final file = File(await getFilePath(gameCode));
+    await file.writeAsString(json.encode(questModel));
+  }
+
   Future<List<Questoes>> loadQuestions(String gameCode) async {
     QuestionModel fullQuestions = await getFileContents(gameCode);
     List<Questoes> questoes = fullQuestions.questoes!;
     return questoes;
   }
 
-  void setTentativas(String gameCode, int tentativas, int index) async {
+  Future<void> setTentativas(String gameCode, int tentativas, int index) async {
     QuestionModel fullQuestions = await getFileContents(gameCode);
     fullQuestions.questoes![index].tentativas = tentativas;
     writeFile(fullQuestions, gameCode);
   }
 
-  void setUsado(String gameCode, int index) async {
+  Future<void> setUsado(String gameCode, int index) async {
     QuestionModel fullQuestions = await getFileContents(gameCode);
     fullQuestions.questoes![index].usado = 1;
     writeFile(fullQuestions, gameCode);
   }
 
-  void writeFile(QuestionModel questModel, String gameCode) async {
-    final file = File(await getFilePath(gameCode));
-    await file.writeAsString(json.encode(questModel));
+  Future<void> setDataResposta(String gameCode, int index) async {
+    QuestionModel fullQuestions = await getFileContents(gameCode);
+    fullQuestions.questoes![index].dataResposta = now.toString().substring(0, 10);
+    writeFile(fullQuestions, gameCode);
   }
 
 }

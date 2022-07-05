@@ -81,16 +81,17 @@ class QuestionController extends GetxController
     _correctAns = question.answerIndex!;
     _selectedAns = selectedIndex;
 
-    //primeira tentativa
+    // primeira tentativa
     if (question.tentativas == 0) {
-      //Certa resposta
+      // Certa resposta
       if (_correctAns == _selectedAns) {
         if (_currentType == 'R') {
           _updatesGame.setForcaPlus(18, _currentIndex);
           _updatesGame.setDataRega(_currentIndex);
+          _updatesGame.setTentativaForca(_currentIndex, 1);
         } else if (_currentType == 'E') {
           _updatesGame.setEstrelinhas(2, _currentIndex);
-          _updatesGame.plusTentativaDiaria(_currentIndex);
+          _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
         _updateQuestions.setTentativas(_currentCode, 11, _currentIndex);
         _updateQuestions.setUsado(_currentCode, _currentIndex);
@@ -100,30 +101,33 @@ class QuestionController extends GetxController
         _updateQuestions.setTentativas(_currentCode, 10, _currentIndex);
         if (_currentType == 'R') {
           _updatesGame.setForcaMinus(18, _currentIndex);
-          _updatesGame.setDataRega(_currentIndex);
+          // _updatesGame.setDataRega(_currentIndex);
         } else if (_currentType == 'E') {
           _updatesGame.setEstrelinhas(0, _currentIndex);
         }
       }
 
-      //Segunda tentativa
+      // Segunda tentativa
     } else if (question.tentativas == 10) {
       // Acertou de segunda
       if (_correctAns == _selectedAns) {
         if (_currentType == 'R') {
           _updatesGame.setForcaPlus(9, _currentIndex);
           _updatesGame.setDataRega(_currentIndex);
+          _updatesGame.setTentativaForca(_currentIndex, 1);
         } else if (_currentType == 'E') {
           _updatesGame.setEstrelinhas(1, _currentIndex);
-          _updatesGame.plusTentativaDiaria(_currentIndex);
+          _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
         _updateQuestions.setTentativas(_currentCode, 21, _currentIndex);
         _updateQuestions.setUsado(_currentCode, _currentIndex);
 
         // Errou de segunda
       } else {
-        if (_currentType == 'E') {
-          _updatesGame.plusTentativaDiaria(_currentIndex);
+        if (_currentType == 'R') {
+          _updatesGame.setTentativaForca(_currentIndex, 1);
+        } else if (_currentType == 'E') {
+          _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
         _updateQuestions.setTentativas(_currentCode, 20, _currentIndex);
         _updateQuestions.setUsado(_currentCode, _currentIndex);

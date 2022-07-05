@@ -9,8 +9,9 @@
       "datafim": "2022-03-01",
       "forca": 90,
       "dataAtualizacaoForca": "2022-03-26",
-      "dataAtual": "2022-03-26",
-      "tentativas_diarias": 0,
+      "dataAtual": "2022-03-27",
+      "tentativas_estrelas": 0,
+      "tentativas_forca": 0,
       "qtd_estrelinhas": 12
     },
     {
@@ -23,7 +24,8 @@
       "forca": 90,
       "dataAtualizacaoForca": "2022-03-26",
       "dataAtual": "2022-03-26",
-      "tentativas_diarias": 0,
+      "tentativas_estrelas": 0,
+      "tentativas_forca": 0,
       "qtd_estrelinhas": 12
     },
     {
@@ -36,7 +38,8 @@
       "forca": 90,
       "dataAtualizacaoForca": "2022-03-26",
       "dataAtual": "2022-03-26",
-      "tentativas_diarias": 0,
+      "tentativas_estrelas": 0,
+      "tentativas_forca": 0,
       "qtd_estrelinhas": 12
     }
   ]

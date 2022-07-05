@@ -1,6 +1,7 @@
 {
     "questoes": [
         {
+            "data_resposta": "2022-07-05",
             "tentativas": 10,
             "id": 90,
             "question": " O organizador de uma competição de lançamento de dardos pretende tornar o campeonato mais competitivo. Pelas regras atuais da competição, numa rodada, o jogador lança 3 dardos e pontua caso acerte pelo menos um deles no alvo. O organizador considera que, em média, os jogadores têm, em cada lançamento, 1/2 de probabilidade de acertar um dardo no alvo. A fim de tornar o jogo mais atrativo, planeja modificar as regras de modo que a probabilidade de um jogador pontuar em uma rodada seja igual ou superior a 9/10. Para isso, decide aumentar a quantidade de dardos a serem lançados em cada rodada. Com base nos valores considerados pelo organizador da competição, a quantidade mínima de dardos que devem ser disponibilizados em uma rodada para tornar o jogo mais atrativo é",
@@ -15,6 +16,7 @@
             "comentario": "dica 90"
         },
         {
+            "data_resposta": "2022-07-05",
             "tentativas": 10,
             "id": 20,
             "question": "As relações do Estado brasileiro com o movimento operário e sindical, bem como as políticas públicas voltadas para as questões sociais durante o primeiro governo da Era Vargas (1930-1945), são temas amplamente estudados pela academia brasileira em seus vários aspectos. São também os temas mais lembrados pela sociedade quando se pensa no legado varguista. ?",
@@ -28,7 +30,8 @@
             "usado": 0,
             "comentario": "dica 20"
         },
-        {
+        {   
+            "data_resposta": "2022-07-05",
             "tentativas": 10,
             "id": 30,
             "question": "Qual é o ..questão 30.. ?",
@@ -43,6 +46,7 @@
             "comentario": "dica 30"
         },
         {
+            "data_resposta": "2022-07-05",
             "tentativas": 10,
             "id": 31,
             "question": "Qual é o ..questão 31.. ?",
@@ -57,6 +61,7 @@
             "comentario": "dica 31"
         },
         {
+            "data_resposta": "2022-07-05",
             "tentativas": 10,
             "id": 33,
             "question": "Qual é o ..questão 33.. ?",
@@ -70,7 +75,8 @@
             "usado": 0,
             "comentario": "dica 33"
         },
-        {
+        {   
+            "data_resposta": "2022-07-05",
             "tentativas": 10,
             "id": 61,
             "question": "Qual é o ..questão 60.. ?",
@@ -85,6 +91,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 10,
             "question": "Qual é o .... ?",
@@ -99,6 +106,7 @@
             "comentario": "dica 10"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 3,
             "question": "Qual é o ..questão 60.. ?",
@@ -113,6 +121,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 4,
             "question": "Qual é o ..questão 60.. ?",
@@ -127,6 +136,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 5,
             "question": "Qual é o ..questão 60.. ?",
@@ -141,6 +151,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 6,
             "question": "Qual é o ..questão 60.. ?",
@@ -155,6 +166,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 7,
             "question": "Qual é o ..questão 60.. ?",
@@ -169,6 +181,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 8,
             "question": "Qual é o ..questão 60.. ?",
@@ -183,6 +196,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 9,
             "question": "Qual é o ..questão 60.. ?",
@@ -197,6 +211,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 61,
             "question": "Qual é o ..questão 60.. ?",
@@ -211,6 +226,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 12,
             "question": "Qual é o ..questão 60.. ?",
@@ -225,6 +241,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 101,
             "question": "Qual é o ..questão 60.. ?",
@@ -239,6 +256,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 43,
             "question": "Qual é o ..questão 60.. ?",
@@ -253,6 +271,7 @@
             "comentario": "dica 61"
         },
         {
+            "data_resposta": "nda",
             "tentativas": 10,
             "id": 55,
             "question": "Qual é o ..questão 60.. ?",

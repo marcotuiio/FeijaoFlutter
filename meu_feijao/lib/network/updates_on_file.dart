@@ -69,16 +69,22 @@ class UpdateOnFile {
     writeFile(fullJson);
   }
 
-  Future<void> plusTentativaDiaria(int gameIndex) async {
+  Future<void> plusTentativaEstrelas(int gameIndex) async {
     var fullJson = await getFileContents();
-    fullJson.jogos![gameIndex].tentativasDiarias =
-        fullJson.jogos![gameIndex].tentativasDiarias! + 1;
+    fullJson.jogos![gameIndex].tentativasEstrelas =
+        fullJson.jogos![gameIndex].tentativasEstrelas! + 1;
     writeFile(fullJson);
   }
 
-  Future<void> setTentativaDiarias(int gameIndex) async {
+  Future<void> setTentativaEstrelas(int gameIndex) async {
     var fullJson = await getFileContents();
-    fullJson.jogos![gameIndex].tentativasDiarias = 0;
+    fullJson.jogos![gameIndex].tentativasEstrelas = 0;
+    writeFile(fullJson);
+  }
+
+  Future<void> setTentativaForca(int gameIndex, int toSet) async {
+    var fullJson = await getFileContents();
+    fullJson.jogos![gameIndex].tentativasForca = toSet;
     writeFile(fullJson);
   }
 }
