@@ -90,20 +90,20 @@ Future<String> getFilePath(String gameCode) async {
 Future<void> loadQuestions(String gameCode) async {
   QuestionModel fullQuestions = await getFileContents(gameCode);
   List<Questoes> questoes = fullQuestions.questoes!;
-  print(questoes);
+  print(questoes.toString());
   int i = 0;
   var now = DateTime.now();
   var time = now.toString().substring(0, 10);
   while (i < questoes.length) {
     if (questoes[i].dataResposta != 'nda') {
       if (questoes[i].usado == 1 || time != questoes[i].dataResposta) {
-      questoes.removeAt(i); 
+        questoes.removeAt(i); 
       }
     }
     i++;
   }
   sampledata = questoes;
-  print(sampledata);
+  print(sampledata.toString());
 }
 
 List<Questoes> sampledata = [];

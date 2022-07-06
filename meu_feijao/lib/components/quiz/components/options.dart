@@ -17,19 +17,9 @@ class Option extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<QuestionController>(
-        init: QuestionController(),
-        builder: (qnController) {
-          Color getTheRightColor() {
-            if (qnController.isAnswered) {
-              if (index == qnController.correctAns) {
-                return Colors.green;
-              } else if (index == qnController.selectedAns &&
-                  qnController.selectedAns != qnController.correctAns) {
-                return Colors.red;
-              }
-            }
-            return Colors.grey;
-          }
+      init: QuestionController(),
+      builder: (qnController) {
+        
 
         return InkWell(
           onTap: press,
@@ -38,7 +28,7 @@ class Option extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               border: Border.all(
-                color: getTheRightColor(),
+                color: Colors.blueGrey,
                 width: 5,
               ),
               borderRadius: BorderRadius.circular(15),
@@ -49,17 +39,14 @@ class Option extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     "${index + 1}. $text",
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16
-                    ),
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
                   ),
                   Container(
                     height: 26,
                     width: 26,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: getTheRightColor(),
+                        color: Colors.blueGrey,
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(50),
@@ -74,3 +61,15 @@ class Option extends StatelessWidget {
     );
   }
 }
+
+// Color getTheRightColor() {
+//   if (qnController.isAnswered) {
+//     if (index == qnController.correctAns) {
+//       return Colors.green;
+//     } else if (index == qnController.selectedAns &&
+//         qnController.selectedAns != qnController.correctAns) {
+//       return Colors.red;
+//     }
+//   }
+//   return Colors.grey;
+// }

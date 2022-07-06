@@ -104,7 +104,6 @@ class QuestionController extends GetxController
         _updateQuestions.setDataResposta(_currentCode, _currentIndex);
         if (_currentType == 'R') {
           _updatesGame.setForcaMinus(18, _currentIndex);
-          // _updatesGame.setDataRega(_currentIndex);
         } else if (_currentType == 'E') {
           _updatesGame.setEstrelinhas(0, _currentIndex);
         }

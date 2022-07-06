@@ -24,7 +24,7 @@ class BodyQuiz extends StatelessWidget {
       len = auxLen; // max 9
       tipo = 'Estrelinhas';
     }
-    print('len $len');
+    // print('len $len');
     return Stack(
       children: <Widget>[
         SafeArea(

@@ -59,7 +59,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
         updates.setTentativaEstrelas(currentIndex);
         isActiveButtonStars = false;
       }
-    } else if (currentGame.dataAtual == yesterday.toString() &&
+    } else if (currentGame.dataAtual == yesterday.toString().substring(0, 10) &&
         currentGame.tentativasEstrelas! < 9) {
       updates.setDataAtual(currentIndex, 0);
       updates.setTentativaEstrelas(currentIndex);
