@@ -18,10 +18,10 @@ class BodyQuiz extends StatelessWidget {
     int len = 1;
     String tipo = '';
     if (type == 'R') {
-      len = 1;
+      len = auxLen; // 1
       tipo = 'Regar';
     } else if (type == 'E') {
-      len = auxLen;
+      len = auxLen; // max 9
       tipo = 'Estrelinhas';
     }
     return Stack(
@@ -53,7 +53,6 @@ class BodyQuiz extends StatelessWidget {
               const SizedBox(height: 20),
               Expanded(
                 child: PageView.builder(
-                  // Block swipe to next qn
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _questionController.pageController,
                   onPageChanged: _questionController.updateTheQnNum,
@@ -63,7 +62,6 @@ class BodyQuiz extends StatelessWidget {
                   ),
                 ),
               ),
-              //getText()
             ],
           ),
         )

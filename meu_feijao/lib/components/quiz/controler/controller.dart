@@ -95,10 +95,12 @@ class QuestionController extends GetxController
         }
         _updateQuestions.setTentativas(_currentCode, 11, _currentIndex);
         _updateQuestions.setUsado(_currentCode, _currentIndex);
+        _updateQuestions.setDataResposta(_currentCode, _currentIndex);
         _numOfCorrectAns++;
       } else {
         // EEEEErrou com tentativas = 0
         _updateQuestions.setTentativas(_currentCode, 10, _currentIndex);
+        _updateQuestions.setDataResposta(_currentCode, _currentIndex);
         if (_currentType == 'R') {
           _updatesGame.setForcaMinus(18, _currentIndex);
           // _updatesGame.setDataRega(_currentIndex);
@@ -121,16 +123,20 @@ class QuestionController extends GetxController
         }
         _updateQuestions.setTentativas(_currentCode, 21, _currentIndex);
         _updateQuestions.setUsado(_currentCode, _currentIndex);
+        _updateQuestions.setDataResposta(_currentCode, _currentIndex);
+        _numOfCorrectAns++;
 
         // Errou de segunda
       } else {
         if (_currentType == 'R') {
           _updatesGame.setTentativaForca(_currentIndex, 1);
+          _updatesGame.setDataRega(_currentIndex);
         } else if (_currentType == 'E') {
           _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
         _updateQuestions.setTentativas(_currentCode, 20, _currentIndex);
         _updateQuestions.setUsado(_currentCode, _currentIndex);
+        _updateQuestions.setDataResposta(_currentCode, _currentIndex);
       }
     }
 

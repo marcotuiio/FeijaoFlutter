@@ -45,6 +45,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
       updates.setTentativaForca(currentIndex, 0);
     } else if (currentGame.tentativasForca == 0) {
       isActiveButtonRega = true;
+      auxLen = 1;
     }
 
     if (today == currentGame.dataAtual) {
@@ -97,6 +98,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
                             code: _code,
                             index: currentIndex,
                             type: 'R',
+                            len: auxLen,
                           ),
                         ),
                       );

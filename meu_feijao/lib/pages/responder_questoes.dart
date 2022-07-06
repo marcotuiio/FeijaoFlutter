@@ -27,7 +27,7 @@ class RespQuestoes extends StatefulWidget {
 
 class _RespQuestoesState extends State<RespQuestoes> {
   late Future<QuestionModel> questionsObjects;
-  String _key = '';
+  String _currentCode = '';
   late int _currentIndex;
   late String _name = '';
   late String _type = '';
@@ -36,11 +36,11 @@ class _RespQuestoesState extends State<RespQuestoes> {
   @override
   void initState() {
     super.initState();
-    _key = widget.code;
+    _currentCode = widget.code;
     _currentIndex = widget.index;
     _type = widget.type;
     _len = widget.len;
-    questionsObjects = NetworkQuestion().getQuestionModel(gameCode: _key);
+    questionsObjects = NetworkQuestion().getQuestionModel(gameCode: _currentCode);
     readFileTXT();
   }
 
@@ -133,13 +133,13 @@ class _RespQuestoesState extends State<RespQuestoes> {
                           const SizedBox(height: 40),
                           InkWell(
                             onTap: () async {
-                              await saveQuestionModel(_key, snapshot.data);
-                              await loadQuestions(_key);
+                              await saveQuestionModel(_currentCode, snapshot.data);
+                              await loadQuestions(_currentCode);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => QuizScreen(
-                                    code: _key,
+                                    code: _currentCode,
                                     index: _currentIndex,
                                     type: _type,
                                     len: _len,
