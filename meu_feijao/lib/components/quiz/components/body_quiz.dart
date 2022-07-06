@@ -24,6 +24,7 @@ class BodyQuiz extends StatelessWidget {
       len = auxLen; // max 9
       tipo = 'Estrelinhas';
     }
+    print('len $len');
     return Stack(
       children: <Widget>[
         SafeArea(
@@ -56,9 +57,9 @@ class BodyQuiz extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _questionController.pageController,
                   onPageChanged: _questionController.updateTheQnNum,
-                  itemCount: len,
-                  itemBuilder: (context, index) => QuestionCard(
-                    question: _questionController.questions[index],
+                  itemCount: len, // questoes.length
+                  itemBuilder: (context, len) => QuestionCard(
+                    question: _questionController.questions[len],
                   ),
                 ),
               ),

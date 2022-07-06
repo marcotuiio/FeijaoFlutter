@@ -95,9 +95,9 @@ Future<void> loadQuestions(String gameCode) async {
   var now = DateTime.now();
   var time = now.toString().substring(0, 10);
   while (i < questoes.length) {
-    if (questoes[i].usado == 1) {
-      if (time != questoes[i].dataResposta) {
-        questoes.removeAt(i);
+    if (questoes[i].dataResposta != 'nda') {
+      if (questoes[i].usado == 1 || time != questoes[i].dataResposta) {
+      questoes.removeAt(i); 
       }
     }
     i++;

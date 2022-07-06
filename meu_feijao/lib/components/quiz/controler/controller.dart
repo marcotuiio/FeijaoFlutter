@@ -97,6 +97,7 @@ class QuestionController extends GetxController
         _updateQuestions.setUsado(_currentCode, _currentIndex);
         _updateQuestions.setDataResposta(_currentCode, _currentIndex);
         _numOfCorrectAns++;
+      
       } else {
         // EEEEErrou com tentativas = 0
         _updateQuestions.setTentativas(_currentCode, 10, _currentIndex);

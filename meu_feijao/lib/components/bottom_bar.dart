@@ -27,13 +27,14 @@ class _NavBarBottomState extends State<NavBarBottom> {
   DateTime now = DateTime.now();
   late String today = '';
   bool isActiveButtonRega = false;
-  bool isActiveButtonStars = true;
+  bool isActiveButtonStars = false;
   late int tentativasDiarias;
   late int auxLen = 0;
 
   @override
   void initState() {
     super.initState();
+    var yesterday = DateTime(now.year, now.month, now.day - 1);
     currentGame = widget.atual;
     currentIndex = widget.index;
     _code = currentGame.codigo!;
@@ -54,12 +55,27 @@ class _NavBarBottomState extends State<NavBarBottom> {
         isActiveButtonStars = true;
         auxLen = 9 - tentativasDiarias;
       } else {
-        updates.setDataAtual(currentIndex);
+        updates.setDataAtual(currentIndex, 1);
         updates.setTentativaEstrelas(currentIndex);
         isActiveButtonStars = false;
       }
+    } else if (currentGame.dataAtual == yesterday.toString() &&
+        currentGame.tentativasEstrelas! < 9) {
+      updates.setDataAtual(currentIndex, 0);
+      updates.setTentativaEstrelas(currentIndex);
+      isActiveButtonStars = true;
+      auxLen = 9;
     }
   }
+  // 6/7/22 today == dataAtual
+  // 7/7/22 dataAtual
+
+  // 7/7/22 today == dataAtual
+  // tentativasDiarias = 4
+
+  // 8/7/22 today
+  // 7/7/22 dataAtual --> 8/7/22 e tentativasDiarias = 0
+  // 7/7/22 yesterday
 
   @override
   Widget build(BuildContext context) {
@@ -85,34 +101,35 @@ class _NavBarBottomState extends State<NavBarBottom> {
           label: "Usar Estrelas",
         ),
         BottomNavigationBarItem(
-            icon: IconButton(
-              iconSize: 40,
-              color: Colors.black,
-              icon: const Icon(Icons.opacity),
-              onPressed: isActiveButtonRega
-                  ? () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RespQuestoes(
-                            code: _code,
-                            index: currentIndex,
-                            type: 'R',
-                            len: auxLen,
-                          ),
+          icon: IconButton(
+            iconSize: 40,
+            color: Colors.black,
+            icon: const Icon(Icons.opacity),
+            onPressed: isActiveButtonRega
+                ? () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RespQuestoes(
+                          code: _code,
+                          index: currentIndex,
+                          type: 'R',
+                          len: 1,
                         ),
-                      );
-                    }
-                  : () {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (BuildContext context) =>
-                            _buildPopupDialogNaoRega(context),
-                      );
-                    },
-            ),
-            label: "Regar"),
+                      ),
+                    );
+                  }
+                : () {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) =>
+                          _buildPopupDialogNaoRega(context),
+                    );
+                  },
+          ),
+          label: "Regar",
+        ),
         BottomNavigationBarItem(
           icon: IconButton(
             iconSize: 40,
@@ -181,7 +198,7 @@ Widget _buildPopupDialog(
       ElevatedButton.icon(
         onPressed: () async {
           var auxStars = -(atual.qtdEstrelinhas!);
-          var auxStars2 = auxStars * 2;
+          var auxStars2 = auxStars * 1;
           await updates.setForcaPlus(auxStars2, currentIndex);
           await updates.setEstrelinhas(-(atual.qtdEstrelinhas!), currentIndex);
           Navigator.pop(context);
