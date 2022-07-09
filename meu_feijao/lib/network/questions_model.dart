@@ -97,8 +97,12 @@ Future<void> loadQuestions(String gameCode) async {
   while (i < questoes.length) {
     if (questoes[i].dataResposta != 'nda') {
       if (questoes[i].usado == 1 || time != questoes[i].dataResposta) {
-        questoes.removeAt(i); 
+        print('remove');
+      } else {
+        sampledata.add(questoes[i]);
       }
+    } else {
+      sampledata.add(questoes[i]);
     }
     i++;
   }

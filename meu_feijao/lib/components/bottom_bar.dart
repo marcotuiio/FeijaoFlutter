@@ -179,7 +179,7 @@ Widget _buildPopupDialog(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
-          'Tem certeza que deseja consumir TODAS SUAS ESTRELAS (${atual.qtdEstrelinhas}) para recuper força (${atual.forca})?',
+          'Tem certeza que deseja consumir o MÁXIMO DE SUAS ESTRELAS (${atual.qtdEstrelinhas}) para recuper força (${atual.forca})?',
         ),
       ],
     ),
@@ -197,10 +197,24 @@ Widget _buildPopupDialog(
       ),
       ElevatedButton.icon(
         onPressed: () async {
-          var auxStars = -(atual.qtdEstrelinhas!);
-          var auxStars2 = auxStars * 1;
-          await updates.setForcaPlus(auxStars2, currentIndex);
-          await updates.setEstrelinhas(-(atual.qtdEstrelinhas!), currentIndex);
+          var max = 100 - atual.forca!;
+          var limite = atual.qtdEstrelinhas! - max;
+          var auxStar = 0;
+          var auxForca = 0;
+
+          // tem estrelas exatamente o suficente para chegar com forca em 100 ou estrelas insuficientes
+          if (limite <= 0) {
+            auxStar = 0;
+            auxForca = atual.qtdEstrelinhas!;
+
+            // tem estrelas o suficente para chegar com forca em 100 e sobra
+          } else if (limite > 0) {
+            auxStar = atual.qtdEstrelinhas! - max;
+            auxForca = max;
+          }
+
+          await updates.setForcaPlus(auxForca, currentIndex);
+          await updates.setEstrelinhas(-(auxStar), currentIndex);
           Navigator.pop(context);
         },
         icon: const Icon(Icons.check_box_outlined),

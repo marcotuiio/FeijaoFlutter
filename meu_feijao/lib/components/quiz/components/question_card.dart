@@ -39,17 +39,6 @@ _buildPopupDialog(BuildContext context, Questoes question, int index) {
       ElevatedButton.icon(
         onPressed: () {
           _controller.checkAns(question, index);
-          // var txt = '';
-          // if (question.answerIndex == index) {
-          //   txt = 'RESPOSTA CORRETA';
-          // } else {
-          //   txt = 'RESPOSTA INCORRETA';
-          // }
-          // showDialog(
-          //   barrierDismissible: false,
-          //   context: context,
-          //   builder: (context) => _buildPopupDialogResposta(context, txt),
-          // );
           Navigator.pop(context);
         },
         icon: const Icon(Icons.check),
@@ -126,35 +115,3 @@ class QuestionCard extends StatelessWidget {
     );
   }
 }
-
-// Widget _buildPopupDialogResposta(BuildContext context, String resp) {
-//   return AlertDialog(
-//     title: const Text(
-//       'CORREÇÃO DA RESPOSTA SELECIONADA',
-//       style: TextStyle(color: Colors.black),
-//     ),
-//     content: Column(
-//       mainAxisSize: MainAxisSize.min,
-//       crossAxisAlignment: CrossAxisAlignment.center,
-//       children: <Widget>[
-//         Text(
-//           resp,
-//           style: const TextStyle(color: Colors.black),
-//         ),
-//       ],
-//     ),
-//     actions: <Widget>[
-//       ElevatedButton.icon(
-//         onPressed: () {
-//           Navigator.pop(context);
-//         },
-//         icon: const Icon(Icons.cancel_presentation),
-//         label: const Text('OK'),
-//         style: ElevatedButton.styleFrom(
-//           primary: Colors.red[700],
-//           onPrimary: Colors.black,
-//         ),
-//       ),
-//     ],
-//   );
-// }

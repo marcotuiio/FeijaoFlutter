@@ -19,8 +19,17 @@ class Option extends StatelessWidget {
     return GetBuilder<QuestionController>(
       init: QuestionController(),
       builder: (qnController) {
+        Color getTheRightColor() {
+          if (qnController.isAnswered) {
+            if (index == qnController.correctAns && qnController.selectedAns == qnController.correctAns) {
+              return Colors.green;
+            } else if (index == qnController.selectedAns && qnController.selectedAns != qnController.correctAns) {
+              return Colors.red;
+            }
+          }
+          return Colors.grey;
+        }
         
-
         return InkWell(
           onTap: press,
           child: Container(
@@ -28,7 +37,7 @@ class Option extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Colors.blueGrey,
+                color: getTheRightColor(),
                 width: 5,
               ),
               borderRadius: BorderRadius.circular(15),
@@ -46,7 +55,7 @@ class Option extends StatelessWidget {
                     width: 26,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.blueGrey,
+                        color: getTheRightColor(),
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(50),
@@ -62,14 +71,4 @@ class Option extends StatelessWidget {
   }
 }
 
-// Color getTheRightColor() {
-//   if (qnController.isAnswered) {
-//     if (index == qnController.correctAns) {
-//       return Colors.green;
-//     } else if (index == qnController.selectedAns &&
-//         qnController.selectedAns != qnController.correctAns) {
-//       return Colors.red;
-//     }
-//   }
-//   return Colors.grey;
-// }
+
