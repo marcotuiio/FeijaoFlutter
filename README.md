@@ -8,11 +8,14 @@ TO DO:
     * Clean code DONE
     * Fix quiz DONE ?
     * What if gamesdata is empty? What to do then? DONE
+    * Add the if to enable or disable buttons on bottomnavbar DONE
+    * Integrate type of question and update on json after answer the question DONE
 
-    * Integrate type of question and update on json after answer the question
-    * Load to sampledata (question_model) only the questions with field 'usado' = 0
+    * Load to sampledata (question_model) only the questions with field 'usado' = 0 NOT WORKING RIGHT
+    * Test if quiz controller works properly (if answer is wrong or right)
+    * Check, when selectin game, if tge game time is over 
     * Remove the progress bar from quiz
-    * Add the if to enable or disable buttons on bottomnavbar
+    
 
     OBS: DO NOT USE BUTTON 'USAR ESTRELINHAS' ON NAV BAR. ITS BROKEN
     BUT IF YOU CLICK ON IT, THEN YOU'RE GONNA HAVE TO DELETE THE GAMESDATA.JSON
