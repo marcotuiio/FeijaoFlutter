@@ -66,7 +66,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
         child: Column(
           children: <Widget>[
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Container(
                   margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -78,6 +78,25 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                       fit: BoxFit.fill,
                       image: AssetImage('assets/star.png'),
                     ),
+                  ),
+                ),
+                Text(
+                  '${currentGame.qtdEstrelinhas}',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.yellow[800],
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  width: 50,
+                ),
+                Text(
+                  '${currentGame.forca}',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.red[700],
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Container(
@@ -108,11 +127,9 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
               children: <Widget>[
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(primary: Colors.orange[900]),
-                  onPressed: () {
-                    setState(() {
-                      // updates.setEstrelinhas(-(600), currentIndex);
-                      updates.setForcaMinus(100, currentIndex);
-                    });
+                  onPressed: () async {
+                    await updates.setEstrelinhas(-(600), currentIndex);
+                    await updates.setForcaMinus(100, currentIndex);
                   },
                   icon: const Icon(Icons.engineering),
                   label: const Text('Alterar arquivo'),

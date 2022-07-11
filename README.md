@@ -10,10 +10,11 @@ TO DO:
     * What if gamesdata is empty? What to do then? DONE
     * Add the if to enable or disable buttons on bottomnavbar DONE
     * Integrate type of question and update on json after answer the question DONE
+    * Test if quiz controller works properly (if answer is wrong or right) DONE
+    * Check, when trying to answer, if the game time is over DONE (?)
 
     * Load to sampledata (question_model) only the questions with field 'usado' = 0 NOT WORKING RIGHT
-    * Test if quiz controller works properly (if answer is wrong or right)
-    * Check, when selectin game, if tge game time is over 
+    * Update images and create apk
     * Remove the progress bar from quiz
     
 

@@ -17,7 +17,6 @@ class UpdateQuestions {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     String filePath = appDocPath + "/questions_" + gameCode + ".json";
-    // print(filePath);
     return filePath;
   }
 
@@ -40,14 +39,16 @@ class UpdateQuestions {
 
   Future<void> setUsado(String gameCode, int index) async {
     QuestionModel fullQuestions = await getFileContents(gameCode);
+    // print(fullQuestions.questoes![index].usado);
     fullQuestions.questoes![index].usado = 1;
+    // print(fullQuestions.questoes![index].usado);
     writeFile(fullQuestions, gameCode);
   }
 
   Future<void> setDataResposta(String gameCode, int index) async {
     QuestionModel fullQuestions = await getFileContents(gameCode);
-    fullQuestions.questoes![index].dataResposta = now.toString().substring(0, 10);
+    fullQuestions.questoes![index].dataResposta =
+        now.toString().substring(0, 10);
     writeFile(fullQuestions, gameCode);
   }
-
 }

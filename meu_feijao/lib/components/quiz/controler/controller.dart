@@ -2,6 +2,7 @@
 // import 'dart:convert';
 // ignore_for_file: deprecated_member_use, unused_field, avoid_print
 
+import 'package:feijao_magico_uel/navigator.dart';
 import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:feijao_magico_uel/network/update_quest.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
@@ -76,7 +77,7 @@ class QuestionController extends GetxController
     _pageController.dispose();
   }
 
-  void checkAns(Questoes question, int selectedIndex) {
+  void checkAns(Questoes question, int selectedIndex) async {
     _isAnswered = true;
     _correctAns = question.answerIndex!;
     _selectedAns = selectedIndex;
@@ -86,26 +87,25 @@ class QuestionController extends GetxController
       // Certa resposta
       if (_correctAns == _selectedAns) {
         if (_currentType == 'R') {
-          _updatesGame.setForcaPlus(18, _currentIndex);
-          _updatesGame.setDataRega(_currentIndex);
-          _updatesGame.setTentativaForca(_currentIndex, 1);
+          await _updatesGame.setForcaPlus(18, _currentIndex);
+          await _updatesGame.setDataRega(_currentIndex);
+          await _updatesGame.setTentativaForca(_currentIndex, 1);
         } else if (_currentType == 'E') {
-          _updatesGame.setEstrelinhas(2, _currentIndex);
-          _updatesGame.plusTentativaEstrelas(_currentIndex);
+          await _updatesGame.setEstrelinhas(2, _currentIndex);
+          await _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
-        _updateQuestions.setTentativas(_currentCode, 11, _currentIndex);
-        _updateQuestions.setUsado(_currentCode, _currentIndex);
-        _updateQuestions.setDataResposta(_currentCode, _currentIndex);
+        await _updateQuestions.setTentativas(_currentCode, 11, _currentIndex);
+        await _updateQuestions.setUsado(_currentCode, _currentIndex);
+        await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
         _numOfCorrectAns++;
-      
       } else {
         // EEEEErrou com tentativas = 0
-        _updateQuestions.setTentativas(_currentCode, 10, _currentIndex);
-        _updateQuestions.setDataResposta(_currentCode, _currentIndex);
+        await _updateQuestions.setTentativas(_currentCode, 10, _currentIndex);
+        await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
         if (_currentType == 'R') {
-          _updatesGame.setForcaMinus(18, _currentIndex);
+          await _updatesGame.setForcaMinus(18, _currentIndex);
         } else if (_currentType == 'E') {
-          _updatesGame.setEstrelinhas(0, _currentIndex);
+          await _updatesGame.setEstrelinhas(0, _currentIndex);
         }
       }
 
@@ -114,36 +114,36 @@ class QuestionController extends GetxController
       // Acertou de segunda
       if (_correctAns == _selectedAns) {
         if (_currentType == 'R') {
-          _updatesGame.setForcaPlus(9, _currentIndex);
-          _updatesGame.setDataRega(_currentIndex);
-          _updatesGame.setTentativaForca(_currentIndex, 1);
+          await _updatesGame.setForcaPlus(9, _currentIndex);
+          await _updatesGame.setDataRega(_currentIndex);
+          await _updatesGame.setTentativaForca(_currentIndex, 1);
         } else if (_currentType == 'E') {
-          _updatesGame.setEstrelinhas(1, _currentIndex);
-          _updatesGame.plusTentativaEstrelas(_currentIndex);
+          await _updatesGame.setEstrelinhas(1, _currentIndex);
+          await _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
-        _updateQuestions.setTentativas(_currentCode, 21, _currentIndex);
-        _updateQuestions.setUsado(_currentCode, _currentIndex);
-        _updateQuestions.setDataResposta(_currentCode, _currentIndex);
+        await _updateQuestions.setTentativas(_currentCode, 21, _currentIndex);
+        await _updateQuestions.setUsado(_currentCode, _currentIndex);
+        await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
         _numOfCorrectAns++;
 
         // Errou de segunda
       } else {
         if (_currentType == 'R') {
-          _updatesGame.setTentativaForca(_currentIndex, 1);
-          _updatesGame.setDataRega(_currentIndex);
+          await _updatesGame.setTentativaForca(_currentIndex, 1);
+          await _updatesGame.setDataRega(_currentIndex);
         } else if (_currentType == 'E') {
-          _updatesGame.plusTentativaEstrelas(_currentIndex);
+          await _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
-        _updateQuestions.setTentativas(_currentCode, 20, _currentIndex);
-        _updateQuestions.setUsado(_currentCode, _currentIndex);
-        _updateQuestions.setDataResposta(_currentCode, _currentIndex);
+        await _updateQuestions.setTentativas(_currentCode, 20, _currentIndex);
+        await _updateQuestions.setUsado(_currentCode, _currentIndex);
+        await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
       }
     }
 
     _animationController.stop();
     update();
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 3), () {
       nextQuestion();
     });
 
@@ -159,8 +159,9 @@ class QuestionController extends GetxController
 
       // Reset the counter
       _animationController.reset();
+      _animationController.forward().whenComplete(nextQuestion);
     } else {
-      // Pop to HomeScreen
+      NavigationService().popToFirst();
     }
   }
 

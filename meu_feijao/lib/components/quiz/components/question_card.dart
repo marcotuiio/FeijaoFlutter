@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 typedef MyPopUp = Widget;
-_buildPopupDialog(BuildContext context, Questoes question, int index) {
+_buildPopupDialog(
+    BuildContext context, Questoes question, int answerIndex, int index) {
   QuestionController _controller = Get.put(QuestionController());
   return AlertDialog(
     title: const Text(
@@ -98,6 +99,7 @@ class QuestionCard extends StatelessWidget {
                     context,
                     question,
                     question.answerIndex!,
+                    index,
                   ),
                 ),
               ),

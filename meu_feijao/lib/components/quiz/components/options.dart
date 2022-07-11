@@ -21,15 +21,17 @@ class Option extends StatelessWidget {
       builder: (qnController) {
         Color getTheRightColor() {
           if (qnController.isAnswered) {
-            if (index == qnController.correctAns && qnController.selectedAns == qnController.correctAns) {
+            if (index == qnController.selectedAns &&
+                qnController.selectedAns == qnController.correctAns) {
               return Colors.green;
-            } else if (index == qnController.selectedAns && qnController.selectedAns != qnController.correctAns) {
+            } else if (index == qnController.selectedAns &&
+                qnController.selectedAns != qnController.correctAns) {
               return Colors.red;
             }
           }
-          return Colors.grey;
+          return Colors.blueGrey;
         }
-        
+
         return InkWell(
           onTap: press,
           child: Container(
@@ -48,7 +50,10 @@ class Option extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     "${index + 1}. $text",
-                    style: const TextStyle(color: Colors.black, fontSize: 16),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
                   ),
                   Container(
                     height: 26,
@@ -70,5 +75,3 @@ class Option extends StatelessWidget {
     );
   }
 }
-
-
