@@ -1,9 +1,9 @@
-// ignore_for_file: avoid_print
-
+import 'dart:io';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:flutter/material.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
+import 'package:path_provider/path_provider.dart';
 
 class NavBarBottom extends StatefulWidget {
   final Jogos atual;
@@ -40,6 +40,8 @@ class _NavBarBottomState extends State<NavBarBottom> {
     _code = currentGame.codigo!;
     dataRega = currentGame.dataAtualizacaoForca!;
     today = now.toString().substring(0, 10);
+    
+    checkJsonEmpty(_code);
 
     // REGAR
     if (int.parse(today.substring(8, 10)) >=
@@ -88,7 +90,9 @@ class _NavBarBottomState extends State<NavBarBottom> {
       isActiveButtonStars = true;
       auxLen = 9;
     }
+
   }
+
   // 6/7/22 today == dataAtual
   // 7/7/22 dataAtual
 
@@ -98,6 +102,24 @@ class _NavBarBottomState extends State<NavBarBottom> {
   // 8/7/22 today
   // 7/7/22 dataAtual --> 8/7/22 e tentativasDiarias = 0
   // 7/7/22 yesterday
+
+  Future<String> getFilePath(String code) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/questions_" + code + ".json";
+    return filePath;
+  }
+
+  void checkJsonEmpty(String code) async {
+    File file = File(await getFilePath(code));
+    if (!file.existsSync()) {
+      setState(() {
+        isActiveButtonRega = true;
+        isActiveButtonStars = true;
+        auxLen = 9;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

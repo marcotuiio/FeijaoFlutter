@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:feijao_magico_uel/network/from_server.dart';
+import 'package:feijao_magico_uel/network/update_quest.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class BotoesMainPage extends StatefulWidget {
 
 class _BotoesMainPageState extends State<BotoesMainPage> {
   UpdateOnFile updates = UpdateOnFile();
+  UpdateQuestions updateQuestions = UpdateQuestions();
   var now = DateTime.now();
   late int forca;
   late int currentIndex;
@@ -83,7 +85,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                 Text(
                   '${currentGame.qtdEstrelinhas}',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 30,
                     color: Colors.yellow[800],
                     fontWeight: FontWeight.bold,
                   ),
@@ -94,7 +96,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                 Text(
                   '${currentGame.forca}',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 30,
                     color: Colors.red[700],
                     fontWeight: FontWeight.bold,
                   ),
@@ -128,8 +130,18 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(primary: Colors.orange[900]),
                   onPressed: () async {
-                    await updates.setEstrelinhas(-(600), currentIndex);
-                    await updates.setForcaMinus(100, currentIndex);
+                    // await updates.setEstrelinhas(600, currentIndex); // FUNCIONA
+                    // await updates.setForcaPlus(20, currentIndex); // FUNCIONA
+                    // await updates.setForcaMinus(12, currentIndex); // FUNCIONA
+                    // await updates.setDataRega(currentIndex); // FUNCIONA
+                    // await updates.setDataAtual(currentIndex, 1); // FUNCIONA
+                    // await updates.plusTentativaEstrelas(currentIndex); // FUNCIONA
+                    // await updates.setTentativaEstrelas(currentIndex); // FUNCIONA
+                    // await updates.setTentativaForca(currentIndex, 0); // FUNCIONA
+
+                    // await updateQuestions.setTentativas(currentGame.codigo!, 30, 0); // FUNCIONA
+                    // await updateQuestions.setUsado(currentGame.codigo!, 1); // FUNCIONA
+                    await updateQuestions.setDataResposta(currentGame.codigo!, 1); // FUNCIONA
                   },
                   icon: const Icon(Icons.engineering),
                   label: const Text('Alterar arquivo'),
