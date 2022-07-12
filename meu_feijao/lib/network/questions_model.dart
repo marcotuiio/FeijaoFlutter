@@ -83,7 +83,6 @@ Future<String> getFilePath(String gameCode) async {
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
   String filePath = appDocPath + "/questions_" + gameCode + ".json";
-  // print(filePath);
   return filePath;
 }
 
@@ -93,11 +92,12 @@ Future<void> loadQuestions(String gameCode) async {
   int i = 0;
   var now = DateTime.now();
   var time = now.toString().substring(0, 10);
+  // print('questoes ${json.encode(questoes)}');
   while (i < questoes.length) {
     if (questoes[i].dataResposta != 'nda') {
-      if (questoes[i].usado == 1 || time != questoes[i].dataResposta) {
-        print('remove');
-      } else if (questoes[i].usado == 0 && time == questoes[i].dataResposta) {
+      if (questoes[i].usado == 0 &&
+          time == questoes[i].dataResposta &&
+          questoes[i].tentativas! < 20) {
         sampledata.add(questoes[i]);
       }
     } else if (questoes[i].dataResposta == 'nda') {
@@ -105,8 +105,8 @@ Future<void> loadQuestions(String gameCode) async {
     }
     i++;
   }
-
   sampledata = questoes;
+  // print('sample ${json.encode(sampledata)}');
 }
 
 List<Questoes> sampledata = [];

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:feijao_magico_uel/components/quiz/components/body_quiz.dart';
 import 'package:feijao_magico_uel/components/quiz/controler/controller.dart';
 import 'package:get/get.dart';
@@ -26,9 +28,14 @@ class QuizScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[
-          MaterialButton(
-            onPressed: _controller.nextQuestion,
-            child: const Text("Pular"),
+          IconButton(
+            icon: const Icon(
+              Icons.close,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              // Get.back();
+            },
           ),
         ],
       ),

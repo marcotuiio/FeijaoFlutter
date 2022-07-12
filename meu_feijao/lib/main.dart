@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:feijao_magico_uel/components/bottomnav_theme.dart';
-import 'package:feijao_magico_uel/navigator.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() {
@@ -23,7 +23,6 @@ class PeDeFeijaoAPP extends StatefulWidget {
 class _PeDeFeijaoAPPState extends State<PeDeFeijaoAPP> {
   // ignore: prefer_typing_uninitialized_variables
   var ghost = {"jogos": []};
-  
 
   @override
   void initState() {
@@ -57,7 +56,7 @@ class _PeDeFeijaoAPPState extends State<PeDeFeijaoAPP> {
   @override
   Widget build(BuildContext context) {
     final ThemeData base = ThemeData.dark();
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.green,
         bottomNavigationBarTheme: bottomNavigationBarTheme,
@@ -65,7 +64,6 @@ class _PeDeFeijaoAPPState extends State<PeDeFeijaoAPP> {
       ),
       debugShowCheckedModeBanner: false,
       home: const SelecionarJogo(),
-      navigatorKey: NavigationService().navigationKey,
     );
   }
 }

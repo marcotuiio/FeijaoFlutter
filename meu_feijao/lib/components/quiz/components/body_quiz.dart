@@ -3,6 +3,7 @@
 import 'package:feijao_magico_uel/components/quiz/components/progress_bar.dart';
 import 'package:feijao_magico_uel/components/quiz/components/question_card.dart';
 import 'package:feijao_magico_uel/components/quiz/controler/controller.dart';
+import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -59,7 +60,7 @@ class BodyQuiz extends StatelessWidget {
                   onPageChanged: _questionController.updateTheQnNum,
                   itemCount: len, // questoes.length
                   itemBuilder: (context, len) => QuestionCard(
-                    question: _questionController.questions[len],
+                    question: sampledata[len],
                   ),
                 ),
               ),

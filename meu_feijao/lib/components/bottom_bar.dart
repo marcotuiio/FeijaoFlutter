@@ -40,21 +40,11 @@ class _NavBarBottomState extends State<NavBarBottom> {
     _code = currentGame.codigo!;
     dataRega = currentGame.dataAtualizacaoForca!;
     today = now.toString().substring(0, 10);
-    
+
     checkJsonEmpty(_code);
 
     // REGAR
-    if (int.parse(today.substring(8, 10)) >=
-        int.parse(currentGame.datafim!.substring(8, 10))) {
-      if (int.parse(today.substring(5, 7)) >=
-          int.parse(currentGame.datafim!.substring(5, 7))) {
-        if (int.parse(today.substring(0, 4)) >=
-            int.parse(currentGame.datafim!.substring(0, 4))) {
-          isActiveButtonRega = false;
-          isActiveButtonStars = false;
-        }
-      }
-    } else if (today == dataRega) {
+    if (today == dataRega) {
       isActiveButtonRega = false;
       updates.setTentativaForca(currentIndex, 0);
     } else if (currentGame.tentativasForca == 0) {
@@ -63,17 +53,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
     }
 
     // ESTRELINHAS
-    if (int.parse(today.substring(8, 10)) >=
-        int.parse(currentGame.datafim!.substring(8, 10))) {
-      if (int.parse(today.substring(5, 7)) >=
-          int.parse(currentGame.datafim!.substring(5, 7))) {
-        if (int.parse(today.substring(0, 4)) >=
-            int.parse(currentGame.datafim!.substring(0, 4))) {
-          isActiveButtonRega = false;
-          isActiveButtonStars = false;
-        }
-      }
-    } else if (today == currentGame.dataAtual) {
+    if (today == currentGame.dataAtual) {
       tentativasDiarias = currentGame.tentativasEstrelas!;
       if (tentativasDiarias < 9) {
         isActiveButtonStars = true;
@@ -91,6 +71,17 @@ class _NavBarBottomState extends State<NavBarBottom> {
       auxLen = 9;
     }
 
+    if (int.parse(today.substring(8, 10)) >=
+        int.parse(currentGame.datafim!.substring(8, 10))) {
+      if (int.parse(today.substring(5, 7)) >=
+          int.parse(currentGame.datafim!.substring(5, 7))) {
+        if (int.parse(today.substring(0, 4)) >=
+            int.parse(currentGame.datafim!.substring(0, 4))) {
+          isActiveButtonRega = false;
+          isActiveButtonStars = false;
+        }
+      }
+    }
   }
 
   // 6/7/22 today == dataAtual
@@ -255,7 +246,7 @@ Widget _buildPopupDialog(
             auxStar = 0;
             auxForca = atual.qtdEstrelinhas!;
 
-            // tem estrelas o suficente para chegar com forca em 100 e sobra
+          // tem estrelas o suficente para chegar com forca em 100 e sobra
           } else if (limite > 0) {
             auxStar = atual.qtdEstrelinhas! - max;
             auxForca = max;

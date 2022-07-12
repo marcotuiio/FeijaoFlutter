@@ -40,8 +40,11 @@ class _RespQuestoesState extends State<RespQuestoes> {
     _currentIndex = widget.index;
     _type = widget.type;
     _len = widget.len;
-    questionsObjects = NetworkQuestion().getQuestionModel(gameCode: _currentCode);
+    questionsObjects =
+        NetworkQuestion().getQuestionModel(gameCode: _currentCode);
     readFileTXT();
+    finalLen = _len;
+    print(finalLen);
   }
 
   Future<String> getFilePathTXT() async {
@@ -133,8 +136,10 @@ class _RespQuestoesState extends State<RespQuestoes> {
                           const SizedBox(height: 40),
                           InkWell(
                             onTap: () async {
-                              await saveQuestionModel(_currentCode, snapshot.data);
-                              await loadQuestions(_currentCode);
+                              setState(() async{
+                                await saveQuestionModel(_currentCode, snapshot.data);
+                                await loadQuestions(_currentCode);
+                              });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -190,6 +195,8 @@ class _RespQuestoesState extends State<RespQuestoes> {
     );
   }
 }
+
+int finalLen = 0;
 
 //Repositório utilizado de base
 //https://github.com/samir-benabadji/Quiz-App-

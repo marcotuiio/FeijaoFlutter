@@ -1,11 +1,11 @@
 // import 'dart:io';
 // import 'dart:convert';
-// ignore_for_file: deprecated_member_use, unused_field, avoid_print
-
-import 'package:feijao_magico_uel/navigator.dart';
+// ignore_for_file: deprecated_member_use, unused_field, avoid_print, prefer_final_fields
 import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:feijao_magico_uel/network/update_quest.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
+import 'package:feijao_magico_uel/pages/responder_questoes.dart';
+import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,8 +25,8 @@ class QuestionController extends GetxController
   late PageController _pageController;
   PageController get pageController => _pageController;
 
-  final List<Questoes> _questions = sampledata;
-  List<Questoes> get questions => _questions;
+  // late List<Questoes> _questions = sampledata;
+  // List<Questoes> get questions => _questions;
 
   bool _isAnswered = false;
   bool get isAnswered => _isAnswered;
@@ -56,8 +56,6 @@ class QuestionController extends GetxController
     _currentIndex = index;
     _currentCode = code;
     _currentType = type;
-    print(_currentCode);
-    print(_currentIndex);
     _animationController = AnimationController(
         duration: const Duration(seconds: 600), vsync: this);
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
@@ -65,7 +63,7 @@ class QuestionController extends GetxController
         update();
       });
 
-    _animationController.forward().whenComplete(nextQuestion);
+    // _animationController.forward().whenComplete(nextQuestion);
     _pageController = PageController();
     super.onInit();
   }
@@ -144,7 +142,11 @@ class QuestionController extends GetxController
     update();
 
     Future.delayed(const Duration(seconds: 3), () {
-      nextQuestion();
+      if (questionNumber.value < finalLen) {
+        nextQuestion();
+      } else {
+        Get.to(() => const SelecionarJogo());
+      }
     });
 
     //Regar = 'R';
@@ -152,17 +154,13 @@ class QuestionController extends GetxController
   }
 
   void nextQuestion() {
-    if (_questionNumber.value != _questions.length) {
-      _isAnswered = false;
-      _pageController.nextPage(
-          duration: const Duration(milliseconds: 250), curve: Curves.ease);
+    _isAnswered = false;
+    _pageController.nextPage(
+        duration: const Duration(milliseconds: 250), curve: Curves.ease);
 
-      // Reset the counter
-      _animationController.reset();
-      _animationController.forward().whenComplete(nextQuestion);
-    } else {
-      NavigationService().popToFirst();
-    }
+    // Reset the counter
+    _animationController.reset(); 
+      
   }
 
   void updateTheQnNum(int index) {
