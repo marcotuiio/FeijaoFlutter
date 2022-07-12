@@ -14,6 +14,7 @@ TO DO:
     * Check, when trying to answer, if the game time is over DONE (?)
 
     * Load to sampledata (question_model) only the questions with field 'usado' = 0 NOT WORKING RIGHT
+    * Check if navigator push after quiz is working right
     * Update images and create apk
     * Remove the progress bar from quiz
     
