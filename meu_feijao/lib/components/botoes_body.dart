@@ -39,7 +39,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
     late String background;
     if (forca >= 90) {
       //crescimento normal
-      background = 'assets/livroplant2.png';
+      background = 'assets/saudavel.png';
     } else if (forca >= 70 && forca < 90) {
       //crescimento anormal 1
       background = 'assets/anormal1.png';
