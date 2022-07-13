@@ -121,11 +121,9 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                               ElevatedButton.icon(
                                 onPressed: () {
                                   setState(() {
-                                    // print(json.encode(_items[index]));
                                     myGame =
                                         json.decode(json.encode(_items[index]));
                                     finalGame = Jogos.fromJson(myGame);
-                                    // print(finalGame.nomeFantasia);
                                   });
                                   Navigator.of(context).push(
                                     MaterialPageRoute(

@@ -45,7 +45,6 @@ class _CodigoJogoState extends State<CodigoJogo> {
 
     final file = File(await getFilePath());
     await file.writeAsString(json.encode(teste));
-    // print('TALVEZ TENHA DADO CERTO NEW GAME $teste');
   }
 
   Future<Map<String, dynamic>> getFileContents() async {

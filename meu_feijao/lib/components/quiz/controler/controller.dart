@@ -1,10 +1,9 @@
-// ignore_for_file: deprecated_member_use, 
+// ignore_for_file: deprecated_member_use,
 
-import 'dart:convert';
+// import 'dart:convert';
 import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:feijao_magico_uel/network/update_quest.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
-import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -79,9 +78,6 @@ class QuestionController extends GetxController
     _isAnswered = true;
     _correctAns = question.answerIndex!;
     _selectedAns = selectedIndex;
-    print(json.encode(question));
-    print(selectedIndex);
-    print(type);
 
     // primeira tentativa
     if (question.tentativas == 0) {
@@ -95,14 +91,12 @@ class QuestionController extends GetxController
           await _updatesGame.setEstrelinhas(2, _currentIndex);
           await _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
-        print('CERTO 0');
         await _updateQuestions.setTentativas(_currentCode, 11, _currentIndex);
         await _updateQuestions.setUsado(_currentCode, _currentIndex);
         await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
         _numOfCorrectAns++;
       } else {
         // EEEEErrou com tentativas = 0
-        print('ERROU 0');
         await _updateQuestions.setTentativas(_currentCode, 10, _currentIndex);
         await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
         if (_currentType == 'R') {
@@ -124,7 +118,6 @@ class QuestionController extends GetxController
           await _updatesGame.setEstrelinhas(1, _currentIndex);
           await _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
-        print('CERTO 10');
         await _updateQuestions.setTentativas(_currentCode, 21, _currentIndex);
         await _updateQuestions.setUsado(_currentCode, _currentIndex);
         await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
@@ -138,7 +131,6 @@ class QuestionController extends GetxController
         } else if (_currentType == 'E') {
           await _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
-        print('ERROU 10');
         await _updateQuestions.setTentativas(_currentCode, 20, _currentIndex);
         await _updateQuestions.setUsado(_currentCode, _currentIndex);
         await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
@@ -149,9 +141,7 @@ class QuestionController extends GetxController
     update();
 
     Future.delayed(const Duration(seconds: 3), () {
-      if (questionNumber.value < finalLen) {
-        print(questionNumber.value);
-        print(finalLen);
+      if (questionNumber.value != sampledata.length) {
         nextQuestion();
       } else {
         Get.to(() => const SelecionarJogo());

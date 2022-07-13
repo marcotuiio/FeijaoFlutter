@@ -9,7 +9,6 @@ class NetworkGame {
 
     if (response.statusCode == 200) {
       //aqui eu ja tenho todo o json em formato de mapa (dart object) !!!
-      // print('EM GAMENET ${GamesModel.fromJson(json.decode(response.body))}');
       return GamesModel.fromJson(json.decode(response.body));
     } else {
       throw Exception("ERRO AO OBTER URL");

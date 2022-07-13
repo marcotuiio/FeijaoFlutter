@@ -4,7 +4,6 @@ import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 class LoadQuestions {
-
   Future<QuestionModel> getFileContents(String gameCode) async {
     File file = File(await getFilePath(gameCode));
     String contents = await file.readAsString();

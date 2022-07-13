@@ -30,7 +30,6 @@ class UpdateOnFile {
     var fullJson = await getFileContents();
     int aux = fullJson.jogos![gameIndex].qtdEstrelinhas!;
     fullJson.jogos![gameIndex].qtdEstrelinhas = aux + estrelinhas;
-    print(fullJson.jogos![gameIndex].qtdEstrelinhas);
     writeFile(fullJson);
   }
 
@@ -42,7 +41,6 @@ class UpdateOnFile {
       fullJson.jogos![gameIndex].forca =
           fullJson.jogos![gameIndex].forca! + forca;
     }
-    print(fullJson.jogos![gameIndex].forca);
     writeFile(fullJson);
   }
 
@@ -54,8 +52,6 @@ class UpdateOnFile {
       fullJson.jogos![gameIndex].forca =
           fullJson.jogos![gameIndex].forca! - forca;
     }
-    print('forca $forca');
-    print('forca atual ${fullJson.jogos![gameIndex].forca}');
     writeFile(fullJson);
   }
 
@@ -63,7 +59,6 @@ class UpdateOnFile {
     var fullJson = await getFileContents();
     fullJson.jogos![gameIndex].dataAtualizacaoForca =
         now.toString().substring(0, 10);
-    print('data rega');
     writeFile(fullJson);
   }
 

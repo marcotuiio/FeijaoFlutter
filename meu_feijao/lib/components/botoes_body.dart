@@ -1,8 +1,11 @@
-import 'dart:convert';
+import 'dart:io';
+
+import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:feijao_magico_uel/network/update_quest.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 class BotoesMainPage extends StatefulWidget {
   final Jogos currentGame;
@@ -27,7 +30,84 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
     forca = widget.currentGame.forca as int;
     currentIndex = widget.index;
     currentGame = widget.currentGame;
+    checkJsonEmpty(currentGame.codigo!);
+    if (isEmpty == 0) {
+      prepareToRespond();
+      loadQuestions(currentGame.codigo!);
+    }
     super.initState();
+  }
+
+  Future<String> getFilePath(String code) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/questions_" + code + ".json";
+    return filePath;
+  }
+
+  void checkJsonEmpty(String code) async {
+    File file = File(await getFilePath(code));
+    if (!file.existsSync()) {
+      setState(() {
+        isActiveButtonRega = true;
+        isActiveButtonStars = true;
+        auxLen = 9;
+        isEmpty = 1;
+      });
+    } else {
+      setState(() {
+        isEmpty = 0;
+      });
+    }
+  }
+
+  Future<void> prepareToRespond() async {
+    UpdateOnFile updates = UpdateOnFile();
+    DateTime now = DateTime.now();
+    var yesterday = DateTime(now.year, now.month, now.day - 1);
+    var today = now.toString().substring(0, 10);
+    var dataRega = currentGame.dataAtualizacaoForca!;
+
+    // REGAR
+    if (today == dataRega) {
+      setState(() {
+        isActiveButtonRega = false;
+        updates.setTentativaForca(currentIndex, 0);
+      });
+    } else if (currentGame.tentativasForca == 0) {
+      isActiveButtonRega = true;
+      auxLen = 1;
+    }
+
+    // ESTRELINHAS
+    if (today == currentGame.dataAtual) {
+      if (currentGame.tentativasEstrelas! < 9) {
+        isActiveButtonStars = true;
+        auxLen = 9 - currentGame.tentativasEstrelas!;
+      } else {
+        updates.setDataAtual(currentIndex, 1);
+        updates.setTentativaEstrelas(currentIndex);
+        isActiveButtonStars = false;
+      }
+    } else if (currentGame.dataAtual == yesterday.toString().substring(0, 10) &&
+        currentGame.tentativasEstrelas! < 9) {
+      updates.setDataAtual(currentIndex, 0);
+      updates.setTentativaEstrelas(currentIndex);
+      isActiveButtonStars = true;
+      auxLen = 9;
+    }
+
+    if (int.parse(today.substring(8, 10)) >=
+        int.parse(currentGame.datafim!.substring(8, 10))) {
+      if (int.parse(today.substring(5, 7)) >=
+          int.parse(currentGame.datafim!.substring(5, 7))) {
+        if (int.parse(today.substring(0, 4)) >=
+            int.parse(currentGame.datafim!.substring(0, 4))) {
+          isActiveButtonRega = false;
+          isActiveButtonStars = false;
+        }
+      }
+    }
   }
 
   @override
@@ -111,50 +191,15 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 100),
-            const Text(
-              'TESTES',
-              style: TextStyle(
-                fontSize: 22,
-                color: Colors.black,
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(primary: Colors.orange[900]),
-                  onPressed: () async {
-                    // await updates.setEstrelinhas(600, currentIndex); // FUNCIONA
-                    // await updates.setForcaPlus(20, currentIndex); // FUNCIONA
-                    // await updates.setForcaMinus(26, currentIndex); // FUNCIONA
-                    // await updates.setDataRega(currentIndex); // FUNCIONA
-                    // await updates.setDataAtual(currentIndex, 1); // FUNCIONA
-                    // await updates.plusTentativaEstrelas(currentIndex); // FUNCIONA
-                    // await updates.setTentativaEstrelas(currentIndex); // FUNCIONA
-                    // await updates.setTentativaForca(currentIndex, 0); // FUNCIONA
-
-                    // await updateQuestions.setTentativas(currentGame.codigo!, 30, 0); // FUNCIONA
-                    // await updateQuestions.setUsado(currentGame.codigo!, 1); // FUNCIONA
-                    // await updateQuestions.setDataResposta(currentGame.codigo!, 1); // FUNCIONA
-                  },
-                  icon: const Icon(Icons.engineering),
-                  label: const Text('Alterar arquivo'),
-                ),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(primary: Colors.purple[900]),
-                  onPressed: () {
-                    print(json.encode(currentGame));
-                  },
-                  icon: const Icon(Icons.person_outline_sharp),
-                  label: const Text('Prova real'),
-                ),
-              ],
-            )
           ],
         ),
       ),
     );
   }
 }
+
+bool isActiveButtonRega = false;
+bool isActiveButtonStars = false;
+int auxLen = 0;
+
+int isEmpty = 0;

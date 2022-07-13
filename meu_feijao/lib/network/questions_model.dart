@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:path_provider/path_provider.dart';
 
 class QuestionModel {
@@ -87,23 +88,24 @@ Future<String> getFilePath(String gameCode) async {
 Future<void> loadQuestions(String gameCode) async {
   QuestionModel fullQuestions = await getFileContents(gameCode);
   List<Questoes> questoes = fullQuestions.questoes!;
-  int i = 0;
+  int i = 0, cont = 0;
   var now = DateTime.now();
   var time = now.toString().substring(0, 10);
-  // print('questoes ${json.encode(questoes)}');
-  while (i < questoes.length) {
+
+  while (i < questoes.length || cont < finalLen) {
     if (questoes[i].dataResposta != 'nda') {
       if (questoes[i].usado == 0 &&
           time == questoes[i].dataResposta &&
           questoes[i].tentativas! < 20) {
         sampledata.add(questoes[i]);
+        cont++;
       }
     } else if (questoes[i].dataResposta == 'nda') {
       sampledata.add(questoes[i]);
+      cont++;
     }
     i++;
   }
-  print('sample ${json.encode(sampledata)}');
 }
 
 List<Questoes> sampledata = [];

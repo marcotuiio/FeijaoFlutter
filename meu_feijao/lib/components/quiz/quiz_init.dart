@@ -2,6 +2,7 @@
 
 import 'package:feijao_magico_uel/components/quiz/components/body_quiz.dart';
 import 'package:feijao_magico_uel/components/quiz/controler/controller.dart';
+import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,13 @@ class QuizScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () => Get.back(),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[
@@ -34,7 +42,7 @@ class QuizScreen extends StatelessWidget {
               color: Colors.black,
             ),
             onPressed: () {
-              // Get.back();
+              Get.to(() => const SelecionarJogo());
             },
           ),
         ],

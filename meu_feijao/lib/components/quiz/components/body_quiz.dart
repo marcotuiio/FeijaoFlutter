@@ -4,6 +4,7 @@ import 'package:feijao_magico_uel/components/quiz/components/progress_bar.dart';
 import 'package:feijao_magico_uel/components/quiz/components/question_card.dart';
 import 'package:feijao_magico_uel/components/quiz/controler/controller.dart';
 import 'package:feijao_magico_uel/network/questions_model.dart';
+import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +26,6 @@ class BodyQuiz extends StatelessWidget {
       // len = auxLen; // max 9
       tipo = 'Estrelinhas';
     }
-    // print('len $len');
     return Stack(
       children: <Widget>[
         SafeArea(
@@ -58,7 +58,7 @@ class BodyQuiz extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _questionController.pageController,
                   onPageChanged: _questionController.updateTheQnNum,
-                  itemCount: sampledata.length, // questoes.length
+                  itemCount: finalLen, // questoes.length
                   itemBuilder: (context, index) => QuestionCard(
                     question: sampledata[index],
                   ),

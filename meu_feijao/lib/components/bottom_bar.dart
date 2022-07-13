@@ -1,9 +1,8 @@
-import 'dart:io';
+import 'package:feijao_magico_uel/components/botoes_body.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:flutter/material.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
-import 'package:path_provider/path_provider.dart';
 
 class NavBarBottom extends StatefulWidget {
   final Jogos atual;
@@ -26,88 +25,13 @@ class _NavBarBottomState extends State<NavBarBottom> {
   late String dataRega = '';
   DateTime now = DateTime.now();
   late String today = '';
-  bool isActiveButtonRega = false;
-  bool isActiveButtonStars = false;
-  late int auxLen = 0;
-
+  
   @override
   void initState() {
     super.initState();
-    var yesterday = DateTime(now.year, now.month, now.day - 1);
     currentGame = widget.atual;
     currentIndex = widget.index;
     _code = currentGame.codigo!;
-    dataRega = currentGame.dataAtualizacaoForca!;
-    today = now.toString().substring(0, 10);
-
-    checkJsonEmpty(_code);
-
-    // REGAR
-    if (today == dataRega) {
-      isActiveButtonRega = false;
-      updates.setTentativaForca(currentIndex, 0);
-    } else if (currentGame.tentativasForca == 0) {
-      isActiveButtonRega = true;
-      auxLen = 1;
-    }
-
-    // ESTRELINHAS
-    if (today == currentGame.dataAtual) {
-      if (currentGame.tentativasEstrelas! < 9) {
-        isActiveButtonStars = true;
-        auxLen = 9 - currentGame.tentativasEstrelas!;
-      } else {
-        updates.setDataAtual(currentIndex, 1);
-        updates.setTentativaEstrelas(currentIndex);
-        isActiveButtonStars = false;
-      }
-    } else if (currentGame.dataAtual == yesterday.toString().substring(0, 10) &&
-        currentGame.tentativasEstrelas! < 9) {
-      updates.setDataAtual(currentIndex, 0);
-      updates.setTentativaEstrelas(currentIndex);
-      isActiveButtonStars = true;
-      auxLen = 9;
-    }
-
-    if (int.parse(today.substring(8, 10)) >=
-        int.parse(currentGame.datafim!.substring(8, 10))) {
-      if (int.parse(today.substring(5, 7)) >=
-          int.parse(currentGame.datafim!.substring(5, 7))) {
-        if (int.parse(today.substring(0, 4)) >=
-            int.parse(currentGame.datafim!.substring(0, 4))) {
-          isActiveButtonRega = false;
-          isActiveButtonStars = false;
-        }
-      }
-    }
-  }
-
-  // 6/7/22 today == dataAtual
-  // 7/7/22 dataAtual
-
-  // 7/7/22 today == dataAtual
-  // tentativasDiarias = 4
-
-  // 8/7/22 today
-  // 7/7/22 dataAtual --> 8/7/22 e tentativasDiarias = 0
-  // 7/7/22 yesterday
-
-  Future<String> getFilePath(String code) async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String appDocPath = appDocDir.path;
-    String filePath = appDocPath + "/questions_" + code + ".json";
-    return filePath;
-  }
-
-  void checkJsonEmpty(String code) async {
-    File file = File(await getFilePath(code));
-    if (!file.existsSync()) {
-      setState(() {
-        isActiveButtonRega = true;
-        isActiveButtonStars = true;
-        auxLen = 9;
-      });
-    }
   }
 
   @override
@@ -241,10 +165,10 @@ Widget _buildPopupDialog(
 
           // tem estrelas exatamente o suficente para chegar com forca em 100 ou estrelas insuficientes
           if (limite <= 0) {
-            auxStar = 0;
+            auxStar = atual.qtdEstrelinhas!;
             auxForca = atual.qtdEstrelinhas!;
 
-          // tem estrelas o suficente para chegar com forca em 100 e sobra
+            // tem estrelas o suficente para chegar com forca em 100 e sobra
           } else if (limite > 0) {
             auxStar = atual.qtdEstrelinhas! - max;
             auxForca = max;

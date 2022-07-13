@@ -1,5 +1,6 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, avoid_print
 import 'dart:io';
+import 'package:feijao_magico_uel/components/botoes_body.dart';
 import 'package:feijao_magico_uel/components/quiz/quiz_init.dart';
 import 'package:feijao_magico_uel/constants.dart';
 import 'package:feijao_magico_uel/network/question_net.dart';
@@ -44,8 +45,6 @@ class _RespQuestoesState extends State<RespQuestoes> {
         NetworkQuestion().getQuestionModel(gameCode: _currentCode);
     readFileTXT();
     finalLen = _len;
-    print(finalLen);
-    print(_type);
   }
 
   Future<String> getFilePathTXT() async {
@@ -64,7 +63,6 @@ class _RespQuestoesState extends State<RespQuestoes> {
   }
 
   Future<void> saveQuestionModel(String gameCode, var fileContents) async {
-    // print('FILE contents: ${json.encode(fileContents)}');
     final file = File(await getFilePath(gameCode));
     if (file.existsSync() == false) {
       QuestionModel aux = fileContents;
@@ -95,7 +93,14 @@ class _RespQuestoesState extends State<RespQuestoes> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Responder Perguntas'),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text('Responder Perguntas', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.green[800],
         centerTitle: true,
       ),
@@ -136,9 +141,10 @@ class _RespQuestoesState extends State<RespQuestoes> {
                           const SizedBox(height: 40),
                           InkWell(
                             onTap: () async {
-                              await saveQuestionModel(
-                                  _currentCode, snapshot.data);
-                              await loadQuestions(_currentCode);
+                              if (isEmpty == 1) {
+                                await saveQuestionModel(_currentCode, snapshot.data);
+                                await loadQuestions(_currentCode);
+                              }
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
