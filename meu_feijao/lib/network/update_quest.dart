@@ -33,15 +33,18 @@ class UpdateQuestions {
 
   Future<void> setTentativas(String gameCode, int tentativas, int index) async {
     QuestionModel fullQuestions = await getFileContents(gameCode);
+    print('TENTATIVAS');
+    print(fullQuestions.questoes![index].tentativas);
     fullQuestions.questoes![index].tentativas = tentativas;
     writeFile(fullQuestions, gameCode);
   }
 
   Future<void> setUsado(String gameCode, int index) async {
     QuestionModel fullQuestions = await getFileContents(gameCode);
-    // print(fullQuestions.questoes![index].usado);
+    print('USADO');
+    print(fullQuestions.questoes![index].usado);
     fullQuestions.questoes![index].usado = 1;
-    // print(fullQuestions.questoes![index].usado);
+    print(fullQuestions.questoes![index].usado);
     writeFile(fullQuestions, gameCode);
   }
 
@@ -49,6 +52,7 @@ class UpdateQuestions {
     QuestionModel fullQuestions = await getFileContents(gameCode);
     fullQuestions.questoes![index].dataResposta =
         now.toString().substring(0, 10);
+    print('dtaResposta $index $gameCode');
     writeFile(fullQuestions, gameCode);
   }
 }

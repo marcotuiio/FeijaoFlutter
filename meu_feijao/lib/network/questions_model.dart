@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
@@ -105,8 +103,7 @@ Future<void> loadQuestions(String gameCode) async {
     }
     i++;
   }
-  sampledata = questoes;
-  // print('sample ${json.encode(sampledata)}');
+  print('sample ${json.encode(sampledata)}');
 }
 
 List<Questoes> sampledata = [];

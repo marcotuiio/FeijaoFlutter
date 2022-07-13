@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:feijao_magico_uel/network/questions_model.dart';
@@ -25,7 +23,6 @@ class LoadQuestions {
   Future<List<Questoes>> loadQuestions(String gameCode) async {
     QuestionModel fullQuestions = await getFileContents(gameCode);
     List<Questoes> questoes = fullQuestions.questoes!;
-    print(questoes);
     return questoes;
   }
 

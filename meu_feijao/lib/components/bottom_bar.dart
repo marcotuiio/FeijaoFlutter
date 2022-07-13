@@ -28,7 +28,6 @@ class _NavBarBottomState extends State<NavBarBottom> {
   late String today = '';
   bool isActiveButtonRega = false;
   bool isActiveButtonStars = false;
-  late int tentativasDiarias;
   late int auxLen = 0;
 
   @override
@@ -54,10 +53,9 @@ class _NavBarBottomState extends State<NavBarBottom> {
 
     // ESTRELINHAS
     if (today == currentGame.dataAtual) {
-      tentativasDiarias = currentGame.tentativasEstrelas!;
-      if (tentativasDiarias < 9) {
+      if (currentGame.tentativasEstrelas! < 9) {
         isActiveButtonStars = true;
-        auxLen = 9 - tentativasDiarias;
+        auxLen = 9 - currentGame.tentativasEstrelas!;
       } else {
         updates.setDataAtual(currentIndex, 1);
         updates.setTentativaEstrelas(currentIndex);

@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, avoid_print, avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers
 
 import 'dart:convert';
 import 'package:feijao_magico_uel/network/game_net.dart';
@@ -38,7 +38,6 @@ class _CodigoJogoState extends State<CodigoJogo> {
     var jsonList = teste.jogos!;
 
     GamesModel snapshot = fromServer;
-    print(snapshot);
     var newGame = snapshot.jogos![0];
 
     jsonList.add(newGame);

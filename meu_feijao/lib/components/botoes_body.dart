@@ -1,7 +1,4 @@
-// ignore_for_file: avoid_print, must_be_immutable
-
 import 'dart:convert';
-import 'package:feijao_magico_uel/network/from_server.dart';
 import 'package:feijao_magico_uel/network/update_quest.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
@@ -21,7 +18,6 @@ class BotoesMainPage extends StatefulWidget {
 class _BotoesMainPageState extends State<BotoesMainPage> {
   UpdateOnFile updates = UpdateOnFile();
   UpdateQuestions updateQuestions = UpdateQuestions();
-  var now = DateTime.now();
   late int forca;
   late int currentIndex;
   late Jogos currentGame;
@@ -61,7 +57,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(background),
-          fit: BoxFit.cover,
+          fit: BoxFit.contain,
         ),
       ),
       child: Center(
@@ -132,7 +128,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                   onPressed: () async {
                     // await updates.setEstrelinhas(600, currentIndex); // FUNCIONA
                     // await updates.setForcaPlus(20, currentIndex); // FUNCIONA
-                    // await updates.setForcaMinus(12, currentIndex); // FUNCIONA
+                    // await updates.setForcaMinus(26, currentIndex); // FUNCIONA
                     // await updates.setDataRega(currentIndex); // FUNCIONA
                     // await updates.setDataAtual(currentIndex, 1); // FUNCIONA
                     // await updates.plusTentativaEstrelas(currentIndex); // FUNCIONA
@@ -141,7 +137,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
 
                     // await updateQuestions.setTentativas(currentGame.codigo!, 30, 0); // FUNCIONA
                     // await updateQuestions.setUsado(currentGame.codigo!, 1); // FUNCIONA
-                    await updateQuestions.setDataResposta(currentGame.codigo!, 1); // FUNCIONA
+                    // await updateQuestions.setDataResposta(currentGame.codigo!, 1); // FUNCIONA
                   },
                   icon: const Icon(Icons.engineering),
                   label: const Text('Alterar arquivo'),
@@ -153,28 +149,6 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                   },
                   icon: const Icon(Icons.person_outline_sharp),
                   label: const Text('Prova real'),
-                ),
-                // ElevatedButton.icon(
-                //   style: ElevatedButton.styleFrom(primary: Colors.deepOrange),
-                //   onPressed: () {
-                //     print("FULL TIME => $now");
-                //     print("TODAY => ${now.toString().substring(0, 10)}");
-                //   },
-                //   icon: const Icon(Icons.watch),
-                //   label: const Text("Get time"),
-                // ),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => const GameTest()),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.watch),
-                  label: const Text("TESTE SERVER"),
                 ),
               ],
             )

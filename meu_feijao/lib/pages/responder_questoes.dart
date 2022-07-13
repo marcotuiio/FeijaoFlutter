@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers
 import 'dart:io';
 import 'package:feijao_magico_uel/components/quiz/quiz_init.dart';
 import 'package:feijao_magico_uel/constants.dart';
@@ -45,6 +45,7 @@ class _RespQuestoesState extends State<RespQuestoes> {
     readFileTXT();
     finalLen = _len;
     print(finalLen);
+    print(_type);
   }
 
   Future<String> getFilePathTXT() async {
@@ -86,7 +87,6 @@ class _RespQuestoesState extends State<RespQuestoes> {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     String filePath = appDocPath + "/questions_" + gameCode + ".json";
-    print(filePath);
     return filePath;
   }
 
@@ -136,10 +136,9 @@ class _RespQuestoesState extends State<RespQuestoes> {
                           const SizedBox(height: 40),
                           InkWell(
                             onTap: () async {
-                              setState(() async{
-                                await saveQuestionModel(_currentCode, snapshot.data);
-                                await loadQuestions(_currentCode);
-                              });
+                              await saveQuestionModel(
+                                  _currentCode, snapshot.data);
+                              await loadQuestions(_currentCode);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

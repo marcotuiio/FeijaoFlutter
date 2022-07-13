@@ -16,13 +16,13 @@ class BodyQuiz extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     QuestionController _questionController = Get.put(QuestionController());
-    int len = 1;
+    // int len = 1;
     String tipo = '';
     if (type == 'R') {
-      len = auxLen; // 1
+      // len = auxLen; // 1
       tipo = 'Regar';
     } else if (type == 'E') {
-      len = auxLen; // max 9
+      // len = auxLen; // max 9
       tipo = 'Estrelinhas';
     }
     // print('len $len');
@@ -58,9 +58,9 @@ class BodyQuiz extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _questionController.pageController,
                   onPageChanged: _questionController.updateTheQnNum,
-                  itemCount: len, // questoes.length
-                  itemBuilder: (context, len) => QuestionCard(
-                    question: sampledata[len],
+                  itemCount: sampledata.length, // questoes.length
+                  itemBuilder: (context, index) => QuestionCard(
+                    question: sampledata[index],
                   ),
                 ),
               ),
