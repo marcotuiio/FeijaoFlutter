@@ -12,11 +12,11 @@ TO DO:
     * Integrate type of question and update on json after answer the question DONE
     * Test if quiz controller works properly (if answer is wrong or right) DONE
     * Check, when trying to answer, if the game time is over DONE (?)
+    * Update images and create apk DONE (could get better)
 
     * Load to sampledata (question_model) only the questions with field 'usado' = 0 NOT WORKING RIGHT
     * Check if navigator push after quiz is working right
-    * Update images and create apk
-    * Remove the progress bar from quiz
+    * Remove the progress bar from quiz // MAYBE
     
 
     OBS: DO NOT USE BUTTON 'USAR ESTRELINHAS' ON NAV BAR. ITS BROKEN
