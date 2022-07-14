@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:feijao_magico_uel/network/games_model.dart';
+import 'package:feijao_magico_uel/network/relatorio_model.dart';
 import 'package:feijao_magico_uel/pages/body.dart';
 import 'package:feijao_magico_uel/pages/config_inicio.dart';
 import 'package:feijao_magico_uel/pages/game_code.dart';
@@ -59,6 +60,44 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     setState(() {
       _name = contents;
     });
+  }
+
+  Future<String> getFilePathQuest(String code) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/questions_" + code + ".json";
+    return filePath;
+  }
+
+  Future<String> getFilePathRelatorio(String code) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/relatorio_" + code + ".json";
+    return filePath;
+  }
+
+  Future<void> checkJsonEmpty(String code) async {
+    File file = File(await getFilePathQuest(code));
+    if (!file.existsSync()) {
+      // // criando arquivo para relatorio das respostas
+      File fileRel = File(await getFilePathRelatorio(code));
+      var rel = {"quests": []};
+      var rel2 = RelatorioModel.fromJson(rel);
+      fileRel.createSync();
+      await fileRel.writeAsString(json.encode(rel2));
+
+      setState(() {
+        isActiveButtonRega = true;
+        isActiveButtonStars = true;
+        auxLen = 9;
+        isEmpty = 1;
+      });
+
+    } else {
+      setState(() {
+        isEmpty = 2;
+      });
+    }
   }
 
   @override
@@ -119,12 +158,13 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                             children: <Widget>[
                               const SizedBox(width: 10),
                               ElevatedButton.icon(
-                                onPressed: () {
+                                onPressed: () async {
                                   setState(() {
                                     myGame =
                                         json.decode(json.encode(_items[index]));
                                     finalGame = Jogos.fromJson(myGame);
                                   });
+                                  await checkJsonEmpty(finalGame.codigo!);
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => HomeScreen(
@@ -188,3 +228,8 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
     );
   }
 }
+
+bool isActiveButtonRega = false;
+bool isActiveButtonStars = false;
+int auxLen = 0;
+int isEmpty = 0;

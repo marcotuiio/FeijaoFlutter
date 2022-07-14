@@ -59,8 +59,8 @@ class BodyQuiz extends StatelessWidget {
                   controller: _questionController.pageController,
                   onPageChanged: _questionController.updateTheQnNum,
                   itemCount: finalLen, // questoes.length
-                  itemBuilder: (context, index) => QuestionCard(
-                    question: sampledata[index],
+                  itemBuilder: (context, finalLen) => QuestionCard(
+                    question: sampledata[finalLen],
                   ),
                 ),
               ),

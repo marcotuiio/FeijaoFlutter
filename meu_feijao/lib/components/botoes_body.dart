@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:feijao_magico_uel/network/update_quest.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
+import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 
 class BotoesMainPage extends StatefulWidget {
   final Jogos currentGame;
@@ -27,41 +25,42 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
 
   @override
   void initState() {
+    super.initState();
     forca = widget.currentGame.forca as int;
     currentIndex = widget.index;
     currentGame = widget.currentGame;
-    checkJsonEmpty(currentGame.codigo!);
-    if (isEmpty == 0) {
-      prepareToRespond();
+    // checkJsonEmpty(currentGame.codigo!);
+    if (isEmpty == 2) {
+      prepareToRespond(currentGame.codigo!);
       loadQuestions(currentGame.codigo!);
-    }
-    super.initState();
+    } 
   }
 
-  Future<String> getFilePath(String code) async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String appDocPath = appDocDir.path;
-    String filePath = appDocPath + "/questions_" + code + ".json";
-    return filePath;
-  }
+  // Future<String> getFilePath(String code) async {
+  //   Directory appDocDir = await getApplicationDocumentsDirectory();
+  //   String appDocPath = appDocDir.path;
+  //   String filePath = appDocPath + "/questions_" + code + ".json";
+  //   return filePath;
+  // }
 
-  void checkJsonEmpty(String code) async {
-    File file = File(await getFilePath(code));
-    if (!file.existsSync()) {
-      setState(() {
-        isActiveButtonRega = true;
-        isActiveButtonStars = true;
-        auxLen = 9;
-        isEmpty = 1;
-      });
-    } else {
-      setState(() {
-        isEmpty = 0;
-      });
-    }
-  }
+  // void checkJsonEmpty(String code) async {
+  //   File file = File(await getFilePath(code));
+  //   if (!file.existsSync()) {
+  //     setState(() {
+  //       isActiveButtonRega = true;
+  //       isActiveButtonStars = true;
+  //       auxLen = 9;
+  //       isEmpty = 1;
+  //     });
 
-  Future<void> prepareToRespond() async {
+  //   } else {
+  //     setState(() {
+  //       isEmpty = 2;
+  //     });
+  //   }
+  // }
+
+  Future<void> prepareToRespond(String gameCode) async {
     UpdateOnFile updates = UpdateOnFile();
     DateTime now = DateTime.now();
     var yesterday = DateTime(now.year, now.month, now.day - 1);
@@ -97,6 +96,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
       auxLen = 9;
     }
 
+    // FIM DO JOGO
     if (int.parse(today.substring(8, 10)) >=
         int.parse(currentGame.datafim!.substring(8, 10))) {
       if (int.parse(today.substring(5, 7)) >=
@@ -105,6 +105,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
             int.parse(currentGame.datafim!.substring(0, 4))) {
           isActiveButtonRega = false;
           isActiveButtonStars = false;
+          // updar relatorio das questoes 
         }
       }
     }
@@ -198,8 +199,3 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
   }
 }
 
-bool isActiveButtonRega = false;
-bool isActiveButtonStars = false;
-int auxLen = 0;
-
-int isEmpty = 0;

@@ -3,8 +3,9 @@
 // import 'dart:convert';
 import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:feijao_magico_uel/network/update_quest.dart';
+import 'package:feijao_magico_uel/network/update_relatorio.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
-import 'package:feijao_magico_uel/pages/selec_jogo.dart';
+import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,9 +24,6 @@ class QuestionController extends GetxController
 
   late PageController _pageController;
   PageController get pageController => _pageController;
-
-  // late List<Questoes> _questions = sampledata;
-  // List<Questoes> get questions => _questions;
 
   bool _isAnswered = false;
   bool get isAnswered => _isAnswered;
@@ -47,6 +45,7 @@ class QuestionController extends GetxController
   late String _currentType;
   final UpdateOnFile _updatesGame = UpdateOnFile();
   final UpdateQuestions _updateQuestions = UpdateQuestions();
+  final UpdateRelatorio _updateRelatorio = UpdateRelatorio();
 
   // called immediately after the widget is allocated memory
   @override
@@ -62,7 +61,7 @@ class QuestionController extends GetxController
         update();
       });
 
-    // _animationController.forward().whenComplete(nextQuestion);
+    _animationController.forward().whenComplete(nextQuestion);
     _pageController = PageController();
     super.onInit();
   }
@@ -78,7 +77,9 @@ class QuestionController extends GetxController
     _isAnswered = true;
     _correctAns = question.answerIndex!;
     _selectedAns = selectedIndex;
-
+    print(_currentType);
+    print(finalLen);
+    print(sampledata.length);
     // primeira tentativa
     if (question.tentativas == 0) {
       // Certa resposta
@@ -94,6 +95,7 @@ class QuestionController extends GetxController
         await _updateQuestions.setTentativas(_currentCode, 11, _currentIndex);
         await _updateQuestions.setUsado(_currentCode, _currentIndex);
         await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
+        await _updateRelatorio.setNewQuest(_currentCode, question.id!, 11);
         _numOfCorrectAns++;
       } else {
         // EEEEErrou com tentativas = 0
@@ -121,6 +123,7 @@ class QuestionController extends GetxController
         await _updateQuestions.setTentativas(_currentCode, 21, _currentIndex);
         await _updateQuestions.setUsado(_currentCode, _currentIndex);
         await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
+        await _updateRelatorio.setNewQuest(_currentCode, question.id!, 21);
         _numOfCorrectAns++;
 
         // Errou de segunda
@@ -134,18 +137,15 @@ class QuestionController extends GetxController
         await _updateQuestions.setTentativas(_currentCode, 20, _currentIndex);
         await _updateQuestions.setUsado(_currentCode, _currentIndex);
         await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
+        await _updateRelatorio.setNewQuest(_currentCode, question.id!, 20);
       }
     }
 
     _animationController.stop();
     update();
 
-    Future.delayed(const Duration(seconds: 3), () {
-      if (questionNumber.value != sampledata.length) {
-        nextQuestion();
-      } else {
-        Get.to(() => const SelecionarJogo());
-      }
+    Future.delayed(const Duration(seconds: 2), () {
+      nextQuestion();
     });
 
     //Regar = 'R';

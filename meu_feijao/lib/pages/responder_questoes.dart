@@ -1,10 +1,10 @@
 // ignore_for_file: avoid_unnecessary_containers, avoid_print
 import 'dart:io';
-import 'package:feijao_magico_uel/components/botoes_body.dart';
 import 'package:feijao_magico_uel/components/quiz/quiz_init.dart';
 import 'package:feijao_magico_uel/constants.dart';
 import 'package:feijao_magico_uel/network/question_net.dart';
 import 'package:feijao_magico_uel/network/questions_model.dart';
+import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';

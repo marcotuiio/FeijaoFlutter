@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:path_provider/path_provider.dart';
 
 class QuestionModel {
@@ -85,27 +84,33 @@ Future<String> getFilePath(String gameCode) async {
   return filePath;
 }
 
+void writeFile(QuestionModel questModel, String gameCode) async {
+  final file = File(await getFilePath(gameCode));
+  await file.writeAsString(json.encode(questModel));
+}
+
 Future<void> loadQuestions(String gameCode) async {
   QuestionModel fullQuestions = await getFileContents(gameCode);
   List<Questoes> questoes = fullQuestions.questoes!;
-  int i = 0, cont = 0;
+  int i = 0;
   var now = DateTime.now();
   var time = now.toString().substring(0, 10);
 
-  while (i < questoes.length || cont < finalLen) {
+  while (i < questoes.length) {
     if (questoes[i].dataResposta != 'nda') {
-      if (questoes[i].usado == 0 &&
-          time == questoes[i].dataResposta &&
-          questoes[i].tentativas! < 20) {
-        sampledata.add(questoes[i]);
-        cont++;
+      if (questoes[i].usado == 1 ||
+          time != questoes[i].dataResposta) {
+        questoes.remove(questoes[i]);
       }
-    } else if (questoes[i].dataResposta == 'nda') {
-      sampledata.add(questoes[i]);
-      cont++;
     }
     i++;
   }
+  fullQuestions.questoes = questoes;
+  writeFile(fullQuestions, gameCode);
+
+  QuestionModel fullQuestions2 = await getFileContents(gameCode);
+  sampledata = fullQuestions2.questoes!;
+  
 }
 
 List<Questoes> sampledata = [];

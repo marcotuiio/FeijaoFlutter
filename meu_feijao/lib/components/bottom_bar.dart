@@ -1,6 +1,6 @@
-import 'package:feijao_magico_uel/components/botoes_body.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/responder_questoes.dart';
+import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
 

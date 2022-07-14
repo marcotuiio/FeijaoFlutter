@@ -57,7 +57,6 @@ class _CodigoJogoState extends State<CodigoJogo> {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     String filePath = appDocPath + "/gamesdata.json";
-    // print(filePath);
     return filePath;
   }
 

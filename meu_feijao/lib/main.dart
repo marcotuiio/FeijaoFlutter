@@ -27,7 +27,6 @@ class _PeDeFeijaoAPPState extends State<PeDeFeijaoAPP> {
   @override
   void initState() {
     super.initState();
-    // checkFileEmpty();
     checkJsonEmpty();
   }
 
@@ -35,7 +34,6 @@ class _PeDeFeijaoAPPState extends State<PeDeFeijaoAPP> {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     String filePath = appDocPath + "/gamesdata.json";
-
     return filePath;
   }
 
