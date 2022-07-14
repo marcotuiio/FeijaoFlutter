@@ -2,11 +2,10 @@
 
 import 'package:feijao_magico_uel/components/quiz/components/body_quiz.dart';
 import 'package:feijao_magico_uel/components/quiz/controler/controller.dart';
-import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-class QuizScreen extends StatelessWidget {
+class QuizScreen extends StatefulWidget {
   final String code;
   final int index;
   final String type;
@@ -20,9 +19,14 @@ class QuizScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<QuizScreen> createState() => _QuizScreenState();
+}
+
+class _QuizScreenState extends State<QuizScreen> {
+  @override
   Widget build(BuildContext context) {
-    QuestionController _controller =
-        Get.put(QuestionController(index: index, code: code, type: type));
+    QuestionController _controller = Get.put(QuestionController(
+        index: widget.index, code: widget.code, type: widget.type));
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -31,7 +35,7 @@ class QuizScreen extends StatelessWidget {
             Icons.arrow_back,
             color: Colors.black,
           ),
-          onPressed: () => Get.back(),
+          onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -42,12 +46,17 @@ class QuizScreen extends StatelessWidget {
               color: Colors.black,
             ),
             onPressed: () {
-              Get.to(() => const SelecionarJogo());
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const SelecionarJogo(),
+              //   ),
+              // );
             },
           ),
         ],
       ),
-      body: BodyQuiz(type: type, auxLen: len),
+      body: BodyQuiz(type: widget.type, leng: widget.len),
     );
   }
 }

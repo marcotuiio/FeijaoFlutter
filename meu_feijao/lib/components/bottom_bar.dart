@@ -170,7 +170,7 @@ Widget _buildPopupDialog(
 
             // tem estrelas o suficente para chegar com forca em 100 e sobra
           } else if (limite > 0) {
-            auxStar = atual.qtdEstrelinhas! - max;
+            auxStar = max;
             auxForca = max;
           }
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:path_provider/path_provider.dart';
 
 class QuestionModel {
@@ -98,8 +99,7 @@ Future<void> loadQuestions(String gameCode) async {
 
   while (i < questoes.length) {
     if (questoes[i].dataResposta != 'nda') {
-      if (questoes[i].usado == 1 ||
-          time != questoes[i].dataResposta) {
+      if (questoes[i].usado == 1 || time != questoes[i].dataResposta) {
         questoes.remove(questoes[i]);
       }
     }
@@ -110,7 +110,7 @@ Future<void> loadQuestions(String gameCode) async {
 
   QuestionModel fullQuestions2 = await getFileContents(gameCode);
   sampledata = fullQuestions2.questoes!;
-  
+  print(json.encode(sampledata));
 }
 
 List<Questoes> sampledata = [];

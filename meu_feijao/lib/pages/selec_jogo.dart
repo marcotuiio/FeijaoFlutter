@@ -92,7 +92,6 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
         auxLen = 9;
         isEmpty = 1;
       });
-
     } else {
       setState(() {
         isEmpty = 2;
@@ -145,7 +144,6 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                 onPrimary: Colors.white,
               ),
             ),
-            // const SizedBox(height: 5),
             _items.isNotEmpty
                 ? Expanded(
                     child: ListView.builder(

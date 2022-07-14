@@ -29,36 +29,11 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
     forca = widget.currentGame.forca as int;
     currentIndex = widget.index;
     currentGame = widget.currentGame;
-    // checkJsonEmpty(currentGame.codigo!);
-    if (isEmpty == 2) {
+    if (isEmpty != 1) {
       prepareToRespond(currentGame.codigo!);
       loadQuestions(currentGame.codigo!);
-    } 
+    }
   }
-
-  // Future<String> getFilePath(String code) async {
-  //   Directory appDocDir = await getApplicationDocumentsDirectory();
-  //   String appDocPath = appDocDir.path;
-  //   String filePath = appDocPath + "/questions_" + code + ".json";
-  //   return filePath;
-  // }
-
-  // void checkJsonEmpty(String code) async {
-  //   File file = File(await getFilePath(code));
-  //   if (!file.existsSync()) {
-  //     setState(() {
-  //       isActiveButtonRega = true;
-  //       isActiveButtonStars = true;
-  //       auxLen = 9;
-  //       isEmpty = 1;
-  //     });
-
-  //   } else {
-  //     setState(() {
-  //       isEmpty = 2;
-  //     });
-  //   }
-  // }
 
   Future<void> prepareToRespond(String gameCode) async {
     UpdateOnFile updates = UpdateOnFile();
@@ -74,26 +49,33 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
         updates.setTentativaForca(currentIndex, 0);
       });
     } else if (currentGame.tentativasForca == 0) {
-      isActiveButtonRega = true;
-      auxLen = 1;
+      setState(() {
+        isActiveButtonRega = true;
+        auxLen = 1;
+      });
     }
 
     // ESTRELINHAS
     if (today == currentGame.dataAtual) {
       if (currentGame.tentativasEstrelas! < 9) {
-        isActiveButtonStars = true;
-        auxLen = 9 - currentGame.tentativasEstrelas!;
+        setState(() {
+          isActiveButtonStars = true;
+          auxLen = 9 - currentGame.tentativasEstrelas!;
+        });
       } else {
-        updates.setDataAtual(currentIndex, 1);
-        updates.setTentativaEstrelas(currentIndex);
-        isActiveButtonStars = false;
+        setState(() {
+          updates.setDataAtual(currentIndex, 1);
+          isActiveButtonStars = false;
+        });
       }
     } else if (currentGame.dataAtual == yesterday.toString().substring(0, 10) &&
         currentGame.tentativasEstrelas! < 9) {
-      updates.setDataAtual(currentIndex, 0);
-      updates.setTentativaEstrelas(currentIndex);
-      isActiveButtonStars = true;
-      auxLen = 9;
+      setState(() {
+        updates.setDataAtual(currentIndex, 0);
+        updates.setTentativaEstrelas(currentIndex);
+        isActiveButtonStars = true;
+        auxLen = 9;
+      });
     }
 
     // FIM DO JOGO
@@ -103,9 +85,11 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
           int.parse(currentGame.datafim!.substring(5, 7))) {
         if (int.parse(today.substring(0, 4)) >=
             int.parse(currentGame.datafim!.substring(0, 4))) {
-          isActiveButtonRega = false;
-          isActiveButtonStars = false;
-          // updar relatorio das questoes 
+          setState(() {
+            isActiveButtonRega = false;
+            isActiveButtonStars = false;
+          });
+          // updar relatorio das questoes
         }
       }
     }
@@ -198,4 +182,3 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
     );
   }
 }
-

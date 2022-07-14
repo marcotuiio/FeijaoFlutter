@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 
 class BodyQuiz extends StatelessWidget {
   final String type;
-  final int auxLen;
-  const BodyQuiz({required this.type, required this.auxLen, Key? key})
+  final int leng;
+  const BodyQuiz({required this.type, required this.leng, Key? key})
       : super(key: key);
 
   @override
@@ -20,10 +20,10 @@ class BodyQuiz extends StatelessWidget {
     // int len = 1;
     String tipo = '';
     if (type == 'R') {
-      // len = auxLen; // 1
+      // len = leng; // 1
       tipo = 'Regar';
     } else if (type == 'E') {
-      // len = auxLen; // max 9
+      // len = leng; // max 9
       tipo = 'Estrelinhas';
     }
     return Stack(
@@ -59,8 +59,8 @@ class BodyQuiz extends StatelessWidget {
                   controller: _questionController.pageController,
                   onPageChanged: _questionController.updateTheQnNum,
                   itemCount: finalLen, // questoes.length
-                  itemBuilder: (context, finalLen) => QuestionCard(
-                    question: sampledata[finalLen],
+                  itemBuilder: (context, index) => QuestionCard(
+                    question: sampledata[index],
                   ),
                 ),
               ),
