@@ -1,9 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:feijao_magico_uel/network/update_quest.dart';
 import 'package:feijao_magico_uel/network/updates_on_file.dart';
 import 'package:feijao_magico_uel/network/games_model.dart';
 import 'package:feijao_magico_uel/pages/selec_jogo.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 class BotoesMainPage extends StatefulWidget {
   final Jogos currentGame;
@@ -33,6 +37,21 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
       prepareToRespond(currentGame.codigo!);
       loadQuestions(currentGame.codigo!);
     }
+  }
+
+  Future<Jogos> getCurrentAgain(int index) async {
+    File file = File(await getFilePath());
+    String contents = await file.readAsString();
+    Map<String, dynamic> data = json.decode(contents);
+    var fullJson = GamesModel.fromJson(data);
+    return fullJson.jogos![index];
+  }
+
+  Future<String> getFilePath() async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String filePath = appDocPath + "/gamesdata.json";
+    return filePath;
   }
 
   Future<void> prepareToRespond(String gameCode) async {
@@ -89,7 +108,7 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
             isActiveButtonRega = false;
             isActiveButtonStars = false;
           });
-          // updar relatorio das questoes
+          // upar relatorio das questoes
         }
       }
     }
@@ -175,6 +194,19 @@ class _BotoesMainPageState extends State<BotoesMainPage> {
                   ),
                 ),
               ],
+            ),
+            const Spacer(),
+            ElevatedButton.icon(
+              onPressed: () {
+                setState(() {
+                  getCurrentAgain(currentIndex).then((value) {
+                    currentGame = value;
+                    forca = currentGame.forca!;
+                  });
+                });
+              },
+              icon: const Icon(Icons.refresh),
+              label: const Text('ATUALIZAR'),
             ),
           ],
         ),

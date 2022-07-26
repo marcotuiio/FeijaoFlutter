@@ -25,7 +25,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
   late String dataRega = '';
   DateTime now = DateTime.now();
   late String today = '';
-  
+
   @override
   void initState() {
     super.initState();
@@ -68,6 +68,9 @@ class _NavBarBottomState extends State<NavBarBottom> {
             icon: const Icon(Icons.opacity),
             onPressed: isActiveButtonRega
                 ? () {
+                    setState(() {
+                      auxType = 'R';
+                    });
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -98,6 +101,9 @@ class _NavBarBottomState extends State<NavBarBottom> {
             icon: const Icon(Icons.book_online_outlined),
             onPressed: isActiveButtonStars
                 ? () {
+                    setState(() {
+                      auxType = 'E';
+                    });
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -173,7 +179,6 @@ Widget _buildPopupDialog(
             auxStar = max;
             auxForca = max;
           }
-
           await updates.setForcaPlus(auxForca, currentIndex);
           await updates.setEstrelinhas(-(auxStar), currentIndex);
           Navigator.pop(context);
@@ -252,3 +257,5 @@ Widget _buildPopupDialogNaoStars(BuildContext context) {
     ],
   );
 }
+
+String auxType = '';

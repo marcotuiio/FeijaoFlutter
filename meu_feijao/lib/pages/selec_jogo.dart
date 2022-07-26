@@ -214,7 +214,7 @@ class _SelecionarJogoState extends State<SelecionarJogo> {
                       ),
                     );
                   },
-                  label: const Text('CONFIGURAÇÕES'),
+                  label: const Text('EDITAR NOME'),
                   backgroundColor: Colors.red,
                 ),
               ],

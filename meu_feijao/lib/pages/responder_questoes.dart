@@ -69,9 +69,9 @@ class _RespQuestoesState extends State<RespQuestoes> {
       List<Questoes> suffleList = aux.questoes!..shuffle();
       aux.questoes = suffleList;
       file.writeAsString(json.encode(aux));
-      print('ARQUIVO SALVO PELA PRIMEIRA VEZ');
+      // print('ARQUIVO SALVO PELA PRIMEIRA VEZ');
     } else {
-      print('ARQUIVO JA EXISTE');
+      // print('ARQUIVO JA EXISTE');
     }
   }
 
@@ -100,7 +100,8 @@ class _RespQuestoesState extends State<RespQuestoes> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Responder Perguntas', style: TextStyle(color: Colors.black)),
+        title: const Text('Responder Perguntas',
+            style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.green[800],
         centerTitle: true,
       ),
@@ -142,7 +143,8 @@ class _RespQuestoesState extends State<RespQuestoes> {
                           InkWell(
                             onTap: () async {
                               if (isEmpty == 1) {
-                                await saveQuestionModel(_currentCode, snapshot.data);
+                                await saveQuestionModel(
+                                    _currentCode, snapshot.data);
                                 await loadQuestions(_currentCode);
                               }
                               Navigator.push(

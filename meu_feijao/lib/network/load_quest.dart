@@ -15,7 +15,6 @@ class LoadQuestions {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     String filePath = appDocPath + "/questions_" + gameCode + ".json";
-    // print(filePath);
     return filePath;
   }
 

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:feijao_magico_uel/pages/responder_questoes.dart';
 import 'package:path_provider/path_provider.dart';
 
 class QuestionModel {
@@ -110,7 +109,7 @@ Future<void> loadQuestions(String gameCode) async {
 
   QuestionModel fullQuestions2 = await getFileContents(gameCode);
   sampledata = fullQuestions2.questoes!;
-  print(json.encode(sampledata));
+  // print(json.encode(sampledata));
 }
 
 List<Questoes> sampledata = [];

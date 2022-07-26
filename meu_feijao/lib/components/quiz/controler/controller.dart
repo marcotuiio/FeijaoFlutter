@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use,
+import 'package:feijao_magico_uel/components/bottom_bar.dart';
 import 'package:feijao_magico_uel/network/questions_model.dart';
 import 'package:feijao_magico_uel/network/update_quest.dart';
 import 'package:feijao_magico_uel/network/update_relatorio.dart';
@@ -11,10 +12,8 @@ class QuestionController extends GetxController
     with SingleGetTickerProviderMixin {
   late int index;
   late String code;
-  late String type;
 
-  QuestionController(
-      {this.index = 0, this.code = '', this.type = '', Key? key});
+  QuestionController({this.index = 0, this.code = '', Key? key});
 
   late AnimationController _animationController;
   late Animation _animation;
@@ -40,7 +39,6 @@ class QuestionController extends GetxController
 
   late int _currentIndex;
   late String _currentCode;
-  late String _currentType;
   final UpdateOnFile _updatesGame = UpdateOnFile();
   final UpdateQuestions _updateQuestions = UpdateQuestions();
   final UpdateRelatorio _updateRelatorio = UpdateRelatorio();
@@ -51,7 +49,6 @@ class QuestionController extends GetxController
     super.onInit();
     _currentIndex = index;
     _currentCode = code;
-    _currentType = type;
     _animationController = AnimationController(
         duration: const Duration(seconds: 600), vsync: this);
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
@@ -75,20 +72,20 @@ class QuestionController extends GetxController
     _isAnswered = true;
     _correctAns = question.answerIndex!;
     _selectedAns = selectedIndex;
-    print('type $type');
-    print('qnValue ${questionNumber.value}');
-    print('len ${sampledata.length}');
+    // print(auxType);
+    // print('qnValue ${questionNumber.value}');
+    // print('len ${sampledata.length}');
     // primeira tentativa
     if (question.tentativas == 0) {
       // Certa resposta
       if (_correctAns == _selectedAns) {
-        if (_currentType == 'R') {
-          print('Certo 0 rega');
+        if (auxType == 'R') {
+          // print('Certo 0 rega');
           await _updatesGame.setForcaPlus(18, _currentIndex);
           await _updatesGame.setDataRega(_currentIndex);
           await _updatesGame.setTentativaForca(_currentIndex, 1);
-        } else if (_currentType == 'E') {
-          print('Certo 0 estrela');
+        } else if (auxType == 'E') {
+          // print('Certo 0 estrela');
           await _updatesGame.setEstrelinhas(2, _currentIndex);
           await _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
@@ -101,11 +98,11 @@ class QuestionController extends GetxController
         // EEEEErrou com tentativas = 0
         await _updateQuestions.setTentativas(_currentCode, 10, _currentIndex);
         await _updateQuestions.setDataResposta(_currentCode, _currentIndex);
-        if (_currentType == 'R') {
-          print('Errou 0 rega');
+        if (auxType == 'R') {
+          // print('Errou 0 rega');
           await _updatesGame.setForcaMinus(18, _currentIndex);
-        } else if (_currentType == 'E') {
-          print('Errou 0 estrela');
+        } else if (auxType == 'E') {
+          // print('Errou 0 estrela');
           await _updatesGame.setEstrelinhas(0, _currentIndex);
         }
       }
@@ -114,13 +111,13 @@ class QuestionController extends GetxController
     } else if (question.tentativas == 10) {
       // Acertou de segunda
       if (_correctAns == _selectedAns) {
-        if (_currentType == 'R') {
-          print('Certo 10 rega');
+        if (auxType == 'R') {
+          // print('Certo 10 rega');
           await _updatesGame.setForcaPlus(9, _currentIndex);
           await _updatesGame.setDataRega(_currentIndex);
           await _updatesGame.setTentativaForca(_currentIndex, 1);
-        } else if (_currentType == 'E') {
-          print('Certo 10 estrela');
+        } else if (auxType == 'E') {
+          // print('Certo 10 estrela');
           await _updatesGame.setEstrelinhas(1, _currentIndex);
           await _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
@@ -132,12 +129,12 @@ class QuestionController extends GetxController
 
         // Errou de segunda
       } else {
-        if (_currentType == 'R') {
-          print('Errou 10 rega');
+        if (auxType == 'R') {
+          // print('Errou 10 rega');
           await _updatesGame.setTentativaForca(_currentIndex, 1);
           await _updatesGame.setDataRega(_currentIndex);
-        } else if (_currentType == 'E') {
-          print('Errou 10 estrela');
+        } else if (auxType == 'E') {
+          // print('Errou 10 estrela');
           await _updatesGame.plusTentativaEstrelas(_currentIndex);
         }
         await _updateQuestions.setTentativas(_currentCode, 20, _currentIndex);

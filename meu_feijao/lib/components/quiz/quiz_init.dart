@@ -26,7 +26,7 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     QuestionController _controller = Get.put(QuestionController(
-        index: widget.index, code: widget.code, type: widget.type));
+        index: widget.index, code: widget.code));
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(

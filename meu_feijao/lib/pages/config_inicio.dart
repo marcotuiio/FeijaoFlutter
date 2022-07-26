@@ -5,7 +5,6 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'dart:async';
 
-// ignore: must_be_immutable
 class CadastroInicial extends StatefulWidget {
   const CadastroInicial({Key? key}) : super(key: key);
 

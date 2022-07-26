@@ -17,7 +17,7 @@ class CodigoJogo extends StatefulWidget {
 
 class _CodigoJogoState extends State<CodigoJogo> {
   late Future<GamesModel> gameObjects;
-  String _code = 'gamesdata';
+  String _code = '';
   var now = DateTime.now();
 
   late String _name = '';
