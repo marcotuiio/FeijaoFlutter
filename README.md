@@ -13,12 +13,4 @@ TO DO:
     * Test if quiz controller works properly (if answer is wrong or right) DONE
     * Check, when trying to answer, if the game time is over DONE (?)
     * Update images and create apk DONE (could get better)
-
-    * Load to sampledata (question_model) only the questions with field 'usado' = 0 NOT WORKING RIGHT
-    * Check if navigator push after quiz is working right
-    * Remove the progress bar from quiz // MAYBE
     
-
-    OBS: DO NOT USE BUTTON 'USAR ESTRELINHAS' ON NAV BAR. ITS BROKEN
-    BUT IF YOU CLICK ON IT, THEN YOU'RE GONNA HAVE TO DELETE THE GAMESDATA.JSON
-    AND QUESTIONS_***.JSON FILE ON THE LOCAL DEVICE AND RESTART THE APP
