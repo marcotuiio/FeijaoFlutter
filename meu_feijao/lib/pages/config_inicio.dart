@@ -51,19 +51,20 @@ class _CadastroInicialState extends State<CadastroInicial> {
             children: <Widget>[
               const SizedBox(height: 10),
               const Text(
-                'Olá Estudante.',
+                'Olá Estudante,',
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 25,
                   color: Colors.black,
                 ),
               ),
               const SizedBox(height: 8),
               const Text(
-                'Bem Vindo ao jogo Feijões Mágicos!!',
+                'Bem-vindo ao jogo Feijões Mágicos!',
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 22,
                   color: Colors.black,
-                ),
+                  ),
               ),
               const SizedBox(height: 5),
               Container(
@@ -87,6 +88,7 @@ class _CadastroInicialState extends State<CadastroInicial> {
                 ),
               ),
               const SizedBox(height: 12),
+              //const NameForm(),
               textFiledViewName(),
               const SizedBox(height: 24),
               ElevatedButton.icon(
@@ -124,9 +126,9 @@ class _CadastroInicialState extends State<CadastroInicial> {
           decoration: InputDecoration(
             hintText: "Cadastre seu Nome",
             labelText: "NOME",
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
               fontSize: 18,
-              color: Colors.blue[800],
+              color: Color.fromARGB(255, 21, 192, 92)         
             ),
             prefixIcon: const Icon(Icons.person),
             border: OutlineInputBorder(
@@ -142,6 +144,107 @@ class _CadastroInicialState extends State<CadastroInicial> {
             });
           },
         ),
+      ),
+    );
+  }
+}
+
+
+class NameForm extends StatefulWidget {
+  const NameForm({Key? key}) : super(key: key);
+
+  @override
+  NameFormState createState() => NameFormState();
+}
+
+class NameFormState extends State<NameForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: SingleChildScrollView(
+          reverse: true,
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 10),
+              const Text(
+                'Olá Estudante,',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Bem-vindo ao jogo Feijões Mágicos!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.black,
+                  ),
+              ),
+              const SizedBox(height: 5),
+              Container(
+                margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                width: 350,
+                height: 190,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: const DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/livroplant.png'),
+                  ),
+                ),
+              ),
+              buildForm(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildForm() {
+    return Container (
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+            child:  Form(
+              key: _formKey,
+              child: TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Insira seu nome',
+                labelText: 'NOME',
+              ),
+              validator: (value) {
+                if(value == null || value.isEmpty) {
+                  return 'Por favor insira seu nome ';
+                }
+                return null;
+              },
+              onFieldSubmitted: (value){
+              },
+            ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Validate returns true if the form is valid, or false otherwise.
+                if (_formKey.currentState!.validate()) {
+                  // If the form is valid, display a snackbar. In the real world,
+                  // you'd often call a server or save the information in a database.
+                }
+              },
+              child: const Text('Salvar'),
+            ),
+          )
+        ], 
       ),
     );
   }
